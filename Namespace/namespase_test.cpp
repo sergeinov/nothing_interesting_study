@@ -1,5 +1,4 @@
-// Программа
-
+// Test namespace
 #include <iostream>
 
 namespace First
