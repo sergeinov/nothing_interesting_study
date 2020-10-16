@@ -10,14 +10,14 @@ namespace Second
 {
 	int version = 5;
 }
-// использование директивы using
+// С‚РµРїРµСЂСЊ РІРѕР·РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїРµСЂРµРјРµРЅРЅСѓСЋ version РіР»РѕР±Р°Р»СЊРЅРѕ
 using namespace Second;
 
 namespace Third
 {
 	int version = 9;
 }
-// использование псевдонима
+// РїСЃРµРІРґРѕРЅРёРј РґР»СЏ РїСЂРѕСЃС‚СЂР°РЅСЃС‚Р° РёРјРµРЅ Third
 namespace ver = Third;
 
 int main()
@@ -25,11 +25,11 @@ int main()
 	setlocale(LC_ALL, "ru");
 
 	std::cout << First::version << std::endl;
-	// появляется возможность использовать пространство Second без оператора ::
+	// РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ СЃ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІР° РёРјРµРЅ Second
 	std::cout << version << std::endl;
 
 	std::cout << "----------------" << std::endl;
-
+	// РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ РїСЃРµРІРґРѕРЅРёРјР°
 	std::cout << ver::version << std::endl;
 
 	return 0;
