@@ -54,7 +54,7 @@ int _tmain()
 	//В комментариях  укажите значения переменных i, j, k
 
 
-	#define MAX(i, j)	((i > j)?i:j)		
+	#define MAX(i, j)	(( (i) > (j) )? (i) : (j))		
 /*
 	int i = 10, j = 12, k;
 	k = MAX(i, j);					//i= 10	, j= 12	, k= 12
@@ -191,12 +191,13 @@ int iNN;
 
 	//_DEBUG — определяется как 1, если заданы параметры компилятора / LDd, / MDd или / MTd
 
-	#define _DEBUG 1
-	#if _DEBUG == 1
-		//#include "1.h"
-	#elif	_DEBUG == 0
-		//#include "2.h"
+
+	#ifdef _DEBUG
+		#include "1.h"
+	#else
+		#include "2.h"
 	#endif	// _DEBUG
+
 // ********************************************************
 
 	//Задание 3. Указатели
@@ -209,7 +210,8 @@ int iNN;
 	char value1 = 'A';
 	int value2 = 5;
 	double value3 = 2.5;
-
+	// Он считает, что укзатель указвает на нультерминированную строку и пытается найти там ноль.
+	// Он делает pValue1++ пока не встретится ноль.
 	char* pValue1 = &value1;	// pValue1	0x0076fb13 "AММММММММФяММММММММММ$\x4ММММММММММ\x2"	char *
 	int* pValue2 = &value2;		// pValue2	0x006ff9a4 {5}	int *
 	double* pValue3 = &value3;	// pValue3	0x006ff994 {2.5000000000000000}	double*
