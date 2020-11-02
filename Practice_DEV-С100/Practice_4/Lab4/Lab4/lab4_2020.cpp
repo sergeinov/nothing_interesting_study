@@ -220,48 +220,49 @@ int main()
 
 	//в)Отсортируйте массив по убыванию значений. 
 	//Используйте сортировку "выбором"
+	{
+
+		srand(time(NULL));
+		int arrRandom[10];
+		int sizeArr2 = sizeof(arrRandom) / sizeof(arrRandom[0]);  // размер массива
+
+		// заполнение массива случайными числами
+		for (int i = 0; i < sizeArr2; i++)
 		{
+			//  рандомные числа от 1 -100
+			arrRandom[i] = rand() % 100 + 1;
+			std::cout << arrRandom[i] << " ";
+		}
 
-			srand(time(NULL));
-			int arrRandom[10];
-			int sizeArr2 = sizeof(arrRandom) / sizeof(arrRandom[0]);  // размер массива
+		// проходим по всему массиву
+		for (int i = 0; i < sizeArr2 - 1; i++)
+		{
+			// здесь индекс с наибольшего элемента
+			int indexMax = i;
 
-			// заполнение массива случайными числами
+			// поиск наибольшего из оставшихся неупорядоченных чисел
+			for (int j = i + 1; j < sizeArr2; j++)
+			{
+				if (arrRandom[j] > arrRandom[indexMax])
+				{
+					indexMax = j;
+				}
+			}
+			// обмен местами значения текущего и наибольшего элементов
+			int temp = arrRandom[indexMax];
+			arrRandom[indexMax] = arrRandom[i];
+			arrRandom[i] = temp;
+
+			// вывод массива
+			std::cout << i + 1 << " цикл: \t";
 			for (int i = 0; i < sizeArr2; i++)
 			{
-				arrRandom[i] = rand() % 100 + 1;
 				std::cout << arrRandom[i] << " ";
 			}
-
-			// проходим по всему массиву
-			for (int i = 0; i < sizeArr2 - 1; i++)
-			{
-				// здесь индекс с наибольшего элемента
-				int indexMax = i;
-
-				// поиск наименьшего из оставшихся неупорядоченных чисел
-				for (int j = i + 1; j < sizeArr2; j++)
-				{
-					if (arrRandom[j] > arrRandom[indexMax])
-					{
-						indexMax = j;
-					}
-				}
-				// обмен местами значения текущего и минимального элементов
-				int temp = arrRandom[indexMax];
-				arrRandom[indexMax] = arrRandom[i];
-				arrRandom[i] = temp;
-
-				// вывод массива
-				std::cout << i + 1 << " цикл: \t";
-				for (int i = 0; i < sizeArr2; i++)
-				{
-					std::cout << arrRandom[i] << " ";
-				}
-			}
-
-			stop
 		}
+
+		stop
+	}
 	
 		// 
 
@@ -275,40 +276,40 @@ int main()
 			//Для проверки выводите массив на консоль на каждой итерации`
 	{
 
-			int arrNN[10] = { 0 };
-			int number;
-			int sizeArr3 = sizeof(arrNN) / sizeof(int);  // размер массива
-			int count = 0;                              // для вывода количества циклов
+		int arrNN[10] = { 0 };
+		int number;
+		int sizeArr3 = sizeof(arrNN) / sizeof(int);  // размер массива
+		int count = 0;                              // для вывода количества циклов
 
-			// через пузырьковую сортировку, упорядочивая полученное значение по возрастанию
-			// идем циклом с конца массива
-			for (int i = sizeArr3 - 1; i >= 0; i--)
+		// через пузырьковую сортировку, упорядочивая полученное значение по возрастанию
+		// идем циклом с конца массива
+		for (int i = sizeArr3 - 1; i >= 0; i--)
+		{
+			std::cout << "Введите значение: " << std::endl;
+			std::cin >> number;
+			arrNN[i] = number;      // присваиваем принятое на вход число массиву по индексу (в данном случае последнему)
+
+			// поиск наименьшего из оставшихся неупорядоченных чисел
+			for (int j = 0; j < sizeArr3 - 1; j++)
 			{
-
-				std::cin >> number;
-				arrNN[i] = number;      // присваиваем принятое на вход число массиву по индексу (в данном случае последнему)
-
-				// поиск из оставшихся неупорядоченных чисел
-				for (int j = 0; j < sizeArr3 - 1; j++)
+				if (arrNN[j + 1] < arrNN[j])
 				{
-					if (arrNN[j + 1] < arrNN[j])
-					{
-						// обмен местами значения текущего и минимального элементов
-						int temp = arrNN[j + 1];
-						arrNN[j + 1] = arrNN[j];
-						arrNN[j] = temp;
-					}
+					// обмен местами значения текущего и минимального элементов
+					int temp = arrNN[j + 1];
+					arrNN[j + 1] = arrNN[j];
+					arrNN[j] = temp;
 				}
-
-				// вывод массива
-				count++;
-				std::cout << count << " цикл: \t";
-				for (int i = 0; i < sizeArr3; i++)
-				{
-					std::cout << arrNN[i] << " ";
-				}
-				std::cout << std::endl;
 			}
+
+			// вывод массива
+			count++;
+			std::cout << count << " цикл: \t";
+			for (int i = 0; i < sizeArr3; i++)
+			{
+				std::cout << arrNN[i] << " ";
+			}
+			std::cout << std::endl;
+		}
 
 		stop
 	}
@@ -321,8 +322,52 @@ int main()
 	//Модифицируйте предыдущее задание следующим образом:
 	//очередное введенное значение помещается в массив только при условии, 
 	//что там еще такого нет (то есть дубли игнорируются)
+	{
+		int arrNN2[10] = { 0 };
+		int number;
+		int sizeArr4 = sizeof(arrNN2) / sizeof(int);  // размер массива
+		int count = 0;                              // для вывода количества циклов
 
-	 
+		// через пузырьковую сортировку, упорядочивая полученное значение по возрастанию
+		// идем циклом с конца массива
+		for (int i = sizeArr4 - 1; i >= 0; i--)
+		{
+			std::cout << "Введите значение: " << std::endl;
+			std::cin >> number;
+
+			// проверка на дубликат числа в массиве			// ?
+			for (int k = sizeArr4 - 1; k >= 0; k--) {
+				if (arrNN2[k] == number) {
+					std::cout << "Есть в массиве!" << std::endl;
+					std::cin >> number;
+				}
+			}
+
+			arrNN2[i] = number; // присваиваем принятое на вход число массиву по индексу (в данном случае последнему)  
+
+			// поиск из оставшихся неупорядоченных чисел
+			for (int j = 0; j < sizeArr4 - 1; j++)
+			{
+
+				if (arrNN2[j + 1] < arrNN2[j])
+				{
+					// обмен местами значения текущего и минимального элементов
+					int temp = arrNN2[j + 1];
+					arrNN2[j + 1] = arrNN2[j];
+					arrNN2[j] = temp;
+				}
+			}
+
+			// вывод массива
+			count++;
+			std::cout << count << " цикл: \t";
+			for (int i = 0; i < sizeArr4; i++)
+			{
+				std::cout << arrNN2[i] << " ";
+			}
+			std::cout << std::endl;
+		}
+	}
 
 // *******************************************************
 	//Задание 9
@@ -335,7 +380,25 @@ int main()
 	//стало: '*' '*' '*' '*' '*' '_' '_' '_' '_' '_'
 	//и распечатайте массив 
 //(Подсказки в файле Алгоритмы для лабораторной работы_4. pdf)
+	{
+		srand(time(NULL));
+		char arrRandom2[10];
+		int sizeArr2 = sizeof(arrRandom2) / sizeof(arrRandom2[0]);  // размер массива
 
+		// заполнение массива случайными числами и замена их на символы  '*'  '_'
+		for (int i = 0; i < sizeArr2; i++)
+		{
+			//  рандомные числа от 1 -100
+			arrRandom2[i] = rand() % 100 + 1;
+			if (arrRandom2[i] > 50) {
+				arrRandom2[i] = '*';
+			}
+			else {
+				arrRandom2[i] = '_';
+			}
+			std::cout << arrRandom2[i] << " ";
+		}
+	}
 // *******************************************************
 	//Задание 10
 	//объявите одномерный встроенный массив  из N элементов и проинициализируйте его.
