@@ -340,7 +340,7 @@ int iNN;
 	//и присвойте его n2
 
 	int n2 = *pn1;
-	n2 = **ppn1;
+	n2 = *(*ppn1);
 	n2 = ***pppn1;  // n2 = 1
 
 	stop
