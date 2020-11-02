@@ -293,6 +293,11 @@ int main()
 	x = (x & 0x00FF00FF) << 8 | (x & 0xFF00FF00) >> 8;
 	x = (x & 0x0000FFFF) << 16 | (x & 0xFFFF0000) >> 16;	// 0xD4C3B2A1
 
+	// в одно выражение
+	// x = ((x >> 24) & 0x000000ff | (x << 24) | (x & 0x00ffff00);
+	// другой вариант
+	// x = (static_cast<unsigned int>(x) >> 24) | (x << 24) | (x & 0x00ffff00);
+
 	std::cout << std::hex << x;
 	stop
 
