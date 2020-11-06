@@ -141,7 +141,7 @@ int main()
 		//int year = 2000; 	// высокосный
 
 		//Вычислили значение 
-		bool isLeapYear = ((year % 100 == 0) && (year % 400 == 0) || ((year % 4 == 0) && (!(year % 100 == 0))));
+		bool isLeapYear = ((year % 400 == 0) || ((year % 4 == 0) && (!(year % 100 == 0))));
 		//bool isLeapYear = ((year % 100 == 0) && (year % 400 == 0) || ((year % 4 == 0) && (!(year % 100 == 0))));
 		std::cout.setf(std::ios::boolalpha);  // для вывода вида true/false
 		std::cout << isLeapYear << std::endl;
