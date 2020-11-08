@@ -3,14 +3,16 @@
 #include  <cstdlib>
 #include  <cstring>
 #define	  stop __asm nop
+#include <iostream>
 
 //Severity	Code	Description	Project	File	Line	Suppression State
 //Error	C4996	'strcpy': This function or variable may be unsafe.Consider using strcpy_s instead.
 //To disable deprecation, use _CRT_SECURE_NO_WARNINGS.
 //See online help for details.Lab5_2020	D : \C++\NEW COURSE(C100 - C110)\C100\LABS\Lab5\Lab5_2020\Lab5_2020\other.cpp	75
 
+//для задания 1.2
 int x = 10;
-int& ref = x;	// определение переменной для задания 1.2
+int& ref = x;	
 
 
 // определение функций для задания  2.1.
@@ -53,6 +55,66 @@ int Swap(int& nX, int& nY)
 }
 
 
+// для задания 3.1
+void PrintArray(const int ar[], size_t size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		std::cout << ar[i] << " ";
+	}
+}
+
+// для задания 3.2
+int Min(const int ar[], size_t size2)
+{
+	int max = ar[0];
+
+	for (size_t i = 1; i < size2; i++)
+	{
+		if (max > ar[i]) {
+			max = ar[i];
+		}
+	}
+	return max;
+}
+
+// для задания 3.3
+int MyStrCmp(const char* arr1, const char* arr2)
+{
+	int res = 0;
+	if (arr1 == 0 || arr2 == 0) return -2;
+
+	if (arr1 > arr2)
+	{
+		res = 1;
+	} else if (arr1 < arr2)
+	{
+		res = -1;
+	}
+	else {
+		res = 0;
+	}
+
+	return res;
+}
+
+
+//для задания 5
+int* addr_min(const int* arrMM, size_t size_MM)
+{
+	const int* p = arrMM;
+
+	for (size_t i = 0; i < size_MM; i++)
+	{
+		if (*p > arrMM[i]) {
+			p = &arrMM[i];
+		}
+	}
+	return (const_cast<int*>(p));
+}
+
+
+
 ///////////////////////////////////////////////////
 int square(const int& val) 
 { 
@@ -64,10 +126,13 @@ int square(const int& val)
 const char* NameOfMonth(int month)
 {
 	const char* strMonths[] = {"", "January","February","March","April", "May","June","July","August","September","October","November","December"};
-	if ((month > 12) || (month < 1))
+	if ((month > 12) || (month < 1)) {
+		std::cout << "Wrong month number!" << std::endl;
 		return nullptr;
-	else
-		return strMonths[month];
+	}
+	else {
+		return (const_cast<char*>(strMonths[month]));
+	}
 	
 }
 //-----------------------------------------------------------------------
