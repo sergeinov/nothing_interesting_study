@@ -5,6 +5,7 @@
 	Передача параметров. Возвращение значения.
 	
 *************************************************************/
+//#define _CRT_SECURE_NO_WARNINGS 1
 #include <iostream>
 #include <tchar.h>
 //#include <cstdio>
@@ -152,10 +153,9 @@ int _tmain()
 		//Выведите результат сравнения с помощью cout:
 	 {
 		 char arr1[] = "HELLO";
-		 char arr2[] = "HELL";
-
-		 int result = MyStrCmp(arr1, arr2);		// сравниваются коды строк
-		 std::cout << result;
+		 char arr2[] = "HELLo";
+		 int result = 0;
+		 std::cout << (((result = MyStrCmp(arr1, arr2)) == 0) ? 0 : (result > 0) ? 1 : -1);
 
 		 stop
 	 }
@@ -206,7 +206,7 @@ int _tmain()
 
 		//В задании привести объявление, определение и вызов функции.
 		{
-			std::cout << DataStr(1,1,2020) << std::endl;
+			std::cout << DataStr(22,9,2020) << std::endl;
 			stop
 		}
 

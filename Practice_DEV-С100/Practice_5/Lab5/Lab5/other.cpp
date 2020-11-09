@@ -81,21 +81,16 @@ int Min(const int ar[], size_t size2)
 // дл€ задани€ 3.3
 int MyStrCmp(const char* arr1, const char* arr2)
 {
-	int res = 0;
-	if (arr1 == 0 || arr2 == 0) return -2;
-
-	if (arr1 > arr2)
-	{
-		res = 1;
-	} else if (arr1 < arr2)
-	{
-		res = -1;
-	}
-	else {
-		res = 0;
+	int result = 0;
+	int result2 = 0;
+	while (*arr1 && *arr2) {
+		result += static_cast<int>(*arr1);
+		arr1++;
+		result2 += static_cast<int>(*arr2);
+		arr2++;
 	}
 
-	return res;
+	return result - result2;
 }
 
 
@@ -131,32 +126,38 @@ const char* NameOfMonth(int month)
 		return nullptr;
 	}
 	else {
-		return (const_cast<char*>(strMonths[month]));
+		return strMonths[month];
 	}
 	
 }
 //-----------------------------------------------------------------------
 const char* DataStr(int day, int month, int year)
 {
-	static char resStr[11];
-	char strDay[3];
+	static char resStr[11];		// результат вывода
+
+	char strDay[3];				// дни
 	_itoa(day, strDay,10);
-	char strMonth[3];
+
+	char strMonth[3];			// мес€цы
 	_itoa(month, strMonth,10);
-	char strYear[5];
+
+	char strYear[5];			// годы
 	_itoa(year, strYear, 10);
 	stop
-	if (day<10)
+	// дни
+	if (day<10)					
 		strcpy(resStr, "0");
 	else 
 		strcpy(resStr, "");
-	strcat(resStr, strDay);
+	strcat(resStr, strDay);		//обьединение строки день  01
 	strcat(resStr, ".");
+	// мес€цы
 	if (month < 10)
 		strcat(resStr, "0");
-	strcat(resStr, strMonth);
+	strcat(resStr, strMonth);		// обьединение строки мес€ц  01
 	strcat(resStr, ".");
-	strcat(resStr, strYear);
+	// годы
+	strcat(resStr, strYear);		// обьединение строки год
 	return resStr;
 }
 
