@@ -1,6 +1,6 @@
 //#include "other.h"
-#define _CRT_SECURE_NO_WARNINGS   //  до всех   #include !!!!
-#include  <cstdlib>
+#define _CRT_SECURE_NO_WARNINGS 1  //  до всех   #include
+//#include  <cstdlib>
 #include  <cstring>
 #define	  stop __asm nop
 #include <iostream>
@@ -19,7 +19,8 @@ int& ref = x;
 // а) по значению
 int IncByValue(int value)
 {
-	return value + 1;
+	value += 1;
+	return value;
 }
 // б) по ссылке
 int IncByReference(int& value)
@@ -97,27 +98,28 @@ int MyStrCmp(const char* arr1, const char* arr2)
 //для задания 5
 int* addr_min(const int* arrMM, size_t size_MM)
 {
-	const int* p = arrMM;
+	const int* pMaxInt = arrMM;
 
 	for (size_t i = 0; i < size_MM; i++)
 	{
-		if (*p > arrMM[i]) {
-			p = &arrMM[i];
+		if (*pMaxInt > arrMM[i]) {
+			pMaxInt = &arrMM[i];
 		}
 	}
-	return (const_cast<int*>(p));
+	// снимает константность у указателя
+	return (const_cast<int*>(pMaxInt));
 }
 
 
 
-///////////////////////////////////////////////////
+// для задания 1.5
 int square(const int& val) 
 { 
 	 int tmp= val * val;
 	return  tmp;
 }
 
-//------------------------------------------------------
+// для задания 4.1
 const char* NameOfMonth(int month)
 {
 	const char* strMonths[] = {"", "January","February","March","April", "May","June","July","August","September","October","November","December"};
@@ -130,7 +132,8 @@ const char* NameOfMonth(int month)
 	}
 	
 }
-//-----------------------------------------------------------------------
+
+// для задания 4.2
 const char* DataStr(int day, int month, int year)
 {
 	static char resStr[11];		// результат вывода
@@ -163,5 +166,23 @@ const char* DataStr(int day, int month, int year)
 
 
 
+// для задания 6
 
+void searchEvenAndOddnumber(const int* arr, size_t size_arr, int searchNumber)
 
+{
+	int result = 0;
+
+	for (int i = 0; i < size_arr; i++)
+	{
+		if (searchNumber == arr[i]) {
+			result++;
+		}
+	}
+	if (result % 2 == 0) {
+		std::cout << searchNumber << " встречается в массиве четное число раз" << std::endl;
+	}
+	else {
+		std::cout << searchNumber << " встречается в массиве нечетное число раз" << std::endl;
+	}
+}

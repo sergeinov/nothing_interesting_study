@@ -36,3 +36,7 @@ int MyStrCmp(const char* arr1, const char* arr2);
 
 //для задания 5
 int* addr_min(const int* arrMM, size_t size_MM);
+
+
+// для задания 6
+void searchEvenAndOddnumber(const int* arr, size_t size_arr, int searchNumber);
