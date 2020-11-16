@@ -116,9 +116,9 @@ int _tmain()
 		//int ar[N] = {список инициализаторов};//подумайте - как и где должны быть заданы N и M
 		//PrintArray(ar, ... может быть, понадобится передать еще какие-нибудь данные);
 	 {
+		 const int N = 5;		// размер массива
 		 int ar[] = { 10, 20 ,30 ,40, 50 };
-		 int size = sizeof(ar) / sizeof(ar[0]);
-		 PrintArray(ar, size);
+		 PrintArray(ar, N);
 		 stop
 	 }
 		// 3.2. Напишите функцию поиска минимального элемента во встроенном одномерном массиве
@@ -128,7 +128,7 @@ int _tmain()
 		//int res = Min(ar, ... может быть, понадобится передать еще какие-нибудь данные);
 	 {
 		 int ar[] = { 10, 4, 22, 5, 6 };
-		 int size2 = sizeof(ar) / sizeof(ar[0]);
+		 size_t size2 = sizeof(ar) / sizeof(ar[0]);
 		 int res = Min(ar, size2);
 		 stop
 	 }
