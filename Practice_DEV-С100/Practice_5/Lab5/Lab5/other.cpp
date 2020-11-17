@@ -1,5 +1,7 @@
 //#include "other.h"
-#define _CRT_SECURE_NO_WARNINGS 1  //  до всех   #include
+
+
+#define _CRT_SECURE_NO_WARNINGS 1
 //#include  <cstdlib>
 #include  <cstring>
 #define	  stop __asm nop
@@ -23,33 +25,27 @@ int IncByValue(int value)
 	return value;
 }
 // б) по ссылке
-int IncByReference(int& value)
+void IncByReference(int& value)
 {
-	if (value == 0) return -1;
 	value += 1;
 }
 // в) по указателю
-int IncByPointer(int* value)
+void IncByPointer(int* value)
 {
-	if (value == 0) return -1;
 	*value += 1;
 }
 
 
 // определение функций дл€ задани€ дл€ задани€  2.2
-int Swap(int* nX, int* nY)
+void Swap(int* nX, int* nY)
 {
-	if (nX == 0 && nY == 0) return -1;
-
 	int temp = *nX;
 	*nX = *nY;
 	*nY = temp;
 }
 
-int Swap(int& nX, int& nY)
+void Swap(int& nX, int& nY)
 {
-	if (nX == 0 && nY == 0) return -1;
-
 	int temp = nX;
 	nX = nY;
 	nY = temp;
@@ -82,16 +78,20 @@ int Min(const int ar[], size_t size2)
 // дл€ задани€ 3.3
 int MyStrCmp(const char* arr1, const char* arr2)
 {
-	int result = 0;
-	int result2 = 0;
-	while (*arr1 && *arr2) {
-		result += static_cast<int>(*arr1);
+	while (*arr1) {
+		if (*arr1 > * arr2)
+		{
+			return 1;
+		}
+		else if (*arr1 < *arr2) {
+			return -1;
+		}
+
 		arr1++;
-		result2 += static_cast<int>(*arr2);
 		arr2++;
 	}
 
-	return result - result2;
+	return 0;
 }
 
 
@@ -122,9 +122,12 @@ int square(const int& val)
 // дл€ задани€ 4.1
 const char* NameOfMonth(int month)
 {
-	const char* strMonths[] = {"", "January","February","March","April", "May","June","July","August","September","October","November","December"};
+	const char* strMonths[] = {"", "January","February","March","April", \
+									"May","June","July","August","September", \
+									"October","November","December"};
+
 	if ((month > 12) || (month < 1)) {
-		std::cout << "Wrong month number!" << std::endl;
+		std::cout << "Ќеверный номер мес€ца!" << std::endl;
 		return nullptr;
 	}
 	else {
@@ -136,7 +139,7 @@ const char* NameOfMonth(int month)
 // дл€ задани€ 4.2
 const char* DataStr(int day, int month, int year)
 {
-	static char resStr[11];		// результат вывода
+	static char result[11];		// результат вывода
 
 	char strDay[3];				// дни
 	_itoa(day, strDay,10);
@@ -149,19 +152,20 @@ const char* DataStr(int day, int month, int year)
 	stop
 	// дни
 	if (day<10)					
-		strcpy(resStr, "0");
+		strcpy(result, "0");
 	else 
-		strcpy(resStr, "");
-	strcat(resStr, strDay);		//обьединение строки день  01
-	strcat(resStr, ".");
+		strcpy(result, "");
+	strcat(result, strDay);		//обьединение строки день  01
+	strcat(result, ".");
 	// мес€цы
 	if (month < 10)
-		strcat(resStr, "0");
-	strcat(resStr, strMonth);		// обьединение строки мес€ц  01
-	strcat(resStr, ".");
+		strcat(result, "0");
+	strcat(result, strMonth);		// обьединение строки мес€ц  01
+	strcat(result, ".");
 	// годы
-	strcat(resStr, strYear);		// обьединение строки год
-	return resStr;
+	strcat(result, strYear);		// обьединение строки год
+
+	return result;
 }
 
 

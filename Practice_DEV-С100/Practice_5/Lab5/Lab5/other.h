@@ -15,13 +15,13 @@ extern int& ref;
 
 // для задания  2.1.
 int IncByValue(int value);
-int IncByReference(int& value);
-int IncByPointer(int* value);
+void IncByReference(int& value);
+void IncByPointer(int* value);
 
 
 // для задания для задания  2.2
-int Swap(int* nX, int* nY);
-int Swap(int& nX, int& nY);
+void Swap(int* nX, int* nY);
+void Swap(int& nX, int& nY);
 
 
 // для задания 3.1
