@@ -78,15 +78,14 @@ int Min(const int ar[], size_t size2)
 // для задания 3.3
 int MyStrCmp(const char* arr1, const char* arr2)
 {
-	while (*arr1) {
-		if (*arr1 > * arr2)
+	while (*arr1 || *arr2) {
+		if ((*arr1 > * arr2) || (*arr1 != 0 && *arr2 == 0))
 		{
 			return 1;
 		}
-		else if (*arr1 < *arr2) {
+		else if ((*arr1 < *arr2) || (*arr1 == 0 && *arr2 != 0)) {
 			return -1;
 		}
-
 		arr1++;
 		arr2++;
 	}
