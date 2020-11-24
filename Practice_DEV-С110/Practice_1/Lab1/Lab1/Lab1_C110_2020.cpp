@@ -7,7 +7,7 @@
 *************************************************************/
 
 #define	  stop __asm nop
-
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string.h>
 #include <ctime>
@@ -317,71 +317,71 @@ for(int i=0; i<...; ...)
 // остается вспомнить какой указатель является эквивалентным имени двумерного массива.
 
 //2)дальше, воспользовавшись этими указателями, переставляем местами элементы i-того и i+1-ого слоев
-{
-	std::cout << "\nЗадание 3" << std::endl;
-	const int N = 4, M = 3, K = 3;
-	double dArray[N][M][K] = {};
-	double(*pdArray)[M][K] = &dArray[0];	// эквивалентный указатель  для имени трехмерного массива 
+	{
+		std::cout << "\nЗадание 3" << std::endl;
+		const int N = 4, M = 3, K = 3;
+		double dArray[N][M][K] = {};
+		double(*pdArray)[M][K] = &dArray[0];	// эквивалентный указатель  для имени трехмерного массива 
 
-	//double* ptrPdArray = &pdArray[0][1];  // указатель на  массив указателей
+		//double* ptrPdArray = &pdArray[0][1];  // указатель на  массив указателей
 
-	// заполняем массив
-		for (size_t j = 0; j < M; j++)
-		{
-			for (size_t k = 0; k < K; k++)
+		// заполняем массив
+			for (size_t j = 0; j < M; j++)
 			{
-				pdArray[0][j][k] = 1.;
-				pdArray[1][j][k] = 2.;
-				pdArray[2][j][k] = 3.;
-				pdArray[3][j][k] = 4.;
+				for (size_t k = 0; k < K; k++)
+				{
+					pdArray[0][j][k] = 1.;
+					pdArray[1][j][k] = 2.;
+					pdArray[2][j][k] = 3.;
+					pdArray[3][j][k] = 4.;
+				}
 			}
-		}
 
-	// вывод массива
-	for (size_t i = 0; i < N; i++)
-	{
-		for (size_t j = 0; j < M; j++)
+		// вывод массива
+		for (size_t i = 0; i < N; i++)
 		{
-			for (size_t k = 0; k < K; k++)
+			for (size_t j = 0; j < M; j++)
 			{
-				std::cout << *(*(*(pdArray + i) + j) + k) << " ";
-			}
-			std::cout  << std::endl;
-		}
-		std::cout << std::endl;
-	}
-
-	// обмен нечетных слоев
-	std::cout << "\nОбмен..." << std::endl;
-	for (size_t i = 0; i < N - 1; i++)
-	{
-		//  ?
-
-		/*if (*ptrPdArray < (*ptrPdArray + 1))
-		{
-			double* temp = *ptrPdArray;
-			*ptrPdArray = (*ptrPdArray + 1);
-			*ptrPdArray = temp;
-
-		}*/
-		std::cout << "" << std::endl;
-	}
-
-	// вывод массива
-	for (size_t i = 0; i < N; i++)
-	{
-		for (size_t j = 0; j < M; j++)
-		{
-			for (size_t k = 0; k < K; k++)
-			{
-				std::cout << *(*(*(pdArray + i) + j) + k) << " ";
+				for (size_t k = 0; k < K; k++)
+				{
+					std::cout << *(*(*(pdArray + i) + j) + k) << " ";
+				}
+				std::cout  << std::endl;
 			}
 			std::cout << std::endl;
 		}
-		std::cout << std::endl;
-	}
 
-}
+		// обмен нечетных слоев
+		std::cout << "\nОбмен..." << std::endl;
+		for (size_t i = 0; i < N - 1; i++)
+		{
+			//  ?
+
+			/*if (*ptrPdArray < (*ptrPdArray + 1))
+			{
+				double* temp = *ptrPdArray;
+				*ptrPdArray = (*ptrPdArray + 1);
+				*ptrPdArray = temp;
+
+			}*/
+			std::cout << "" << std::endl;
+		}
+
+		// вывод массива
+		for (size_t i = 0; i < N; i++)
+		{
+			for (size_t j = 0; j < M; j++)
+			{
+				for (size_t k = 0; k < K; k++)
+				{
+					std::cout << *(*(*(pdArray + i) + j) + k) << " ";
+				}
+				std::cout << std::endl;
+			}
+			std::cout << std::endl;
+		}
+
+	}
 
 
 ///////////////////////////////////////////////////////////////////////////
@@ -452,7 +452,7 @@ for(int i=0; i<...; ...)
 
 		//В каждой строке "сдвиньте звездочки" в начало строки, например:
 		// проходим по всему массиву пузырьковой сортировкой (в порядке возрастания)
-		/*std::cout << "\nСортировка звездочки в начало строки..." << std::endl;
+		std::cout << "\nСортировка звездочки в начало строки..." << std::endl;
 		for (int i = 0; i < N; i++)
 		{
 			bool flag = false;		// для выключения лишнего перебора чисел (была ли хотя бы одна перестановка)
@@ -480,7 +480,7 @@ for(int i=0; i<...; ...)
 			if (!flag) {
 				break;
 			}
-		}*/
+		}
 
 		// вывод  отсортированного массива 
 		for (size_t i = 0; i < N; i++)
@@ -499,7 +499,7 @@ for(int i=0; i<...; ...)
 		//"распределение"
 
 		std::cout << "\nСортировка звездочки по столбцам вниз..." << std::endl;
-		for (int i = 0; i < N; i++)
+		/*for (int i = 0; i < N; i++)
 		{
 			bool flag = false;		// для выключения лишнего перебора чисел (была ли хотя бы одна перестановка)
 
@@ -538,7 +538,7 @@ for(int i=0; i<...; ...)
 				std::cout << arrRandom[i][j] << " ";
 			}
 			std::cout << std::endl;
-		}
+		}*/
 	}
 ///////////////////////////////////////////////////////////////
 //			Динамическое выделение памяти                    //
@@ -577,7 +577,7 @@ for(int i=0; i<...; ...)
 		std::cout << "\nЗадание 5.б" << std::endl;
 		std::cout << "\nСортировка..." << std::endl;
 
-		int temp = 0;
+		/*int temp = 0;
 		// проходим по всему массиву
 		for (int i = 0; i < N; i++)	// цикл по строкам
 		{
@@ -614,71 +614,170 @@ for(int i=0; i<...; ...)
 		}
 		std::cout << std::endl;
 
+		
+		*/
 
 		//Задание 5в. Объявите одномерный массив размерностью N.
 		//Сформируйте значение i-ого элемента одномерного массива  
 		//равным среднему значению элементов i-ой строки
 		//двухмерного массива
+		
+		std::cout << "\nЗадание 5.в" << std::endl;
 
+		double* pArr2 = new double[N];
+		double sum = 0;
+
+		for (size_t i = 0; i < N; i++)
+		{
+			for (size_t j = 0; j < M; j++)
+			{
+				// считаем сумму строки
+				sum += pArrNumbers[i][j];
+			}
+			sum /= N;
+			pArr2[i] = sum;
+		}
+
+		std::cout << "\nСреднее значение элементов i-ой строки двухмерного массива" << std::endl;
+			//двухмерного массива" << std::endl;
+		// вывод массива
+		for (int i = 0; i < N; i++)
+		{
+			std::cout << pArr2[i] << " ";
+		}
 
 		//Подсказка - не забудьте освободить память!
-		std::cout << "\nОсвобождаем память..." << std::endl;
+		std::cout << "\n\nОсвобождаем память двухмерного..." << std::endl;
 		for (size_t i = 0; i < N; i++)
 		{
 			delete[]  pArrNumbers[i];
 		}
 		delete[] pArrNumbers;
 		pArrNumbers = 0;
+
+		std::cout << "Освобождаем память одномерного..." << std::endl;
+		delete[] pArr2;
+		pArr2 = 0;
+		
 	}
+
 /////////////////////////////////////////////////////////////////////////////
-//Задание 6. 
-	//Реализуйте задание №2, используя не встроенные, а ДИНАМИЧЕСКИЕ массивы (массив?).
-	// Важно! 
-	//Так как строки могут быть разной длины, /эффективным решением было бы 
-	//отводить под каждую строку ровно столько байтов, сколько требуется для ее хранения.
-	//
-	//Для того, чтобы определить длину введенной строки можно воспользоваться 
-	//функцией strlen 
-	//size_t strlen(char const* _Str);
+	//Задание 6. 
+	{
+		//Реализуйте задание №2, используя не встроенные, а ДИНАМИЧЕСКИЕ массивы (массив?).
+		// Важно! 
+		//Так как строки могут быть разной длины, /эффективным решением было бы 
+		//отводить под каждую строку ровно столько байтов, сколько требуется для ее хранения.
+		//
+		//Для того, чтобы определить длину введенной строки можно воспользоваться 
+		//функцией strlen 
+		//size_t strlen(char const* _Str);
+		std::cout << "\nЗадание 6" << std::endl;
+
+		int N = 0, M = 0;
+		char* pStrArr = new char[N * M];
+		char** ppStrArr = new char* [N];	// впомогательный указатель для обращения привычным способом [i][j]
+
+		for (size_t i = 0; i < N; i++)
+		{
+			ppStrArr[i] = new char[M];	// направляем каждый  i  указатель на начало соответствующей  i строки
+		}
+
+		// Для ввода строки нужно использовать буфер "достаточного" размера.
+		char strBuffer[1024] = {};
+
+		//Цикл ввода строк:
+		for (int i = 0; i < 2; i++)
+		{
+			std::cout << "Введите строку: " << std::endl;
+
+			//ввод строки в массив strBuffer:
+			std::cin >> strBuffer;
+			M += strlen(strBuffer); // вычислим длину нашей строки
+			N += 1;					// увеличили количество строк
+
+			// выделили новый блок памяти
+			char* tmp = new char[N * M];
+			// переписали в новый блок старое содержимое
+			for (size_t i = 0; i < (N - 1) * M; i++)
+			{
+				tmp[i] = pStrArr[i];
+			}
+
+			// освободили старый массив
+			delete[] pStrArr;
+			// перенаправили указатель на новый массив
+			pStrArr = tmp;
+			delete[] ppStrArr;  // освободили память занятую вспомогательным массивом указателей
+
+			ppStrArr = new char* [N];  // выделили блок больше чем предыдущий
+			// сформировали новые адреса
+			for (size_t i = 0; i < N; i++)
+			{
+				ppStrArr[i] = new char[M];	// направляем каждый  i  указатель на начало соответствующей  i строки
+			}
+
+		}
+
+		//char* pStrArr = new char[N * M];
+		//char** ppStrArr = new char* [N];	// впомогательный указатель для обращения привычным способом [i][j]
+
+		
+
+		//При этом значение количества строк сформируйте с помощью потока ввода
+		//int nStringNumber;	
+
+		
 	
-	//При этом значение количества строк сформируйте с помощью потока ввода
-	int nStringNumber;
-	   	 
+		
+		// вывод массива
+		/*for (int i = 0; i < N; i++) 
+		{
+			for (size_t j = 0; j < M; j++)
+			{
+				std::cout << ppStrArr[i][j];
+			}
+			std::cout << std::endl;
+		}*/
+		
+		// Для ввода строки нужно использовать буфер "достаточного" размера. 
+		// В качестве такого буфера обычно используется встроенный массив.
+		// Для того, чтобы введенную строку  скопировать из буфера в массив  строк,
+		// можно воспользоваться функцией strcpy
+		//char* strcpy_s(	char* _Dest,  char const* _Source);
+		//  или
+		//errno_t strcpy_s(char* _Dest, size_t  _SizeInBytes, char const* _Source); 
+		//где _SizeInBytes - размер "приемного" буфера.
+		//Замечание: 
+		//скорее всего, при компиляции Вы получите следующую ошибку:
+		//Severity	Code	Description	Project	File	Line	Suppression State
+		//	Error	C4996	'strcpy': This function or variable may be unsafe.
+		//Consider using strcpy_s instead.To disable deprecation, use _CRT_SECURE_NO_WARNINGS.
 
-	//Цикл ввода строк:
+		//Это происходит потому, что функция strcpy считается небезопасной.
 
-	// Для ввода строки нужно использовать буфер "достаточного" размера. 
-	// В качестве такого буфера обычно используется встроенный массив.
-	// Для того, чтобы введенную строку  скопировать из буфера в массив  строк,
-	// можно воспользоваться функцией strcpy
-	//char* strcpy_s(	char* _Dest,  char const* _Source);
-	//  или
-	//errno_t strcpy_s(char* _Dest, size_t  _SizeInBytes, char const* _Source); 
-	//где _SizeInBytes - размер "приемного" буфера.
-	//Замечание: 
-	//скорее всего, при компиляции Вы получите следующую ошибку:
-	//Severity	Code	Description	Project	File	Line	Suppression State
-	//	Error	C4996	'strcpy': This function or variable may be unsafe.
-	//Consider using strcpy_s instead.To disable deprecation, use _CRT_SECURE_NO_WARNINGS.
+		//Для того, чтобы пользоваться функцией strcpy, а не strcpy_s, можно
+		//  - либо объявить макрос #define _CRT_SECURE_NO_WARNINGS   (обязательно ДО всех #include !!!!!)
+		//- либо установить режим без доп. проверки на безопасность Properties->C/C++ ->General->SDL checs -> No
+
+
+		//Цикл сортировки строк по методу "всплывающего пузырька" в
+		//порядке возрастания кода первого символа
+
+
+
+
+
+		//Освобождение занятой памяти:
+
+		/*for (int i = 0; i < N; i++) 
+		{
+			delete[]  ppStrArr[i];
+		}
+		delete[] ppStrArr;
+		ppStrArr = 0;*/
+
+	}
 	
-	//Это происходит потому, что функция strcpy считается небезопасной.
-	
-	//Для того, чтобы пользоваться функцией strcpy, а не strcpy_s, можно
-	//  - либо объявить макрос #define _CRT_SECURE_NO_WARNINGS   (обязательно ДО всех #include !!!!!)
-	//- либо установить режим без доп. проверки на безопасность Properties->C/C++ ->General->SDL checs -> No
-	
-
-	//Цикл сортировки строк по методу "всплывающего пузырька" в
-	//порядке возрастания кода первого символа
-
-
-
-
-
-	//Освобождение занятой памяти:
-
-
-
-
 	return 0; 
 }
