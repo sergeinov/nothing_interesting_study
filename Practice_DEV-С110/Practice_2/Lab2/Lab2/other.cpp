@@ -1,4 +1,5 @@
-//#include "other.h"
+#include "other.h"
+#include <iostream>
 
 ///////////////////////////////////////////////////
 
@@ -27,7 +28,29 @@ void VarArgs(int arg1,...)
 //#include "other.h"
 
 ///////////////////////////////////////////////////
+// для задания  1
+void PrintArray(int (*pArr)[M], int sizeN) {
+	for (size_t i = 0; i < sizeN; i++)
+	{
+		for (size_t j = 0; j < M; j++)
+		{
+			std::cout << pArr[i][j] << "  ";
+		}
+	}
+};
 
+void PrintArray2(int **pArr2, int sizeN2, int sizeM2) {
+
+	// заполняем значениями элементы
+	for (size_t i = 0; i < sizeN2; i++)
+	{
+		pArr2[i] = new int[sizeM2];
+		for (size_t j = 0; j < sizeN2; j++)
+		{
+			pArr2[i][j] = i * j;
+		}
+	}
+};
 
 
 void Sort(char* pcFirst, int nNumber, int size,
