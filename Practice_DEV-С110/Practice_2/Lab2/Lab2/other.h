@@ -1,14 +1,28 @@
 #pragma once
-
+///////////////////////////////////////////////////
 // для задания  1
 const int N = 4, M = 4;
 
-void PrintArray(int (*pArr)[M], int sizeN);
-//void PrintArray2(int (*pArr2)[][M], int sizeN2, int sizeM2);
-void PrintArray2(int **pArr2, int sizeN2, int sizeM2);
-//Прототипы функций, используемых в данном задании :
-//void VarArgs(int arg1, ...);
+void PrintArray(int (*pArr)[M], size_t sizeN);
+void PrintArray2(int **pArr2, size_t sizeN2, size_t sizeM2);
 
+///////////////////////////////////////////////////
+// для задания  3
+void _cdecl VarArgs(int arg1, ...);
+
+// для задания  3.б
+void _cdecl VarArgs2(int arg1, ...);
+
+///////////////////////////////////////////////////
+//Задание 4
+double Sum(double number1, double number2);
+double Sub(double number1, double number2);
+double Mul(double number1, double number2);
+double Div(double number1, double number2);
+double PowDouble(double number1, double number2);
+
+
+///////////////////////////////////////////////////
 void Sort(char* pcFirst, int nNumber, int size,
 void(*Swap)(void*, void*), int(*Compare)(void*, void*));
 void SwapInt(void* p1, void* p2);
