@@ -51,13 +51,14 @@ int main()
 		//после каждого слоя пропускать строку для того, чтобы отделить один слой от другого
 		std::cout << "Задание 1.б" << std::endl;
 
-		const int N = 3, M = 3, K = 3;
+		const int N = 3, M = 3, K = 4;
 
 		int arr2[N][M][K];
+		int* temp = &arr2[0][0][0];
 		// заполнение массива
-		for (size_t i = 0; i < N; i++)
+		for (size_t i = 0; i < N * K * M; i++)
 		{
-			for (size_t j = 0; j < M; j++)
+			/*for (size_t j = 0; j < M; j++)
 			{
 				for (size_t k = 0; k < K; k++)
 				{
@@ -65,7 +66,9 @@ int main()
 					arr2[1][j][k] = 2;
 					arr2[2][j][k] = 3;
 				}
-			}		
+			}	*/	
+			// второй способ
+			temp[i] = i / (M * K) + 1;
 		}
 		
 		// вывод массива 
@@ -120,9 +123,9 @@ int main()
 		//			  |_________|
 		std::cout << "\nЗадание 1.г" << std::endl;
 		int arr3[N][M][K] = {
-			{{1}},
-			{{2}},
-			{{3}}
+			{1},
+			{2},
+			{3}
 		};
 		// вывод массива 
 		for (size_t i = 0; i < N; i++)
@@ -157,7 +160,7 @@ int main()
 		// будет ошибка времени выполнения
 		const char* arr5[] = { "Hello", "World" };  		
 		std::cout << *(arr5[1]) << std::endl;	//  адрес начала второго указателя   "W"
-
+		//*arr5[5] = 'H';
 
 
 	}
@@ -197,7 +200,7 @@ int main()
 
 		//Объявите двухмерный массив с именем cBuffer типа char и
 		// размерностью N*M
-		char cBuffer[N][M];
+		char cBuffer[N][M] = {};
 		int NumberStr = N;
 
 		//Объявите массив (с именем cPointers) указателей на строки
@@ -223,7 +226,7 @@ int main()
 
 			//Присвойте элементу массива cPointers с индексом nIndex
 			//указатель на строку с номером nIndex в массиве cBuffer
-			cPointers[i] =static_cast<char*>(cBuffer[i]);
+			cPointers[i] = cBuffer[i];
 		}
 
 		//Выдать диагностику о том, что прием строк завершен.
@@ -253,9 +256,6 @@ int main()
 					flag = true;
 				}
 			}
-
-			// вывод на экран промежуточных рез-тов
-			//std::cout << cPointers[i] << std::endl;
 			if (!flag)
 			{
 				break;
@@ -266,10 +266,11 @@ int main()
 		// вывод массива 
 		for (size_t i = 0; i < NumberStr; i++)
 		{
-			for (size_t j = 0; j < M; j++)
+			std::cout << cPointers[i] << std::endl;
+			/*for (size_t j = 0; j < M; j++)
 			{
 					std::cout<<*(*(cPointers+i)+j)<<" ";
-			}
+			}*/
 			std::cout << std::endl;
 		}
 
@@ -320,22 +321,15 @@ for(int i=0; i<...; ...)
 	{
 		std::cout << "\nЗадание 3" << std::endl;
 		const int N = 4, M = 3, K = 3;
-		double dArray[N][M][K] = {};
-		double(*pdArray)[M][K] = &dArray[0];	// эквивалентный указатель  для имени трехмерного массива 
+		double dArray[N][M][K] = {
+			{{1,1,1},{1,1,1},{1,1,1}},
+			{{2,2,2},{2,2,2},{2,2,2}},
+			{{3,3,3},{3,3,3},{3,3,3}},
+			{{4,4,4},{4,4,4},{4,4,4}}
+		};
+		double(*pdArray)[K] = dArray[0];	// эквивалентный указатель  для имени трехмерного массива 
 
 		//double* ptrPdArray = &pdArray[0][1];  // указатель на  массив указателей
-
-		// заполняем массив
-			for (size_t j = 0; j < M; j++)
-			{
-				for (size_t k = 0; k < K; k++)
-				{
-					pdArray[0][j][k] = 1.;
-					pdArray[1][j][k] = 2.;
-					pdArray[2][j][k] = 3.;
-					pdArray[3][j][k] = 4.;
-				}
-			}
 
 		// вывод массива
 		for (size_t i = 0; i < N; i++)
@@ -344,7 +338,7 @@ for(int i=0; i<...; ...)
 			{
 				for (size_t k = 0; k < K; k++)
 				{
-					std::cout << *(*(*(pdArray + i) + j) + k) << " ";
+					std::cout << dArray[i][j][k] << " ";
 				}
 				std::cout  << std::endl;
 			}
@@ -353,18 +347,19 @@ for(int i=0; i<...; ...)
 
 		// обмен нечетных слоев
 		std::cout << "\nОбмен..." << std::endl;
-		for (size_t i = 0; i < N - 1; i++)
+		for (size_t i = 0; i < N; i+=2)
 		{
-			//  ?
-
-			/*if (*ptrPdArray < (*ptrPdArray + 1))
+			double(*pdArray1)[K] = dArray[i];
+			double(*pdArray2)[K] = dArray[i + 1];
+			for (size_t j = 0; j < M; j++)
 			{
-				double* temp = *ptrPdArray;
-				*ptrPdArray = (*ptrPdArray + 1);
-				*ptrPdArray = temp;
-
-			}*/
-			std::cout << "" << std::endl;
+				for (size_t k = 0; k < K; k++)
+				{
+					double temp = pdArray1[j][k];
+					pdArray1[j][k] = pdArray2[j][k];
+					pdArray2[j][k] = temp;
+				}
+			}
 		}
 
 		// вывод массива
@@ -374,7 +369,7 @@ for(int i=0; i<...; ...)
 			{
 				for (size_t k = 0; k < K; k++)
 				{
-					std::cout << *(*(*(pdArray + i) + j) + k) << " ";
+					std::cout << dArray[i][j][k] << " ";
 				}
 				std::cout << std::endl;
 			}
@@ -417,7 +412,7 @@ for(int i=0; i<...; ...)
 	{
 		std::cout << "\nЗадание 4" << std::endl;
 		std::cout << "\nМассив..." << std::endl;
-		const int N = 5, M = 5;
+		const int N = 8, M = 5;
 		srand(time(NULL));
 		char arrRandom[N][M];
 
@@ -426,16 +421,7 @@ for(int i=0; i<...; ...)
 		{
 			for (size_t j = 0; j < M; j++)
 			{
-				//  рандомные числа от 1 -100
-				arrRandom[i][j] = rand() % 2;
-				// замена на символы
-				if (arrRandom[i][j] == 0) {
-					arrRandom[i][j] = '*';
-				}
-				else {
-					arrRandom[i][j] = '_';
-				}
-				//std::cout << arrRandom[i][j] << " ";
+				arrRandom[i][j] = (rand() % 2) ? '*' : '_';
 			}
 
 		}
@@ -453,30 +439,39 @@ for(int i=0; i<...; ...)
 		//В каждой строке "сдвиньте звездочки" в начало строки, например:
 		// проходим по всему массиву пузырьковой сортировкой (в порядке возрастания)
 		std::cout << "\nСортировка звездочки в начало строки..." << std::endl;
+		int  index = 0;
 		for (int i = 0; i < N; i++)
 		{
 			bool flag = false;		// для выключения лишнего перебора чисел (была ли хотя бы одна перестановка)
+			
 
 			for (int j = 0; j < M; j++)
 			{
-				for (size_t k = 0; k < N - 1; k++)
+				for (size_t k = 0; k < N; k++)
 				{
 					// проверка на последний элемент массива
 					if (j == N - 1 && k == M - 1)
 					{
 						continue;
 					}
+					
 					// сравниваем элементы и меняем местами
-					if (arrRandom[j][k] == '_')
+					if (arrRandom[j][k] == '*')
 					{
-						char temp = arrRandom[j][k];
-						arrRandom[j][k] = arrRandom[j][k + 1];
-						arrRandom[j][k + 1] = temp;
+						index++;
+
+							arrRandom[j][index] = '*';
+
 
 						flag = true;
 					}
+					/*arrRandom[j][k] = ;
+					arrRandom[j][index] = arrRandom[j][k + 1];
+					arrRandom[j][k + 1] = temp;*/
 				}
+				
 			}
+			index = 0;
 			if (!flag) {
 				break;
 			}
@@ -503,9 +498,9 @@ for(int i=0; i<...; ...)
 		{
 			bool flag = false;		// для выключения лишнего перебора чисел (была ли хотя бы одна перестановка)
 
-			for (int j = 0; j < M; j++)
+			for (int j = 0; j < M - 1; j++)
 			{
-				for (size_t k = 0; k < N - 1; k++)
+				for (size_t k = 0; k < M; k++)
 				{
 					// проверка на последний элемент массива
 					if (j == N - 1 && k == M - 1)
@@ -513,7 +508,7 @@ for(int i=0; i<...; ...)
 						continue;
 					}
 					// сравниваем элементы и меняем местами
-					if (arrRandom[j][k] == '*')
+					if (arrRandom[j][k] == '*' && arrRandom[j + 1][k] == '_')
 					{
 
 						//   ?
@@ -529,6 +524,7 @@ for(int i=0; i<...; ...)
 				break;
 			}
 		}
+
 
 		// вывод  отсортированного массива 
 		for (size_t i = 0; i < N; i++)
@@ -577,8 +573,8 @@ for(int i=0; i<...; ...)
 		std::cout << "\nЗадание 5.б" << std::endl;
 		std::cout << "\nСортировка..." << std::endl;
 
-		/*int temp = 0;
-		// проходим по всему массиву
+		int temp = 0;
+		 //проходим по всему массиву
 		for (int i = 0; i < N; i++)	// цикл по строкам
 		{
 
@@ -615,7 +611,7 @@ for(int i=0; i<...; ...)
 		std::cout << std::endl;
 
 		
-		*/
+		
 
 		//Задание 5в. Объявите одномерный массив размерностью N.
 		//Сформируйте значение i-ого элемента одномерного массива  
@@ -634,7 +630,7 @@ for(int i=0; i<...; ...)
 				// считаем сумму строки
 				sum += pArrNumbers[i][j];
 			}
-			sum /= N;
+			sum /= M;
 			pArr2[i] = sum;
 		}
 
@@ -674,23 +670,23 @@ for(int i=0; i<...; ...)
 		//size_t strlen(char const* _Str);
 		std::cout << "\nЗадание 6" << std::endl;
 
-		int N = 0, M = 0;
-		char* pStrArr = new char[N * M];
+		int N = 5;
+
 		char** ppStrArr = new char* [N];	// впомогательный указатель для обращения привычным способом [i][j]
 
-		for (size_t i = 0; i < N; i++)
+		/*for (size_t i = 0; i < N; i++)
 		{
-			ppStrArr[i] = new char[M];	// направляем каждый  i  указатель на начало соответствующей  i строки
-		}
+			ppStrArr[i] = new char[];	// направляем каждый  i  указатель на начало соответствующей  i строки
+		}*/
 
 		// Для ввода строки нужно использовать буфер "достаточного" размера.
-		char strBuffer[1024] = {};
+		
 
 		//Цикл ввода строк:
-		for (int i = 0; i < 2; i++)
+		/*for (int i = 0; i < 2; i++)
 		{
 			std::cout << "Введите строку: " << std::endl;
-
+			char strBuffer[1024] = {};
 			//ввод строки в массив strBuffer:
 			std::cin >> strBuffer;
 			M += strlen(strBuffer); // вычислим длину нашей строки
@@ -731,7 +727,7 @@ for(int i=0; i<...; ...)
 	
 		
 		// вывод массива
-		/*for (int i = 0; i < N; i++) 
+		for (int i = 0; i < N; i++) 
 		{
 			for (size_t j = 0; j < M; j++)
 			{
