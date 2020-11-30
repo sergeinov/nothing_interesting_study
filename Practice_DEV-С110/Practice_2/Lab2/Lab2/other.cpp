@@ -55,11 +55,64 @@ void PrintArray2(int **pArr2, size_t sizeN, size_t sizeM)
 		std::cout << std::endl;
 	}
 };
+
+///////////////////////////////////////////////////
+// дл€ задани€  2
+int DayOfYear(int day, int month, int year, int(*nDayTab)[12]) 
+{
+	bool isLeapYear = ((year % 400 == 0) || ((year % 4 == 0) && (!(year % 100 == 0))));		// проверка высокосного и не высокосного года
+	int res = 0;		// дл€ записи результата  пор€дкового дн€ года
+	if (isLeapYear == 1)
+	{
+		for (size_t i = 0; i < month; i++)
+		{
+			res += nDayTab[1][i];			// прибавл€ем количество дней в мес€це из массива
+		}
+		res += day;							// прибавл€ем текущий день мес€ца 
+	}
+	else {
+		for (size_t i = 0; i < month; i++)
+		{
+			res += nDayTab[0][i];			// прибавл€ем количество дней в мес€це из массива
+		}
+		res += day;							// прибавл€ем текущий день мес€ца 
+	}
+
+	return res;
+};
+
+void DayOfMonth(int year, int dayOfYear, int(*nDayTab)[12], int* resDayMonth, int* resMonth)
+{
+	int count = 0 ;			// счетчик дл€  мес€ца
+	bool isLeapYear = ((year % 400 == 0) || ((year % 4 == 0) && (!(year % 100 == 0))));		// проверка высокосного и не высокосного года
+
+	if (isLeapYear == 1)
+	{
+		while (!(dayOfYear <= 31))
+		{
+			dayOfYear -= nDayTab[1][count];		// отнимаем от пор€дкового дн€ года количество дней в мес€це
+			count++;							// увеличиваем мес€ц на один
+		}
+		*resDayMonth = dayOfYear;		// присваиваем результат  дн€ мес€ца
+		*resMonth = count;				// присваиваем результат  мес€ца
+	}
+	else {
+		while (!(dayOfYear <= 31))
+		{
+			dayOfYear -= nDayTab[0][count];		// отнимаем от пор€дкового дн€ года количество дней в мес€це
+			count++;							// увеличиваем мес€ц на один
+		}		
+		*resDayMonth = dayOfYear;		// присваиваем результат  дн€ мес€ца
+		*resMonth = count;				// присваиваем результат  мес€ца
+	}
+
+};
+
 ///////////////////////////////////////////////////
 // дл€ задани€  3
 void __cdecl VarArgs(int arg1, ...) 
 {
-	int count;
+	//int count;
 	int* p = &arg1;		// вспомогательный указатель на первый элемент
 
 	while (*p)
@@ -107,8 +160,8 @@ double PowDouble(double number1, double number2)
 };
 
 
-
 ///////////////////////////////////////////////////
+//«адание 5.
 void Sort(char* pcFirst, int nNumber, int size,
 	void(*Swap)(void*, void*), int(*Compare)(void*, void*))
 {
@@ -140,5 +193,57 @@ void SwapInt(void* p1, void* p2)
 	return nResult;
 }*/
 
+///////////////////////////////////////////////////
+//«адание 6
+const char* GetString0()
+{
+	return "¬ызов функции GetString 0!";
+};
+const char* GetString1()
+{
+	return "¬ызов функции GetString 1!";
+};
+const char* GetString2()
+{
+	return "¬ызов функции GetString 2!";
+};
+const char* GetString3()
+{
+	return "¬ызов функции GetString 3!";
+};
+
+///////////////////////////////////////////////////
+//«адание 8.  
+int sumValue(int value)
+{
+	if (value <= 1)		// условие дл€ завершени€ рекурсии
+	{
+		return 1;
+	}
+	else {
+		 return value + sumValue(value - 1);		// складываем числа
+	}
+};
+
+int quantityNumber(int value2)
+{
+	if (value2 <= 1)
+	{
+		return 1;
+	}
+	else {
+		return quantityNumber(value2 / 10) + 1;
+	}
+};
 
 
+void reversStr(const char* str)
+{
+	if (*str)
+	{	
+		//str++;				// получаетс€ вывод без последней буквы
+		//reversStr(str);
+		reversStr(str + 1);
+		std::cout << *str;
+	}
+};

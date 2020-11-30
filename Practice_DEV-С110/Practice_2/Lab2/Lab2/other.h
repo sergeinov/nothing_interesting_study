@@ -7,6 +7,12 @@ void PrintArray(int (*pArr)[M], size_t sizeN);
 void PrintArray2(int **pArr2, size_t sizeN2, size_t sizeM2);
 
 ///////////////////////////////////////////////////
+//Задание 2.
+int DayOfYear(int day, int month, int year, int (*nDayTab)[12]);
+
+void DayOfMonth(int year, int dayOfYear, int (*nDayTab)[12], int* resDayMonth, int* resMonth);
+
+///////////////////////////////////////////////////
 // для задания  3
 void _cdecl VarArgs(int arg1, ...);
 
@@ -23,9 +29,24 @@ double PowDouble(double number1, double number2);
 
 
 ///////////////////////////////////////////////////
+//Задание 5.
 void Sort(char* pcFirst, int nNumber, int size,
-void(*Swap)(void*, void*), int(*Compare)(void*, void*));
+		  void(*Swap)(void*, void*), int(*Compare)(void*, void*));
+
 void SwapInt(void* p1, void* p2);
 int CmpInt(void* p1, void* p2);
 
+///////////////////////////////////////////////////
+//Задание 6
+const char* GetString0();
+const char* GetString1();
+const char* GetString2();
+const char* GetString3();
 
+///////////////////////////////////////////////////
+//Задание 8.  
+int sumValue(int value);
+
+int quantityNumber(int value2);
+
+void reversStr(const char* str);
