@@ -29,12 +29,16 @@ double PowDouble(double number1, double number2);
 
 
 ///////////////////////////////////////////////////
-//Задание 5.
+//Задание 5.a
 void Sort(char* pcFirst, int nNumber, int size,
 		  void(*Swap)(void*, void*), int(*Compare)(void*, void*));
 
 void SwapInt(void* p1, void* p2);
 int CmpInt(void* p1, void* p2);
+
+//Задание 5.б
+void SwapDouble(void* p1, void* p2);
+int CmpDouble(void* p1, void* p2);
 
 ///////////////////////////////////////////////////
 //Задание 6
@@ -42,6 +46,11 @@ const char* GetString0();
 const char* GetString1();
 const char* GetString2();
 const char* GetString3();
+
+///////////////////////////////////////////////////
+//Задание 7*.
+const int K = 5;
+void addVilueInArr(int* pAr, size_t K);
 
 ///////////////////////////////////////////////////
 //Задание 8.  

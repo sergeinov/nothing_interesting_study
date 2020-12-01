@@ -161,7 +161,7 @@ double PowDouble(double number1, double number2)
 
 
 ///////////////////////////////////////////////////
-//«адание 5.
+//«адание 5.a
 void Sort(char* pcFirst, int nNumber, int size,
 	void(*Swap)(void*, void*), int(*Compare)(void*, void*))
 {
@@ -170,7 +170,7 @@ void Sort(char* pcFirst, int nNumber, int size,
 		for (int j = nNumber - 1; j >= i; j--)
 		{
 			char* pCurrent = pcFirst + j * size;
-			char* pPrevious = pcFirst + (j - 1)*size;
+			char* pPrevious = pcFirst + (j - 1) * size;
 			if ((*Compare)(pPrevious, pCurrent) > 0)//требуетс€
 												//переставить
 				(*Swap)(pPrevious, pCurrent);
@@ -179,19 +179,69 @@ void Sort(char* pcFirst, int nNumber, int size,
 
 void SwapInt(void* p1, void* p2)
 {
+	int* pp1 = static_cast<int*>(p1);	// приводим указатель к требуемому типу, с которым работаем
+	int* pp2 = static_cast<int*>(p2);
 
-
+	// обмениваем значени€
+	int temp = *pp1;
+	*pp1 = *pp2;
+	*pp1 = temp;
 }
 
-/*int CmpInt(void* p1, void* p2)
+int CmpInt(void* p1, void* p2)
 {
-	int nResult;
+	int nResult = 0;
+	int* pp1 = static_cast<int*>(p1);	// приводим указатель к требуемому типу, с которым работаем
+	int* pp2 = static_cast<int*>(p2);
 
-
-
+	// сравнение символов
+	if (*pp1 == *pp2)
+	{
+		nResult = 0;
+	} else if(*pp1 > *pp2) 
+	{
+		nResult = 1;
+	}
+	else {
+		nResult = -1;
+	}
 
 	return nResult;
-}*/
+}
+
+//«адание 5.б
+void SwapDouble(void* p1, void* p2)
+{
+	double* pp1 = static_cast<double*>(p1);	// приводим указатель к требуемому типу, с которым работаем
+	double* pp2 = static_cast<double*>(p2);
+
+	// обмениваем значени€
+	double temp = *pp1;
+	*pp1 = *pp2;
+	*pp1 = temp;
+}
+
+int CmpDouble(void* p1, void* p2)
+{
+	int nResult = 0;
+	double* pp1 = static_cast<double*>(p1);	// приводим указатель к требуемому типу, с которым работаем
+	double* pp2 = static_cast<double*>(p2);
+
+	// сравнение символов
+	if (*pp1 == *pp2)
+	{
+		nResult = 0;
+	}
+	else if (*pp1 > * pp2)
+	{
+		nResult = 1;
+	}
+	else {
+		nResult = -1;
+	}
+
+	return nResult;
+}
 
 ///////////////////////////////////////////////////
 //«адание 6
@@ -211,6 +261,44 @@ const char* GetString3()
 {
 	return "¬ызов функции GetString 3!";
 };
+
+
+///////////////////////////////////////////////////
+//«адание 7*.
+void addVilueInArr(int* pAr, size_t K)
+{
+	int n;
+	// узнаем какое число добавл€ем
+	std::cout << "\n акое число добавить в массив?" << std::endl;
+	std::cin >> n;
+
+	// увеличиваем размер массива
+	K += 1;
+
+	// выдел€ем вспомогательный новый блок пам€ти
+	int* temp = new int[K];
+
+	// переписываем в новый массив содержимое
+	for (size_t i = 0; i < K; i++)
+	{
+		temp[i] = pAr[i];
+	}
+
+	// добавили значение в новый увеличенный массив
+	temp[K - 1] = n;
+
+	// удал€ем старый массив
+	delete[] pAr;
+
+	// перенаправили указатель на новый массив
+	pAr = temp;
+
+	// ”далили указатель вспомогательного массива
+	//delete[] temp;
+	temp = 0;
+
+};
+
 
 ///////////////////////////////////////////////////
 //«адание 8.  
