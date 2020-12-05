@@ -439,41 +439,24 @@ for(int i=0; i<...; ...)
 		//В каждой строке "сдвиньте звездочки" в начало строки, например:
 		// проходим по всему массиву пузырьковой сортировкой (в порядке возрастания)
 		std::cout << "\nСортировка звездочки в начало строки..." << std::endl;
-		int  index = 0;
-		for (int i = 0; i < N; i++)
+
+		// двигаемся по строкам
+		for (int j = 0; j < N; j++)
 		{
-			bool flag = false;		// для выключения лишнего перебора чисел (была ли хотя бы одна перестановка)
-			
-
-			for (int j = 0; j < M; j++)
+			// заходим. сортируем строку
+			for (int k = 0; k < M; k++)
 			{
-				for (size_t k = 0; k < N; k++)
+				// сортируем каждое значение в строке
+				for (size_t l = 0; l < M - k - 1; l++)
 				{
-					// проверка на последний элемент массива
-					if (j == N - 1 && k == M - 1)
-					{
-						continue;
-					}
-					
 					// сравниваем элементы и меняем местами
-					if (arrRandom[j][k] == '*')
+					if (arrRandom[j][l] == '_')
 					{
-						index++;
-
-							arrRandom[j][index] = '*';
-
-
-						flag = true;
+						char temp = arrRandom[j][l];
+						arrRandom[j][l] = arrRandom[j][l + 1];
+						arrRandom[j][l + 1] = temp;
 					}
-					/*arrRandom[j][k] = ;
-					arrRandom[j][index] = arrRandom[j][k + 1];
-					arrRandom[j][k + 1] = temp;*/
 				}
-				
-			}
-			index = 0;
-			if (!flag) {
-				break;
 			}
 		}
 
@@ -494,34 +477,23 @@ for(int i=0; i<...; ...)
 		//"распределение"
 
 		std::cout << "\nСортировка звездочки по столбцам вниз..." << std::endl;
-		/*for (int i = 0; i < N; i++)
+		/*for (int j = 0; j < M; j++)
 		{
-			bool flag = false;		// для выключения лишнего перебора чисел (была ли хотя бы одна перестановка)
-
-			for (int j = 0; j < M - 1; j++)
+			// заходим. сортируем строку
+			for (int k = 0; k < N; k++)
 			{
-				for (size_t k = 0; k < M; k++)
+				// сортируем каждое значение в строке
+				for (size_t l = 0; l < N - k - 1; l++)
 				{
-					// проверка на последний элемент массива
-					if (j == N - 1 && k == M - 1)
-					{
-						continue;
-					}
+
 					// сравниваем элементы и меняем местами
-					if (arrRandom[j][k] == '*' && arrRandom[j + 1][k] == '_')
+					if (arrRandom[j][l])
 					{
-
-						//   ?
-						char temp = arrRandom[j][k];
-						arrRandom[j][k] = arrRandom[j+1][k];
-						arrRandom[j+1][k] = temp;
-
-						flag = true;
+						char temp = arrRandom[j][l];
+						arrRandom[j][l] = arrRandom[j+1][l];
+						arrRandom[j+1][l] = temp;
 					}
 				}
-			}
-			if (!flag) {
-				break;
 			}
 		}
 
@@ -575,13 +547,13 @@ for(int i=0; i<...; ...)
 
 		int temp = 0;
 		 //проходим по всему массиву
-		for (int i = 0; i < N; i++)	// цикл по строкам
+		/*for (int i = 0; i < N; i++)	// цикл по строкам
 		{
+			int indexMax = i;  // здесь индекс  наибольшего элемента
 
 			// поиск наибольшего из оставшихся неупорядоченных чисел
-			for (int j = i + 1; j < M; j++)		// цикл шага
+			for (int j = 0; j < M - 1; j++)		// цикл шага
 			{
-				int indexMax = j;  // здесь индекс  наибольшего элемента
 
 				for (size_t k = j + 1; k < M; k++)	// цикл выбора наибольшегоэлемента
 				{
@@ -607,7 +579,7 @@ for(int i=0; i<...; ...)
 				std::cout << pArrNumbers[i][j] << " ";
 			}
 			std::cout << std::endl;
-		}
+		}*/
 		std::cout << std::endl;
 
 		
@@ -669,61 +641,48 @@ for(int i=0; i<...; ...)
 		//функцией strlen 
 		//size_t strlen(char const* _Str);
 		std::cout << "\nЗадание 6" << std::endl;
+	
+		int N = 0;
+		int M = 0;
 
-		int N = 5;
+		char** ppStrArr = new char* [N];	// массив указателей на строки
 
-		char** ppStrArr = new char* [N];	// впомогательный указатель для обращения привычным способом [i][j]
-
-		/*for (size_t i = 0; i < N; i++)
+		for (size_t i = 0; i < N; i++)
 		{
-			ppStrArr[i] = new char[];	// направляем каждый  i  указатель на начало соответствующей  i строки
-		}*/
-
-		// Для ввода строки нужно использовать буфер "достаточного" размера.
-		
-
-		//Цикл ввода строк:
-		/*for (int i = 0; i < 2; i++)
-		{
-			std::cout << "Введите строку: " << std::endl;
-			char strBuffer[1024] = {};
-			//ввод строки в массив strBuffer:
-			std::cin >> strBuffer;
-			M += strlen(strBuffer); // вычислим длину нашей строки
-			N += 1;					// увеличили количество строк
-
-			// выделили новый блок памяти
-			char* tmp = new char[N * M];
-			// переписали в новый блок старое содержимое
-			for (size_t i = 0; i < (N - 1) * M; i++)
-			{
-				tmp[i] = pStrArr[i];
-			}
-
-			// освободили старый массив
-			delete[] pStrArr;
-			// перенаправили указатель на новый массив
-			pStrArr = tmp;
-			delete[] ppStrArr;  // освободили память занятую вспомогательным массивом указателей
-
-			ppStrArr = new char* [N];  // выделили блок больше чем предыдущий
-			// сформировали новые адреса
-			for (size_t i = 0; i < N; i++)
-			{
-				ppStrArr[i] = new char[M];	// направляем каждый  i  указатель на начало соответствующей  i строки
-			}
-
+			ppStrArr[i] = new char[M];		// направляем каждый  i  указатель на начало соответствующей  i строки
 		}
 
-		//char* pStrArr = new char[N * M];
-		//char** ppStrArr = new char* [N];	// впомогательный указатель для обращения привычным способом [i][j]
-
-		
+		// Для ввода строки нужно использовать буфер "достаточного" размера.
+		char strBuffer[256] = {};
 
 		//При этом значение количества строк сформируйте с помощью потока ввода
-		//int nStringNumber;	
+		int nStringNumber = 0;
+		std::cout << "Введите количество вводимых строк" << std::endl;
+		std::cin >> nStringNumber;
 
-		
+
+		//Цикл ввода строк:
+		for (int i = 0; i < nStringNumber; i++)
+		{
+			std::cout << "Введите строку: " << std::endl;	
+			std::cin >> strBuffer;				//ввод строки в массив strBuffer	
+			M += strlen(strBuffer);				// вычислим длину нашей строки	
+			N += 1;								// увеличили количество строк
+
+			
+			char** tmp = new char* [M];			// выделили новый блок памяти под массив указателей
+			for (size_t i = 0; i < (N-1); i++)
+			{
+				tmp[i] = ppStrArr[i];			// переписали адреса в новый массив адреса строк
+			}
+			
+			delete[] ppStrArr;					//  старый массив удаляем
+			ppStrArr = tmp;						// перенаправили ppStrArr указатель на новый массив 
+			ppStrArr[N - 1] = new char[M];		// выделили память для новой добавляемой строки
+
+			strcpy(ppStrArr[i], strBuffer);		// Скопировали из буфера в массив  строки
+		}
+
 	
 		
 		// вывод массива
@@ -732,9 +691,13 @@ for(int i=0; i<...; ...)
 			for (size_t j = 0; j < M; j++)
 			{
 				std::cout << ppStrArr[i][j];
+				if ((ppStrArr[i][j]) == 0)
+				{
+					continue;
+				}
 			}
 			std::cout << std::endl;
-		}*/
+		}
 		
 		// Для ввода строки нужно использовать буфер "достаточного" размера. 
 		// В качестве такого буфера обычно используется встроенный массив.
