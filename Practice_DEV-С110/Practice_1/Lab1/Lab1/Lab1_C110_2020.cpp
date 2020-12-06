@@ -412,7 +412,7 @@ for(int i=0; i<...; ...)
 	{
 		std::cout << "\nЗадание 4" << std::endl;
 		std::cout << "\nМассив..." << std::endl;
-		const int N = 8, M = 5;
+		const int N = 8, M = 7;
 		srand(time(NULL));
 		char arrRandom[N][M];
 
@@ -477,26 +477,19 @@ for(int i=0; i<...; ...)
 		//"распределение"
 
 		std::cout << "\nСортировка звездочки по столбцам вниз..." << std::endl;
-		/*for (int j = 0; j < M; j++)
+		for (int j = 0; j < M; j++)
 		{
-			// заходим. сортируем строку
-			for (int k = 0; k < N; k++)
+			int k = N - 1;
+			for (int i = k; i >= 0; i--)	//начинаем с  нижней строки N -1
 			{
-				// сортируем каждое значение в строке
-				for (size_t l = 0; l < N - k - 1; l++)
+				if (arrRandom[i][j] == '*')
 				{
-
-					// сравниваем элементы и меняем местами
-					if (arrRandom[j][l])
-					{
-						char temp = arrRandom[j][l];
-						arrRandom[j][l] = arrRandom[j+1][l];
-						arrRandom[j+1][l] = temp;
-					}
+					arrRandom[i][j] = '_';
+					arrRandom[k][j] = '*';
+					k--;
 				}
 			}
 		}
-
 
 		// вывод  отсортированного массива 
 		for (size_t i = 0; i < N; i++)
@@ -506,7 +499,7 @@ for(int i=0; i<...; ...)
 				std::cout << arrRandom[i][j] << " ";
 			}
 			std::cout << std::endl;
-		}*/
+		}
 	}
 ///////////////////////////////////////////////////////////////
 //			Динамическое выделение памяти                    //
@@ -516,13 +509,14 @@ for(int i=0; i<...; ...)
 		////Задание 5а.Создайте ДИНАМИЧЕСКИЙ двухмерный массив с размерностями,
 		//вычисляемыми в процессе выполнения программы - N*M.
 		//Задайте значения элементов помощью генератора случайных чисел.
+		srand(time(NULL));
 		std::cout << "\nЗадание 5.a" << std::endl;
 		int N = 5;
 		int M = 5;
 
 		int** pArrNumbers = new int*[N];		// выделяется память массива указателей на строки
 
-		// // выделяем память на строки
+		// выделяем память на строки
 		for (size_t i = 0; i < N; i++)
 		{
 			pArrNumbers[i] = new int[M];
@@ -543,30 +537,27 @@ for(int i=0; i<...; ...)
 		//Задание 5б. В сформированном массиве отсортируйте каждую строку по
 		//убыванию значений. Используйте сортировку "выбором"
 		std::cout << "\nЗадание 5.б" << std::endl;
-		std::cout << "\nСортировка..." << std::endl;
+		std::cout << "Сортировка..." << std::endl;
 
 		int temp = 0;
 		 //проходим по всему массиву
-		/*for (int i = 0; i < N; i++)	// цикл по строкам
+		for (int i = 0; i < N; i++)	// цикл по строкам
 		{
-			int indexMax = i;  // здесь индекс  наибольшего элемента
-
-			// поиск наибольшего из оставшихся неупорядоченных чисел
+			// поиск  из оставшихся неупорядоченных чисел
 			for (int j = 0; j < M - 1; j++)		// цикл шага
 			{
-
+				int indexMax = i;  // здесь индекс  наибольшего элемента
 				for (size_t k = j + 1; k < M; k++)	// цикл выбора наибольшегоэлемента
 				{
-					if (pArrNumbers[j][k] > pArrNumbers[j][indexMax])
+					if (pArrNumbers[i][j] > pArrNumbers[i][indexMax])
 					{
 						int indexMax = k;	
 					}
 				}
 				// обмен местами значения текущего и наибольшего элементов
-				temp = pArrNumbers[j][indexMax];
-				pArrNumbers[j][indexMax] = pArrNumbers[i][j];
-				pArrNumbers[i][j] = temp;
-				//std::cout << pArrNumbers[i][j] << " ";			
+				temp = pArrNumbers[i][j];
+				pArrNumbers[i][j] = pArrNumbers[i][indexMax];
+				pArrNumbers[i][j] = temp;		
 			}
 
 		}
@@ -579,7 +570,7 @@ for(int i=0; i<...; ...)
 				std::cout << pArrNumbers[i][j] << " ";
 			}
 			std::cout << std::endl;
-		}*/
+		}
 		std::cout << std::endl;
 
 		
@@ -641,16 +632,10 @@ for(int i=0; i<...; ...)
 		//функцией strlen 
 		//size_t strlen(char const* _Str);
 		std::cout << "\nЗадание 6" << std::endl;
-	
-		int N = 0;
-		int M = 0;
 
-		char** ppStrArr = new char* [N];	// массив указателей на строки
-
-		for (size_t i = 0; i < N; i++)
-		{
-			ppStrArr[i] = new char[M];		// направляем каждый  i  указатель на начало соответствующей  i строки
-		}
+		int N = 0;		// строка
+		int M = 0;		// размер строки
+		const char* STOP_STRING = "*";
 
 		// Для ввода строки нужно использовать буфер "достаточного" размера.
 		char strBuffer[256] = {};
@@ -660,43 +645,24 @@ for(int i=0; i<...; ...)
 		std::cout << "Введите количество вводимых строк" << std::endl;
 		std::cin >> nStringNumber;
 
+		char** ppStrArr = new char* [nStringNumber];	// массив указателей на строки
 
 		//Цикл ввода строк:
 		for (int i = 0; i < nStringNumber; i++)
 		{
-			std::cout << "Введите строку: " << std::endl;	
-			std::cin >> strBuffer;				//ввод строки в массив strBuffer	
-			M += strlen(strBuffer);				// вычислим длину нашей строки	
-			N += 1;								// увеличили количество строк
+			std::cout << "Введите строку: " << std::endl;
+			std::cin >> strBuffer;					//ввод строки в массив strBuffer	
+			M = strlen(strBuffer) + 1;				// вычислим длину нашей строки	
 
-			
-			char** tmp = new char* [M];			// выделили новый блок памяти под массив указателей
-			for (size_t i = 0; i < (N-1); i++)
-			{
-				tmp[i] = ppStrArr[i];			// переписали адреса в новый массив адреса строк
-			}
-			
-			delete[] ppStrArr;					//  старый массив удаляем
-			ppStrArr = tmp;						// перенаправили ppStrArr указатель на новый массив 
-			ppStrArr[N - 1] = new char[M];		// выделили память для новой добавляемой строки
+			ppStrArr[i] = new char[M];				// создаем динамическую память для строки
+			strcpy_s(ppStrArr[i], M, strBuffer);	// Скопировали из буфера в массив  строки
 
-			strcpy(ppStrArr[i], strBuffer);		// Скопировали из буфера в массив  строки
 		}
 
-	
-		
 		// вывод массива
-		for (int i = 0; i < N; i++) 
+		for (int i = 0; i < nStringNumber; i++)
 		{
-			for (size_t j = 0; j < M; j++)
-			{
-				std::cout << ppStrArr[i][j];
-				if ((ppStrArr[i][j]) == 0)
-				{
-					continue;
-				}
-			}
-			std::cout << std::endl;
+			std::cout << "Строка " << i + 1  << " - " << ppStrArr[i] << std::endl;
 		}
 		
 		// Для ввода строки нужно использовать буфер "достаточного" размера. 
@@ -722,19 +688,39 @@ for(int i=0; i<...; ...)
 
 		//Цикл сортировки строк по методу "всплывающего пузырька" в
 		//порядке возрастания кода первого символа
-
-
+		std::cout << "Отсортированные строки" << std::endl;
+		for (int i = 0; i < nStringNumber; i++)
+		{
+			bool b = false;										 // флаг
+			for (int j = 0; j < nStringNumber - 1; j++)
+			{
+				if ((strcmp(ppStrArr[j], ppStrArr[j + 1])) > 0)
+				{
+					char* temp = ppStrArr[j];
+					ppStrArr[j] = ppStrArr[j + 1];
+					ppStrArr[j + 1] = temp;
+					b = true;
+				}
+				if (b == false)
+					break;
+			}
+		}
+		// вывод массива
+		for (int i = 0; i < nStringNumber; i++)
+		{
+			std::cout << ppStrArr[i] << std::endl;
+		}
 
 
 
 		//Освобождение занятой памяти:
-
-		/*for (int i = 0; i < N; i++) 
+		// Ошибка
+		for (int i = 0; i < nStringNumber; i++)
 		{
 			delete[]  ppStrArr[i];
 		}
 		delete[] ppStrArr;
-		ppStrArr = 0;*/
+		ppStrArr = 0;
 
 	}
 	
