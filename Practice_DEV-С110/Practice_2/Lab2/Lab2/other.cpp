@@ -30,7 +30,7 @@ void VarArgs(int arg1,...)
 
 ///////////////////////////////////////////////////
 // для задания  1
-void PrintArray(int (*pArr)[M], size_t sizeN) 
+void PrintArray(int (*pArr)[M], size_t sizeN) // void PrintArray(int pArr[][M], size_t sizeN)
 {
 	for (size_t i = 0; i < sizeN; i++)
 	{
@@ -62,7 +62,7 @@ int DayOfYear(int day, int month, int year, int(*nDayTab)[12])
 {
 	bool isLeapYear = ((year % 400 == 0) || ((year % 4 == 0) && (!(year % 100 == 0))));		// проверка высокосного и не высокосного года
 	int res = 0;		// для записи результата  порядкового дня года
-	if (isLeapYear == 1)
+	/*if (isLeapYear == 1)
 	{
 		for (size_t i = 0; i < month; i++)
 		{
@@ -76,7 +76,12 @@ int DayOfYear(int day, int month, int year, int(*nDayTab)[12])
 			res += nDayTab[0][i];			// прибавляем количество дней в месяце из массива
 		}
 		res += day;							// прибавляем текущий день месяца 
+	}*/
+	for (size_t i = 0; i < month; i++)
+	{
+		res += nDayTab[isLeapYear][i];			// прибавляем количество дней в месяце из массива
 	}
+	res += day;
 
 	return res;
 };
@@ -86,7 +91,7 @@ void DayOfMonth(int year, int dayOfYear, int(*nDayTab)[12], int* resDayMonth, in
 	int count = 0 ;			// счетчик для  месяца
 	bool isLeapYear = ((year % 400 == 0) || ((year % 4 == 0) && (!(year % 100 == 0))));		// проверка высокосного и не высокосного года
 
-	if (isLeapYear == 1)
+	/*if (isLeapYear == 1)
 	{
 		while (!(dayOfYear <= 31))
 		{
@@ -104,8 +109,17 @@ void DayOfMonth(int year, int dayOfYear, int(*nDayTab)[12], int* resDayMonth, in
 		}		
 		*resDayMonth = dayOfYear;		// присваиваем результат  дня месяца
 		*resMonth = count;				// присваиваем результат  месяца
+	}*/
+	if (dayOfYear >= 1)
+	{
+		while (!(dayOfYear <= 31))
+		{
+			dayOfYear -= nDayTab[isLeapYear][count];		// отнимаем от порядкового дня года количество дней в месяце
+			count++;							// увеличиваем месяц на один
+		}
+		*resDayMonth = dayOfYear;		// присваиваем результат  дня месяца
+		*resMonth = count;				// присваиваем результат  месяца
 	}
-
 };
 
 ///////////////////////////////////////////////////
@@ -171,9 +185,10 @@ void Sort(char* pcFirst, int nNumber, int size,
 		{
 			char* pCurrent = pcFirst + j * size;
 			char* pPrevious = pcFirst + (j - 1) * size;
-			if ((*Compare)(pPrevious, pCurrent) > 0)//требуется
-												//переставить
+			if ((*Compare)(pPrevious, pCurrent) > 0) {
+				// меняем местами значения через функцию Swap
 				(*Swap)(pPrevious, pCurrent);
+			}
 		}
 }
 
@@ -185,7 +200,7 @@ void SwapInt(void* p1, void* p2)
 	// обмениваем значения
 	int temp = *pp1;
 	*pp1 = *pp2;
-	*pp1 = temp;
+	*pp2 = temp;
 }
 
 int CmpInt(void* p1, void* p2)
@@ -195,7 +210,7 @@ int CmpInt(void* p1, void* p2)
 	int* pp2 = static_cast<int*>(p2);
 
 	// сравнение символов
-	if (*pp1 == *pp2)
+	/*if (*pp1 == *pp2)
 	{
 		nResult = 0;
 	} else if(*pp1 > *pp2) 
@@ -204,9 +219,11 @@ int CmpInt(void* p1, void* p2)
 	}
 	else {
 		nResult = -1;
-	}
+	}*/
+	// второй вариант
+	return (*pp1 - *pp2);
 
-	return nResult;
+	//return nResult;
 }
 
 //Задание 5.б
@@ -218,7 +235,7 @@ void SwapDouble(void* p1, void* p2)
 	// обмениваем значения
 	double temp = *pp1;
 	*pp1 = *pp2;
-	*pp1 = temp;
+	*pp2 = temp;
 }
 
 int CmpDouble(void* p1, void* p2)
@@ -228,7 +245,7 @@ int CmpDouble(void* p1, void* p2)
 	double* pp2 = static_cast<double*>(p2);
 
 	// сравнение символов
-	if (*pp1 == *pp2)
+	/*if (*pp1 == *pp2)
 	{
 		nResult = 0;
 	}
@@ -238,9 +255,10 @@ int CmpDouble(void* p1, void* p2)
 	}
 	else {
 		nResult = -1;
-	}
-
-	return nResult;
+	}*/
+	// второй вариант
+	return (*pp1 - *pp2);
+	//return nResult;
 }
 
 ///////////////////////////////////////////////////
@@ -251,21 +269,28 @@ const char* GetString0()
 };
 const char* GetString1()
 {
-	return "Вызов функции GetString 1!";
+	const char arr[] = { "Вызов функции GetString 1!" };
+	return arr;
+	// return "B"
 };
 const char* GetString2()
 {
-	return "Вызов функции GetString 2!";
+	static char arr[] = { "Вызов функции GetString 2!" };
+	return arr;
+	//return "Вызов функции GetString 2!";
 };
 const char* GetString3()
 {
-	return "Вызов функции GetString 3!";
+	char* arr = new char[]{"Вызов функции GetString 3!"};
+	
+	//return "Вызов функции GetString 3!";
+	return arr;
 };
 
 
 ///////////////////////////////////////////////////
 //Задание 7*.
-void addVilueInArr(int* pAr, size_t K)
+void addVilueInArr(int*& pAr, size_t &K)
 {
 	int n;
 	// узнаем какое число добавляем
@@ -304,9 +329,9 @@ void addVilueInArr(int* pAr, size_t K)
 //Задание 8.  
 int sumValue(int value)
 {
-	if (value <= 1)		// условие для завершения рекурсии
+	if (value <= 0)		// условие для завершения рекурсии
 	{
-		return 1;
+		return value;
 	}
 	else {
 		 return value + sumValue(value - 1);		// складываем числа
@@ -333,5 +358,15 @@ void reversStr(const char* str)
 		//reversStr(str);
 		reversStr(str + 1);
 		std::cout << *str;
+	}
+};
+
+void reversStr2(const char* str)
+{
+	if (*str)
+	{
+		std::cout << *str;
+		reversStr2(str + 1);
+		
 	}
 };

@@ -49,8 +49,7 @@ const char* GetString3();
 
 ///////////////////////////////////////////////////
 //Задание 7*.
-const int K = 5;
-void addVilueInArr(int* pAr, size_t K);
+void addVilueInArr(int*& pAr, size_t &K);
 
 ///////////////////////////////////////////////////
 //Задание 8.  
@@ -59,3 +58,5 @@ int sumValue(int value);
 int quantityNumber(int value2);
 
 void reversStr(const char* str);
+
+void reversStr2(const char* str);
