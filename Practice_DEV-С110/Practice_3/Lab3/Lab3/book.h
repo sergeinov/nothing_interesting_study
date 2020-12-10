@@ -1,23 +1,25 @@
 #pragma once
-
+/*
 enum CATEGORY2 { Боевики = 1, Детективы, Приключения, Фантастика, Фэнтези, История, Спорт };
 
-struct BOOK2
+struct TBook2
 {
-	char autor[50] = "Сергей Семонович Труш";
-	char title[100] = "Трясина";
-	unsigned short year = 2011;
-	float price = 55.45;
-	CATEGORY2 category = Фантастика;
+	char autor[50];
+	char title[100];
+	unsigned short year;
+	float price;
+	CATEGORY2 category;
 };
 
 
 // для Задания 1.3
-void printBOOK2(const BOOK2* book);
+void printBOOK2(const TBook2* book);
 
 
 // для Задания 1.4
-void editBook2(BOOK2* book);
+void editBook2(TBook2* book);
+*/
+
 
 ////////////////////////////////////////////////
 
@@ -25,6 +27,7 @@ void editBook2(BOOK2* book);
 
 enum eCATEGORY { Detectives = 1, Adventure, Fantastic, Fantasy, History, Sports };
 
+// книга
 struct BOOK
 {
 	char autor[50] = {0};
@@ -34,18 +37,22 @@ struct BOOK
 	eCATEGORY category;
 };
 
+//картотека
 struct CARD_INDEX
 {
-	BOOK** pB;				// указатель на картотеку BOOK* pB
-	size_t count = 0;		// количество книг
+	BOOK** pB;				// указатель на книгу BOOK* pB
+	size_t count;		// количество книг
 	size_t cap;				// емкость картотеки
 };
 
 // функция вывода меню
-void outputMenu();
+void outputMenu(int* answer);
+
+// распечатать книгу
+void print(const BOOK* book);
 
 // функция для распечатки картотеки
-void printBOOK(const CARD_INDEX* pCard, int size);
+void printBOOK(const CARD_INDEX* pCard);
 
 // функция добавления книги
 void addBook(CARD_INDEX* pCard);
