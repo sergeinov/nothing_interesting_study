@@ -1,4 +1,14 @@
+
+#include <windows.h>
+#include <conio.h>
+
 #define stop __asm  nop
+#define LEFT 75
+#define RIGHT 77
+#define UP 72
+#define DOWN 80
+#define ESC	27
+
 /*************************************************************
 Практическое занятие №2-курс-С110. Функции и динамические массивы
 Использование функций, управляющих графическим выводом
@@ -31,13 +41,13 @@
 #include "GraphicsLib.h"
 int main()
 {
+	setlocale(LC_ALL, "Rus");
+
 	//Запуск процесса demo.exe 
 	StartDemo();
 	
-	std::cout << "Press any key\n";
-	std::cin.get();
 	//Задание размерностей двухмерного массива
-	int n = 10, m = 10;
+	int n = 30, m = 30;
 	SetDimensions(n, m);
 
 	// Определение динамического двумерного массива (1-й способ)
@@ -54,19 +64,81 @@ int main()
 	{
 		for (size_t j = 0; j < m; j++)
 		{
-			pp[i][j] = EMPTY;
+			pp[i][j] = GREEN;
 		}
 	}
-		
-	//Отрисовка шариков
+	//Отрисовка поля шариков
 	DrawBalls(p, n, m);
 	pause(1000);
-	pp[4][4] = RED;
-	DrawBalls(p, n, m);
-	std::cout << "FinishDemo\n";
-	std::cin.get();
-	//Завершение процесса
 
+
+	// реализацияя управления шариком
+	bool flag = true;							// для завершения цикла
+
+	// стартовые координаты шарика
+	int x = n / 2;
+	int y = m / 2;
+	pp[x][y] = RED;
+
+	// цикл управления шариком
+	while (flag)
+	{
+		// отрисовка шарика
+		DrawBalls(p, n, m);
+
+		if (!_kbhit())
+		{
+			continue;
+		}
+		else {
+			unsigned char ch = _getch();
+			
+			switch (ch)
+			{
+			case LEFT:
+				pp[x][y] = GREEN;				// перекрашиваем прошлую позицию
+				y--;
+				pp[x][y] = RED;				// закрашиваем новую позицию
+				std::cout << "Влево!" << std::endl;
+				break;
+			case RIGHT:
+				pp[x][y] = GREEN;
+				y++;
+				pp[x][y] = RED;
+				std::cout << "Вправо!" << std::endl;
+				break;
+			case UP:
+				pp[x][y] = GREEN;
+				x--;
+				pp[x][y] = RED;
+				std::cout << "Вверх!" << std::endl;
+				break;
+			case DOWN:
+				pp[x][y] = GREEN;
+				x++;
+				pp[x][y] = RED;
+				std::cout << "Вниз!" << std::endl;
+				break;
+			case ESC:
+				std::cout << "EXIT!\n";
+				flag = false;
+				break;
+			}
+			
+			if ((x == 0) || (x == -n) || (y == 0) || (y == m))
+			{
+				std::cout << "Граница" << std::endl;
+				std::cout << "EXIT!\n";
+				flag = false;
+			}
+		}
+
+	}
+
+	//std::cout << "Press any key\n";
+	//std::cin.get();
+	
+	//Завершение процесса
 	FinishDemo();
 	
 }
