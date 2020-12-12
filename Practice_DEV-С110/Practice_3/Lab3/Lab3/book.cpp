@@ -75,23 +75,33 @@ void outputMenu(int* answer)
 	arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
 
 	printf("\nВведите команду: ");
-	scanf("%d", answer);
+	do
+	{
+		scanf("%d", answer);
+	} while (*answer <= 0 || *answer > 6);
 };
 
 // функция для распечатки картотеки
 void printBOOK(const CARD_INDEX* pCard)
 {
-	for (size_t i = 0; i < pCard->count; i++)
+	if (pCard->count == 0)
 	{
-		print(pCard->pB[i]);
+		printf("\nПусто!\n");
+	} else {
+		printf("\nКниг: %d\n", pCard->count);
+		for (size_t i = 0; i < pCard->count; i++)
+		{
+			print(pCard->pB[i]);
+		}
 	}
+	
 };
 
 // распечатать книгу
 void print(const BOOK* book)
 {
 	static const char* arr[] = { "Adventure", "Fantastic", "Fantasy", "History", "Sports", "Detectives"};
-	printf("Автор : %s\nНазвание : %s\nГод : %d\nЦена : %.2f\nКатегория : %d",
+	printf("Автор : %s\nНазвание : %s\nГод : %d\nЦена : %.2f\nКатегория : %s",
 		book->autor, book->title, book->year, book->price, arr[book->category - 1]);
 	printf("\n\n");
 };
@@ -99,50 +109,90 @@ void print(const BOOK* book)
 // функция добавления книги
 void addBook(CARD_INDEX* pCard)
 {
-	if (pCard->count >= pCard->cap)		// емкость исчерпана
+	//pCard->count++;						//  увеличили количество книг
+
+	if (pCard->count >= pCard->cap)		// проверка. емкость исчерпана
 	{
-		// не знаю как, но перераспределяем память
+		pCard->cap++;
+		BOOK** tmp = new BOOK* [pCard->cap];
+		for (size_t i = 0; i < pCard->count; i++)
+		{
+			tmp[i] = pCard->pB[i];
+		}
+		delete[] pCard->pB;
+		pCard->pB = tmp;
 	}
 
-	pCard->pB[pCard->count] = new BOOK[pCard->count + 1];	// куда-то не в ту память лезем
-	for (size_t i = 0; i < pCard->count + 1; i++)
-	{
-		pCard->pB[i ] =  
-	}
+	BOOK* pBook = new BOOK;
+	addFieldsBook(pBook);
+
+	pCard->pB[pCard->count] = pBook;
+	pCard->count++;
 	
+};
+
+void addFieldsBook(BOOK* book) {
+
 	bool flag = true;	// для завершения цикла
 	while (flag)
 	{
 		printf("\nВведите автора:\n");
-		scanf("%49s", pCard->pB[pCard->count]->autor);
+		scanf("%49s", book->autor);
 
 		printf("\nВведите название книги:\n");
-		scanf("%99s", pCard->pB[pCard->count]->title);
+		scanf("%99s", book->title);
 
 		printf("\nВведите год:\n");
-		scanf("%d", pCard->pB[pCard->count]->year);
-		if (pCard->pB[pCard->count]->year < 1445 || pCard->pB[pCard->count]->year > 2020)
+		scanf("%d", &book->year);
+		if (book->year < 1445 || book->year > 2020)
 		{
 			printf("Не допустимый год издания.Не меньше 1445г\n");
 			continue;
 		}
 
 		printf("\nВведите цену:\n");
-		scanf("%f", pCard->pB[pCard->count]->price);
-		if (pCard->pB[pCard->count]->price < 0)
+		scanf("%f", &book->price);
+		if (book->price < 0)
 		{
 			printf("Цена не может быть отрицательной!\n");
 			continue;
 		}
 
-		printf("\nВведите категорию\
-			1 - Adventure,2 - Fantastic,3 - Fantasy,4 - History,5 - Sports,6 - Detectives:\n");
-		scanf("%d", pCard->pB[pCard->count]->category);
-		if (pCard->pB[pCard->count]->price < 0 || pCard->pB[pCard->count]->price > 6)
+		printf("\nВведите категорию: 1 - Adventure,2 - Fantastic,3 - Fantasy,4 - History,5 - Sports,6 - Detectives:\n");
+		scanf("%d", &book->category);
+		if (book->category <= 0 || book->category > 6)
 		{
 			printf("Категория не верна!\n");
 			continue;
 		}
-	}
 		flag = false;
+	}
+		
+};
+
+
+void deleteBook(CARD_INDEX* pCard)
+{
+	int numberBook = 0;
+	bool flag = true;
+	do
+	{
+		printf("\nВведите какую книгу удалить: 0,1,2....\n");
+		scanf("%d", &numberBook);
+
+		if (numberBook > pCard->count)
+		{
+			printf("Неверный номер в каталоге");
+			continue;
+		}
+		flag = false;
+	} while (flag);
+	
+	delete pCard->pB[numberBook];
+
+	pCard->pB[numberBook] = pCard->pB[pCard->count - 1];
+
+	pCard->count--;
+	//delete pCard->pB[numberBook + 1];
+
 };

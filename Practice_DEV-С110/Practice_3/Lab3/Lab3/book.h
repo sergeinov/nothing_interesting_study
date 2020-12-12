@@ -56,3 +56,9 @@ void printBOOK(const CARD_INDEX* pCard);
 
 // функция добавления книги
 void addBook(CARD_INDEX* pCard);
+
+// функция добавления полей в книгу
+void addFieldsBook(BOOK* book);
+
+// удалить книгу
+void deleteBook(CARD_INDEX* pCard);

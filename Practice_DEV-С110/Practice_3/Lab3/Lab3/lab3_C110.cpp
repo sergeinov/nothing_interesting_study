@@ -145,13 +145,14 @@ int main()
 		//Выход из программы (...)
 		//Реализуйте посредством функций разные возможности работы с картотекой
 
-		int codeAnswer = 0;					// для записи кода команды 
+		int codeAnswer = 0;								// для записи кода команды 
 
-		CARD_INDEX card;					// экземпляр картотеки
-		card.count = 0;
-		card.cap = 0;
-		card.pB = nullptr;
+		CARD_INDEX card = {new BOOK*[2], 0, 2};			// экземпляр картотеки
+		//card.count = 0;
+		//card.cap = 0;
+		//card.pB = nullptr;
 		
+
 		do
 		{
 			outputMenu(&codeAnswer);
@@ -163,15 +164,13 @@ int main()
 				break;
 			case 2:
 				addBook(&card);
-				card.count++;			// увеличиваем количество книг на 1
 				break;
 			case 3:
+				deleteBook(&card);
 			case 4:
 			case 5:
 			case 6:
 				printf("\nВыход из программы!\n");
-			default:
-				break;
 			}
 			
 
@@ -180,9 +179,9 @@ int main()
 		// освобождаем память от массива структур
 		/*for (size_t i = 0; i < N; i++)
 		{
-			delete Card[i];
+			delete card[i];
 		}
-		delete[] Card;
+		delete[] card;
 		*/
 
 		//Подсказка1: для файлового ввода/вывода используйте функции fprintf и fscanf
