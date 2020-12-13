@@ -188,11 +188,52 @@ void deleteBook(CARD_INDEX* pCard)
 		flag = false;
 	} while (flag);
 	
-	delete pCard->pB[numberBook];
+	// удаляем структуру
+	if (numberBook == pCard->count)
+	{
+		// если последний елемент, удаляем сразу
+		delete pCard->pB[numberBook];
+	}
+	else {
+		
+		// если не последний, ставим на его место последний элемент
+		
+		pCard->pB[numberBook] = pCard->pB[pCard->count];		
 
-	pCard->pB[numberBook] = pCard->pB[pCard->count - 1];
+		// удаляем
+		delete pCard->pB[pCard->count];
 
+		/*for (size_t i = 0; i < pCard->count; i++)
+		{
+			BOOK* temp = pCard->pB[numberBook];
+			pCard->pB[numberBook + 1] = pCard->pB[numberBook];
+			pCard->pB[numberBook + 1] = pCard->pB[numberBook];
+		}*/
+		
+	}
+
+	//  уменьшаем колиество книг
 	pCard->count--;
-	//delete pCard->pB[numberBook + 1];
 
+};
+
+
+// добавить в файл картотеку
+void addInFile(CARD_INDEX* pCard)
+{
+	FILE* file = fopen("in.txt", "w");		//открываем файл
+	const char* arr[] = { "Adventure", "Fantastic", "Fantasy", "History", "Sports", "Detectives" };
+	if (file)
+	{
+		for (size_t i = 0; i < pCard->count; i++)
+		{		
+			fprintf(file, "Автор: %s\nНазвание: %s\nГод: %d\nЦена: %.2f\nКатегория: %s\n\n",
+			pCard->pB[i]->autor, pCard->pB[i]->title, pCard->pB[i]->year, pCard->pB[i]->price, arr[pCard->pB[i]->category]);
+		}
+		printf("\nЗаписано!\n");
+		fclose(file);
+	}
+	else {
+		printf("Ошибка открытия файла!");
+	}
 };

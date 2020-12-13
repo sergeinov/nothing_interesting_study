@@ -167,10 +167,14 @@ int main()
 				break;
 			case 3:
 				deleteBook(&card);
+				break;
 			case 4:
+				addInFile(&card);
+				break;
 			case 5:
 			case 6:
 				printf("\nВыход из программы!\n");
+				break;
 			}
 			
 

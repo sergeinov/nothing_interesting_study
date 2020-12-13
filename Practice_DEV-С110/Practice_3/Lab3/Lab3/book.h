@@ -62,3 +62,6 @@ void addFieldsBook(BOOK* book);
 
 // удалить книгу
 void deleteBook(CARD_INDEX* pCard);
+
+// добавить в файл картотеку
+void addInFile(CARD_INDEX* pCard);
