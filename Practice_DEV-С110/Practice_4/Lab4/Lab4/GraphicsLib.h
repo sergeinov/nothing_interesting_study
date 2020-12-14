@@ -23,3 +23,5 @@ void FinishDemo();
 //Пауза
 void pause(int ms);
 
+//void printEndWord();
+

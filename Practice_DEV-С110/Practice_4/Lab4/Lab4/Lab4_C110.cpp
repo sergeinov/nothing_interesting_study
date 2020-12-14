@@ -139,6 +139,7 @@ int main()
 	//std::cin.get();
 	
 	//Завершение процесса
+	//pause(1000);
 	FinishDemo();
 	
 }
