@@ -145,13 +145,12 @@ int main()
 		//Выход из программы (...)
 		//Реализуйте посредством функций разные возможности работы с картотекой
 
-		int codeAnswer = 0;								// для записи кода команды 
 
-		CARD_INDEX card = {new BOOK*[2], 0, 2};			// экземпляр картотеки
+		CARD_INDEX card = { new BOOK * [2], 0, 2 };			// экземпляр картотеки
 		//card.count = 0;
 		//card.cap = 0;
-		//card.pB = nullptr;
-		
+		//card.pB = nullptr;	
+		int codeAnswer = 0;								// для записи кода команды 
 
 		do
 		{
@@ -172,21 +171,23 @@ int main()
 				addInFile(&card);
 				break;
 			case 5:
+				addOutFile(&card);
+				break;
 			case 6:
 				printf("\nВыход из программы!\n");
 				break;
+			default:
+				printf("\nНеверный код команды!\n");
 			}
-			
 
 		} while (!(codeAnswer == 6));
-		
+
 		// освобождаем память от массива структур
-		/*for (size_t i = 0; i < N; i++)
+	/*	for (size_t i = 0; i < card.count; i++)
 		{
-			delete card[i];
+			delete card.pB[i];
 		}
-		delete[] card;
-		*/
+		card.pB = 0;*/
 
 		//Подсказка1: для файлового ввода/вывода используйте функции fprintf и fscanf
 		//(заголовочный файл <cstdio>
@@ -212,17 +213,50 @@ int main()
 
 
 
-	}
+
 
 	//****************************************************************
-	{
 		//Задание 3. Предоставьте пользователю возможность выводить перечень книг
 		//в определенном порядке => напишите функцию (функции) сортировки массива
 		//по любому из полей структуры.
 		//Замечание: признак - "по какому полю сортируем" можно ввести с помощью
 		//перечисления.
+		printf("\n\nЗадание 3\n");
+		int answer2 = 0;
+
+		do
+		{
+			printf("Выберите по какому полю сортировать: 1 - по автору; 2 - по заголовку; 3 - году; 4 - по цене; 5 - по категории 6 - вывести результат; 7 - ВЫХОД!!!:\n");
+			std::cin >> answer2;
+			switch (answer2)
+			{
+			case 1:
+				sortByAll(&card, autor);
+				break;
+			case 2:
+				sortByAll(&card, title);
+				break;
+			case 3:
+				//deleteBook(&card);
+				break;
+			case 4:
+				//addInFile(&card);
+				break;
+			case 5:
+				//addOutFile(&card);
+				break;
+			case 6:
+				printf("\nРезультат сортировки:");
+				printBOOK(&card);
+				break;
+			case 7:
+				printf("\nВыход из программы!\n");
+				break;
+			}
+		} while (!(answer2 == 6));
 
 
 	}
+
 	return 0;
 }

@@ -86,7 +86,7 @@ void printBOOK(const CARD_INDEX* pCard)
 {
 	if (pCard->count == 0)
 	{
-		printf("\nПусто!\n");
+		printf("\nВ каталоге пусто!\n");
 	} else {
 		printf("\nКниг: %d\n", pCard->count);
 		for (size_t i = 0; i < pCard->count; i++)
@@ -177,44 +177,48 @@ void deleteBook(CARD_INDEX* pCard)
 	bool flag = true;
 	do
 	{
+		if (pCard->count == 0)
+		{
+			printf("\nВ каталоге пусто! Добавьте книгу!\n");
+			flag = false;
+		}
+
 		printf("\nВведите какую книгу удалить: 0,1,2....\n");
 		scanf("%d", &numberBook);
 
-		if (numberBook > pCard->count)
+		if (numberBook > pCard->count - 1)
 		{
-			printf("Неверный номер в каталоге");
+			printf("\nНеверный номер в каталоге\n");
 			continue;
+		} else {
+			// удаляем структуру
+			if (numberBook == (pCard->count - 1))
+			{
+				// если последний елемент, удаляем сразу
+				delete pCard->pB[numberBook];
+			}
+			else {
+				// если не последний, ставим на его место последний элемент
+				BOOK* temp = pCard->pB[numberBook];
+				pCard->pB[numberBook] = pCard->pB[pCard->count - 1];
+				pCard->pB[pCard->count - 1] = temp;
+				// удаляем
+				delete pCard->pB[pCard->count - 1];
+
+				/*for (size_t i = 0; i < pCard->count; i++)
+				{
+					BOOK* temp = pCard->pB[numberBook];
+					pCard->pB[numberBook + 1] = pCard->pB[numberBook];
+					pCard->pB[numberBook + 1] = pCard->pB[numberBook];
+				}*/
+			}
+
+			// уменьшаем количество книг
+			pCard->count--;
 		}
 		flag = false;
 	} while (flag);
 	
-	// удаляем структуру
-	if (numberBook == pCard->count)
-	{
-		// если последний елемент, удаляем сразу
-		delete pCard->pB[numberBook];
-	}
-	else {
-		
-		// если не последний, ставим на его место последний элемент
-		
-		pCard->pB[numberBook] = pCard->pB[pCard->count];		
-
-		// удаляем
-		delete pCard->pB[pCard->count];
-
-		/*for (size_t i = 0; i < pCard->count; i++)
-		{
-			BOOK* temp = pCard->pB[numberBook];
-			pCard->pB[numberBook + 1] = pCard->pB[numberBook];
-			pCard->pB[numberBook + 1] = pCard->pB[numberBook];
-		}*/
-		
-	}
-
-	//  уменьшаем колиество книг
-	pCard->count--;
-
 };
 
 
@@ -236,4 +240,87 @@ void addInFile(CARD_INDEX* pCard)
 	else {
 		printf("Ошибка открытия файла!");
 	}
+};
+
+
+// добавить из файла книги
+void addOutFile(CARD_INDEX* pCard)
+{
+	FILE* file = fopen("out.txt", "r");
+	if (file)
+	{
+		BOOK* pBook = new BOOK;
+		
+		fscanf(file, "Books i %d\nautor: %s\ntitle: %s\nyear: %d\nprice: %.2f\ncategory: %s\n\n",
+			   &pCard->count, pBook->autor, pBook->title, &pBook->year, &pBook->price, &pBook->category);
+
+		pCard->pB[pCard->count] = pBook;
+
+		fclose(file);
+	}
+	else {
+		printf("Не получилось считать файл!");
+	}
+};
+
+// Если файл существует и его удалось открыть
+//if()
+//{
+//Чтение данных из файла
+//а) считали количество элементов
+//б) создали массив требуемой размерности
+//в) считали данные из файла в массив
+
+////////////////////////////////////////////////////////////////////////
+
+// для Задания 3
+
+void sortByAll(CARD_INDEX* pCard, eSwap numberSort)
+{
+	switch (numberSort)
+	{
+	case 1:
+		for (size_t i = 0; i < pCard->count; i++)
+		{
+			for (size_t j = 0; j < pCard->count - i - 1; j++)
+			{
+				// если не первый автор больше второго
+				if (strcmp(pCard->pB[j]->autor, pCard->pB[j + 1]->autor) > 0)
+				{
+					BOOK* tmp = pCard->pB[j];	// обмен элементов 
+					pCard->pB[j] = pCard->pB[j + 1];
+					pCard->pB[j + 1] = tmp;
+				}
+			}
+		}
+		break;
+	case 2:
+		for (size_t i = 0; i < pCard->count; i++)
+		{
+			for (size_t j = 0; j < pCard->count - i - 1; j++)
+			{
+				// если не первый автор больше второго
+				if (strcmp(pCard->pB[j]->title, pCard->pB[j + 1]->title) > 0)
+				{
+					BOOK* tmp = pCard->pB[j];	// обмен элементов 
+					pCard->pB[j] = pCard->pB[j + 1];
+					pCard->pB[j + 1] = tmp;
+				}
+			}
+		}
+		break;
+	case 3:
+		//deleteBook(&card);
+		break;
+	case 4:
+		//addInFile(&card);
+		break;
+	case 5:
+		//addOutFile(&card);
+		break;
+	default:
+		printf("\nЧто-то не сработала сортировка\n");
+	}
+
+	printf("Отсортировано!!!\n");
 };

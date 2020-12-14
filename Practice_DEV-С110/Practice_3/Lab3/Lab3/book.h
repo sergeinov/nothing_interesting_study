@@ -65,3 +65,18 @@ void deleteBook(CARD_INDEX* pCard);
 
 // добавить в файл картотеку
 void addInFile(CARD_INDEX* pCard);
+
+// добавить из файла книги
+void addOutFile(CARD_INDEX* pCard);
+
+//////////////////////////////////////////////////////////////////////
+
+// для Задания 3
+
+enum eSwap { autor = 1, title, year, price, category };
+
+void sortByAll(CARD_INDEX* pCard, eSwap numberSort);
+//void sortByTitle(CARD_INDEX* pCard, eSwap numberSort);
+//void sortByYear(CARD_INDEX* pCard, eSwap numberSort);
+//void sortByPrice(CARD_INDEX* pCard, eSwap numberSort);
+//void sortByCategory(CARD_INDEX* pCard, eSwap numberSort);
