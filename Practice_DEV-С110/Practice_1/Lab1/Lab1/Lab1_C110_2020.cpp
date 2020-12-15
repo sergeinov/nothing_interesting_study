@@ -441,7 +441,7 @@ for(int i=0; i<...; ...)
 		std::cout << "\nСортировка звездочки в начало строки..." << std::endl;
 
 		// двигаемся по строкам
-		for (int j = 0; j < N; j++)
+		/*for (int j = 0; j < N; j++)
 		{
 			// заходим. сортируем строку
 			for (int k = 0; k < M; k++)
@@ -458,8 +458,43 @@ for(int i=0; i<...; ...)
 					}
 				}
 			}
+		}*/
+		/*for (int j = 0; j < N; j++)
+		{
+			int index = 0;
+			for (int k = 0; k < M; k++)
+			{
+				if (arrRandom[j][k] == '*')
+				{
+					arrRandom[j][k] = '_';
+					arrRandom[j][index] = '*';
+					index++;
+				}
+				/*for (size_t l = 0; l < M - k - 1; l++)
+				{
+					// сравниваем элементы и меняем местами
+					if (arrRandom[j][l] == '_')
+					{
+						char temp = arrRandom[j][l];
+						arrRandom[j][l] = arrRandom[j][l + 1];
+						arrRandom[j][l + 1] = temp;
+					}
+				}
+			}*/
+		for (int j = 0; j < N; j++)
+		{
+			int index = 0;
+			char* p = arrRandom[j];
+			for (int k = 0; k < M; k++)
+			{
+				if (p[k] == '*')
+				{
+					p[k] = '_';
+					p[index] = '*';
+					index++;
+				}
+			}
 		}
-
 		// вывод  отсортированного массива 
 		for (size_t i = 0; i < N; i++)
 		{
@@ -543,21 +578,23 @@ for(int i=0; i<...; ...)
 		 //проходим по всему массиву
 		for (int i = 0; i < N; i++)	// цикл по строкам
 		{
-			// поиск  из оставшихся неупорядоченных чисел
+			
+			int* pIndex = pArrNumbers[i];
 			for (int j = 0; j < M - 1; j++)		// цикл шага
 			{
 				int indexMax = i;  // здесь индекс  наибольшего элемента
+				
 				for (size_t k = j + 1; k < M; k++)	// цикл выбора наибольшегоэлемента
 				{
-					if (pArrNumbers[i][j] > pArrNumbers[i][indexMax])
+					if (pIndex[j] > pIndex[indexMax])
 					{
 						int indexMax = k;	
 					}
 				}
 				// обмен местами значения текущего и наибольшего элементов
-				temp = pArrNumbers[i][j];
-				pArrNumbers[i][j] = pArrNumbers[i][indexMax];
-				pArrNumbers[i][j] = temp;		
+				temp = pIndex[j];
+				pIndex[j] = pIndex[indexMax];
+				pIndex[j] = temp;
 			}
 
 		}

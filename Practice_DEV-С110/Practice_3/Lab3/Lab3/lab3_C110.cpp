@@ -171,10 +171,10 @@ int main()
 				addInFile(&card);
 				break;
 			case 5:
-				addOutFile(&card);
+				addFromFile(&card);
 				break;
 			case 6:
-				printf("\nВыход из программы!\n");
+				printf("Выход из программы!\n");
 				break;
 			default:
 				printf("\nНеверный код команды!\n");
@@ -222,11 +222,11 @@ int main()
 		//Замечание: признак - "по какому полю сортируем" можно ввести с помощью
 		//перечисления.
 		printf("\n\nЗадание 3\n");
-		int answer2 = 0;
+		int answer2 = 0;			// команда от пользователя
 
 		do
 		{
-			printf("Выберите по какому полю сортировать: 1 - по автору; 2 - по заголовку; 3 - году; 4 - по цене; 5 - по категории 6 - вывести результат; 7 - ВЫХОД!!!:\n");
+			printf("Выберите по какому полю сортировать: \n1 - по автору;\n2 - по заголовку; \n3 - году; \n4 - по цене; \n5 - по категории \n6 - вывести результат!; \n7 - выход!!!:\n");
 			std::cin >> answer2;
 			switch (answer2)
 			{
@@ -237,23 +237,23 @@ int main()
 				sortByAll(&card, title);
 				break;
 			case 3:
-				//deleteBook(&card);
+				sortByAll(&card, year);
 				break;
 			case 4:
-				//addInFile(&card);
+				sortByAll(&card, price);
 				break;
 			case 5:
-				//addOutFile(&card);
+				sortByAll(&card, category);
 				break;
 			case 6:
 				printf("\nРезультат сортировки:");
 				printBOOK(&card);
 				break;
 			case 7:
-				printf("\nВыход из программы!\n");
+				printf("Выход из программы!\n");
 				break;
 			}
-		} while (!(answer2 == 6));
+		} while (!(answer2 == 7));
 
 
 	}

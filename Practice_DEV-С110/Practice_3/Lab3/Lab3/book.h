@@ -67,7 +67,7 @@ void deleteBook(CARD_INDEX* pCard);
 void addInFile(CARD_INDEX* pCard);
 
 // добавить из файла книги
-void addOutFile(CARD_INDEX* pCard);
+void addFromFile(CARD_INDEX* pCard);
 
 //////////////////////////////////////////////////////////////////////
 

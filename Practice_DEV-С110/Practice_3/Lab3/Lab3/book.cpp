@@ -173,7 +173,7 @@ void addFieldsBook(BOOK* book) {
 
 void deleteBook(CARD_INDEX* pCard)
 {
-	int numberBook = 0;
+	
 	bool flag = true;
 	do
 	{
@@ -182,40 +182,28 @@ void deleteBook(CARD_INDEX* pCard)
 			printf("\nВ каталоге пусто! Добавьте книгу!\n");
 			flag = false;
 		}
-
+		int numberBook = 0;
 		printf("\nВведите какую книгу удалить: 0,1,2....\n");
 		scanf("%d", &numberBook);
 
+		// проверяем ответ
 		if (numberBook > pCard->count - 1)
 		{
 			printf("\nНеверный номер в каталоге\n");
 			continue;
 		} else {
 			// удаляем структуру
-			if (numberBook == (pCard->count - 1))
+			delete pCard->pB[numberBook];
+
+			// сдвигаем все книги влево на место удаленной
+			for (size_t i = numberBook; i < pCard->count; i++)
 			{
-				// если последний елемент, удаляем сразу
-				delete pCard->pB[numberBook];
+				pCard->pB[i] = pCard->pB[i + 1];
 			}
-			else {
-				// если не последний, ставим на его место последний элемент
-				BOOK* temp = pCard->pB[numberBook];
-				pCard->pB[numberBook] = pCard->pB[pCard->count - 1];
-				pCard->pB[pCard->count - 1] = temp;
-				// удаляем
-				delete pCard->pB[pCard->count - 1];
-
-				/*for (size_t i = 0; i < pCard->count; i++)
-				{
-					BOOK* temp = pCard->pB[numberBook];
-					pCard->pB[numberBook + 1] = pCard->pB[numberBook];
-					pCard->pB[numberBook + 1] = pCard->pB[numberBook];
-				}*/
-			}
-
-			// уменьшаем количество книг
-			pCard->count--;
 		}
+		// уменьшаем количество книг
+		pCard->count--;
+		
 		flag = false;
 	} while (flag);
 	
@@ -229,6 +217,7 @@ void addInFile(CARD_INDEX* pCard)
 	const char* arr[] = { "Adventure", "Fantastic", "Fantasy", "History", "Sports", "Detectives" };
 	if (file)
 	{
+		fprintf(file,"Book is %d\n", pCard->count);
 		for (size_t i = 0; i < pCard->count; i++)
 		{		
 			fprintf(file, "Автор: %s\nНазвание: %s\nГод: %d\nЦена: %.2f\nКатегория: %s\n\n",
@@ -244,17 +233,33 @@ void addInFile(CARD_INDEX* pCard)
 
 
 // добавить из файла книги
-void addOutFile(CARD_INDEX* pCard)
+void addFromFile(CARD_INDEX* pCard)
 {
 	FILE* file = fopen("out.txt", "r");
 	if (file)
 	{
-		BOOK* pBook = new BOOK;
-		
-		fscanf(file, "Books i %d\nautor: %s\ntitle: %s\nyear: %d\nprice: %.2f\ncategory: %s\n\n",
-			   &pCard->count, pBook->autor, pBook->title, &pBook->year, &pBook->price, &pBook->category);
+		int countBook = 0;
+		fscanf(file, "Books is %d", &countBook);
+		if (pCard->count + countBook > pCard->cap)
+		{
+			pCard->cap = pCard->count + countBook;
+			BOOK** tmp = new BOOK*[pCard->cap];
+			for (size_t i = 0; i < pCard->count; i++)
+			{
+				tmp[i] = pCard->pB[i];
+			}
+		}
 
-		pCard->pB[pCard->count] = pBook;
+		for (size_t i = pCard->count; i < pCard->count + countBook; i++)
+		{
+			BOOK* book = new BOOK;
+
+			fscanf(file, "\nautor: %s\ntitle: %s\nyear: %d\nprice: %f\ncategory: %d\n\n",
+					book->autor, book->title, &book->year, &book->price, &book->category);
+			pCard->pB[i] = book;
+		}
+
+		pCard->count += countBook;
 
 		fclose(file);
 	}
@@ -277,9 +282,10 @@ void addOutFile(CARD_INDEX* pCard)
 
 void sortByAll(CARD_INDEX* pCard, eSwap numberSort)
 {
-	switch (numberSort)
+	/*switch (numberSort)
 	{
 	case 1:
+		printf("Сортировка по автору....\n");
 		for (size_t i = 0; i < pCard->count; i++)
 		{
 			for (size_t j = 0; j < pCard->count - i - 1; j++)
@@ -295,6 +301,7 @@ void sortByAll(CARD_INDEX* pCard, eSwap numberSort)
 		}
 		break;
 	case 2:
+		printf("Сортировка по названию книги....\n");
 		for (size_t i = 0; i < pCard->count; i++)
 		{
 			for (size_t j = 0; j < pCard->count - i - 1; j++)
@@ -310,16 +317,95 @@ void sortByAll(CARD_INDEX* pCard, eSwap numberSort)
 		}
 		break;
 	case 3:
-		//deleteBook(&card);
+		printf("Сортировка по году издания....\n");
+		for (size_t i = 0; i < pCard->count; i++)
+		{
+			for (size_t j = 0; j < pCard->count - i - 1; j++)
+			{
+				// если не первый автор больше второго
+				if (pCard->pB[j]->year > pCard->pB[j + 1]->year)
+				{
+					BOOK* tmp = pCard->pB[j];	// обмен элементов 1
+					pCard->pB[j] = pCard->pB[j + 1];
+					pCard->pB[j + 1] = tmp;
+				}
+			}
+		}
 		break;
 	case 4:
-		//addInFile(&card);
+		printf("Сортировка по цене....\n");
+		for (size_t i = 0; i < pCard->count; i++)
+		{
+			for (size_t j = 0; j < pCard->count - i - 1; j++)
+			{
+				// если не первый автор больше второго
+				if (pCard->pB[j]->price > pCard->pB[j + 1]->price)
+				{
+					BOOK* tmp = pCard->pB[j];	// обмен элементов 1
+					pCard->pB[j] = pCard->pB[j + 1];
+					pCard->pB[j + 1] = tmp;
+				}
+			}
+		}
 		break;
 	case 5:
-		//addOutFile(&card);
+		printf("Сортировка по категории....\n");
+		for (size_t i = 0; i < pCard->count; i++)
+		{
+			for (size_t j = 0; j < pCard->count - i - 1; j++)
+			{
+				// если не первый автор больше второго
+				if (pCard->pB[j]->category > pCard->pB[j + 1]->category)
+				{
+					BOOK* tmp = pCard->pB[j];	// обмен элементов 1
+					pCard->pB[j] = pCard->pB[j + 1];
+					pCard->pB[j + 1] = tmp;
+				}
+			}
+		}
 		break;
 	default:
-		printf("\nЧто-то не сработала сортировка\n");
+		printf("\nОтсортировано с ошибкой!!!\n");
+	}*/
+	const char* arr[] = { " ", "Автор","Заголовок", "Год", "Цена", "Категория" };
+
+	printf("\nСортировка по %s\n", arr[numberSort]);
+
+	for (size_t i = 0; i < pCard->count; i++)
+	{
+		for (size_t j = 0; j < pCard->count - i - 1; j++)
+		{
+			bool flag = false;
+			switch (numberSort)
+			{
+			case 1:
+				flag = (strcmp(pCard->pB[j]->autor, pCard->pB[j + 1]->autor));
+				break;
+			case 2:
+				flag = (strcmp(pCard->pB[j]->title, pCard->pB[j + 1]->title));
+				break;
+			case 3:
+				flag = (pCard->pB[j]->year > pCard->pB[j + 1]->year);
+				break;
+			case 4:
+				flag = (pCard->pB[j]->price > pCard->pB[j + 1]->price);
+				break;
+			case 5:
+				flag = (pCard->pB[j]->category > pCard->pB[j + 1]->category);
+				break;
+			default:
+				break;
+			}
+
+			// если флаг положительный сортируем 
+			if (flag)
+			{
+				BOOK* tmp = pCard->pB[j];	// обмен элементов 
+				pCard->pB[j] = pCard->pB[j + 1];
+				pCard->pB[j + 1] = tmp;
+			}
+
+		}
 	}
 
 	printf("Отсортировано!!!\n");
