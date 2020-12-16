@@ -12,10 +12,10 @@ int main()
 	int temp = arrCircle[sizeArr - 1];		// сохраняем последний элемент
 
 	// кольцевая перестановки в право
-	for (int i = sizeArr - 1; i >= 0; i--)
+	for (int i = sizeArr - 2; i >= 0; i--)
 	{
 		// сдвигаем вправо на 1 позицию
-		arrCircle[i] = arrCircle[i - 1];
+		arrCircle[i + 1] = arrCircle[i];
 	}
 	arrCircle[0] = temp;		// ставим элемент вперед
 

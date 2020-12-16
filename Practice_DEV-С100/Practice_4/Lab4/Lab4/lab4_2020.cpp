@@ -423,7 +423,7 @@ int main()
 					arrRandom2[j] = arrRandom2[j + 1];
 					arrRandom2[j + 1] = temp;
 
-					flag = true;
+					
 				}
 			}
 
