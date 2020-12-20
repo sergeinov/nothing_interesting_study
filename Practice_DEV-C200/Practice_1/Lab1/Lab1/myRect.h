@@ -2,9 +2,11 @@
 #include <iostream>
 
 class Rect{
+
 	int m_left, m_right, m_top, m_bottom;
 
 	public:
+		
 		// конструктор  по умолчанию
 		Rect() { m_left = 0; m_right = 0; m_top = 0; m_bottom = 0; };
 
@@ -40,6 +42,9 @@ class Rect{
 		void SetAll(int left, int right, int top, int bottom);
 
 		// метод позволяет получить поле
-		const void Get() ;
+		const int* Get() ;
+		
+		// метод возвращает объект прямоугольника
+		Rect& BoundingRect(const Rect* rect1, const Rect* rect2);
 };
 

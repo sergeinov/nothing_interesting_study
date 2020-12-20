@@ -41,10 +41,28 @@ void Rect::SetAll(int left, int right, int top, int bottom)
 }
 
 
-const void Rect::Get()
+const int* Rect::Get()
 {
-	std::cout << "m_left: " << m_left << std::endl;
-	std::cout << "m_right: " << m_right << std::endl;
-	std::cout << "m_top: " << m_top << std::endl;
-	std::cout << "m_bottom: " << m_bottom << std::endl;
+	int* arr = new int[4];
+	arr[0] = this->m_left;
+	arr[1] = this->m_right;
+	arr[2] = this->m_bottom;
+	arr[3] = this->m_bottom;
+
+	return arr;
+};
+
+
+//Задание 4б
+Rect& Rect::BoundingRect(const Rect* rect1, const Rect* rect2) 
+{
+	
+	Rect* p = new Rect;		// вызов конструктора по умолчанию
+
+	p->m_left = rect1->m_left + rect2->m_left;
+	p->m_right = rect1->m_right + rect2->m_right;
+	p->m_top = rect1->m_top + rect2->m_top;
+	p->m_bottom = rect1->m_bottom + rect2->m_bottom;
+
+	return *p;
 };
