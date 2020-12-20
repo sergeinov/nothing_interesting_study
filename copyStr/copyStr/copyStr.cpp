@@ -17,14 +17,19 @@ char* myStrCopy(char* destination, char* source)
     //}
     //return res;
 
-    // вариант второй. Присваивание в условии
-    char* res;
+    //// вариант второй. Присваивание в условии
+    //char* res;
+    //for (res = destination;  (*destination = *source) ; )
+    //{
+    //    destination++;
+    //    source++;
+    //}
+    //return res;
 
-    for (res = destination;  (*destination = *source) ; )
-    {
-        destination++;
-        source++;
-    }
+    //третий вариант
+    char* res;
+    // присваивание в условии с постфиксным увеличением адреса на + 1
+    for (res = destination; (*destination++ = *source++););
 
     return res;
 }
