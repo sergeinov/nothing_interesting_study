@@ -30,6 +30,12 @@ class Rect{
 			}
 		};
 
+		// деструктор
+		~Rect()
+		{
+
+		};
+
 		// конструктор копирования
 		Rect(const Rect& copyToOtherClass);
 
