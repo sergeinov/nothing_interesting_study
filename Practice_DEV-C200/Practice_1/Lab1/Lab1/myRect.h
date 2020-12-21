@@ -25,9 +25,6 @@ class Rect{
 				m_top = top;
 				m_bottom = bottom;
 			}
-			else {
-				std::cout << "Ошибка! неверные значения параметров Конструктора: " << this << std::endl;
-			}
 		};
 
 		// деструктор
