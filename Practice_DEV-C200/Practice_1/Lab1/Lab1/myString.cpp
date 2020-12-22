@@ -5,6 +5,8 @@
 using namespace std;
 
 // Определение конструктора.
+MyString::MyString() { m_pStr = nullptr; };
+
 MyString::MyString(const char* pStr)
 {
 	
@@ -33,4 +35,7 @@ void MyString::SetNewString(char* source)
 {
 	m_pStr = new char[strlen(source) + 1];
 	strcpy(m_pStr, source);
+
+	// ошибка после деструктора
+	//m_pStr = source;
 }

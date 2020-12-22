@@ -2,10 +2,10 @@
 class MyString
 {
     char* m_pStr;	//строка-член класса
-public:
 
+    public:
     // конструктор
-    MyString() { m_pStr = nullptr; };
+    MyString();
     MyString(const char* pStr);
     // деструктор
     ~MyString();
