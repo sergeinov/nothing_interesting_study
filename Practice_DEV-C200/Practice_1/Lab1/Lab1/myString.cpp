@@ -25,17 +25,19 @@ MyString::~MyString()
 // коструктор копирования
 MyString::MyString(const MyString& otherStr)
 {
-	// выделяем память под строку m_pStr и копируем  в нее параметр конструктора pStr
-	m_pStr = new char[strlen(otherStr.m_pStr) + 1];
-	strcpy(m_pStr, otherStr.m_pStr);
+	if (otherStr.m_pStr)
+	{
+		// выделяем память под строку m_pStr и копируем  в нее параметр конструктора pStr
+		m_pStr = new char[strlen(otherStr.m_pStr) + 1];
+		strcpy(m_pStr, otherStr.m_pStr);
+	}
 };
 
 // функция меняет строку
-void MyString::SetNewString(char* source)
+void MyString::SetNewString(const char* source)
 {
+	delete[] m_pStr;
 	m_pStr = new char[strlen(source) + 1];
 	strcpy(m_pStr, source);
 
-	// ошибка после деструктора
-	//m_pStr = source;
 }

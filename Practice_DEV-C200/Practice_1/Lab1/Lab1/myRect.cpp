@@ -77,7 +77,7 @@ void Rect::SetAll(int left, int right, int top, int bottom)
 }
 
 
-const int* Rect::Get()
+const int* Rect::Get() const
 {
 	int* arr = new int[4];
 	arr[0] = this->m_left;
@@ -88,7 +88,7 @@ const int* Rect::Get()
 	return arr;
 };
 
-void Rect::GetAll(int* x1, int* x2, int* y1, int* y2)
+void Rect::GetAll(int* x1, int* x2, int* y1, int* y2) const
 {
 	*x1 = m_left;
 	*x2 = m_right;
@@ -97,15 +97,12 @@ void Rect::GetAll(int* x1, int* x2, int* y1, int* y2)
 };
 
 //Задание 4б
-Rect& Rect::BoundingRect(const Rect* rect1, const Rect* rect2) 
+void Rect::BoundingRect(const Rect* rect1, const Rect* rect2) 
 {
-	
-	Rect* p = new Rect;		// вызов конструктора по умолчанию
 
-	p->m_left = rect1->m_left + rect2->m_left;
-	p->m_right = rect1->m_right + rect2->m_right;
-	p->m_top = rect1->m_top + rect2->m_top;
-	p->m_bottom = rect1->m_bottom + rect2->m_bottom;
+	this->m_left = rect1->m_left + rect2->m_left;
+	this->m_right = rect1->m_right + rect2->m_right;
+	this->m_top = rect1->m_top + rect2->m_top;
+	this->m_bottom = rect1->m_bottom + rect2->m_bottom;
 
-	return *p;
 };

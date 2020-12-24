@@ -24,10 +24,11 @@
 		int x1, x2, y1, y2, xx1, xx2, yy1, yy2;
 		r1.GetAll(&x1, &x2, &y1, &y2);			// вызов GetAll
 		r2.GetAll(&xx1, &xx2, &yy1, &yy2);		// вызов GetAll
-		int res1 = x1 + xx1;
-		int res2 = x2 + xx2;
-		int res3 = y1 + yy1;
-		int res4 = y2 + yy2;
+		int res1 = (x1 > xx1) ? x1 : xx1 ;		// если левая сторона первого прямоугольника больше 
+												// левой стороны второго прямоугольника
+		int res2 = (x2 > xx2) ? x2 : xx2;		// тут также только правая сторона
+		int res3 = (y1 > yy1) ? y1 : yy1;					// и т.д.
+		int res4 = (y2 > yy2) ? y2 : yy2;
 		Rect temp(res1, res2, res3, res3);		// конструктор с параметрами
 
 		return temp;							// конструктор копирования
@@ -36,13 +37,17 @@
 	};
 
 	// вариант с массивом
-	Rect BoundingRect2(Rect& r1, Rect& r2)
+	Rect BoundingRect2(const Rect& r1, const Rect& r2) 
 	{
+		const int* p1 = r1.Get();
+		const int* p2 = r2.Get();
+		Rect temp((p1[0] + p2[0]),
+				  (p1[1] + p2[1]),
+				  (p1[2] + p2[2]),
+				  (p1[3] + p2[3]));
 
-		Rect temp((r1.Get()[0] + r2.Get()[0]),
-			(r1.Get()[1] + r2.Get()[1]),
-			(r1.Get()[2] + r2.Get()[2]),
-			(r1.Get()[3] + r2.Get()[3]));
+		delete p1;
+		delete p2;
 		return temp;	//	компилятор формируя значение с помощью конструктора копий копирует
 						//	из стека в область зарезервированную вызывающей функцией
 	};
@@ -215,7 +220,7 @@ int main()
 		//Задание 4б.Реализуйте ту же задачу (BoundingRect) методом класса
 		Rect r1(1, 2, 3, 4), r2(5, 6, 7, 8), r3;
 
-		r3 = r3.BoundingRect(&r1, &r2);		// {m_left = 6 m_right = 8 m_top = 10 m_bottom=12}
+		r3.BoundingRect(&r1, &r2);		// {m_left = 6 m_right = 8 m_top = 10 m_bottom=12}
 		
 		stop
 	}
@@ -233,11 +238,10 @@ int main()
 			Rect arRect[2];		// массив из двух объектов Rect (вызывается конструктор по умолчанию)
 			for(int i=0; i<3; i++)
 			{
-				static Rect r3 (i,i,i,i) ;		// вызов конструктора с параметрами при первом выполнении, вызов деструктора в конце программы
-				// при i = 0 ошибка значений  ( инициализация {m_left=0 m_right=0 m_top=0 ...})
-				Rect r4(*pR);					// вызов коснтруктора копирования по указателю pR {m_left=1 m_right=2 m_top=1 ...}
+				static Rect r3 (i,i,i,i);		// вызов конструктора с параметрами при первом выполнении, вызов деструктора в конце программы
+				Rect r4(*pR);					// вызов конструктора копирования по указателю pR {m_left=1 m_right=2 m_top=1 ...}
 				Rect r5(i,i,i,i);				// вызов конструктора с параметрами 
-				// при i = 0 ошибка значений  {m_left=-858993460 m_right=-858993460 m_top=-858993460 ...}
+				
 				// вызов деструктора для r4
 				// вызов деструктора для r5
 			}
@@ -259,6 +263,12 @@ int main()
 	//корректные инициализацию и деактивацию объекта
 	//C помощью остановов определите когда происходит
 	//захват и освобождение памяти для строки-члена класса
+	{
+		MyString s1;
+		MyString s2 = s1;
+		stop
+	}
+
 	{
 		MyString	str1("It's my string1!");
 		//Создайте метод GetString(), который обеспечит доступ к хранящейся строке.
@@ -320,8 +330,8 @@ int main()
 			while(spirt.getSpirt() > 0.50)			// конец на // {m_volume=100.000000 m_spirt=0.499959260 }
 			{
 				iter++;
-				spirt.Pereliv(water); //или spirt.Pereliv(water, объем_кружки);
-				water.Pereliv(spirt); // аналогично
+				spirt.Pereliv(water);	//или spirt.Pereliv(water, объем_кружки);
+				water.Pereliv(spirt);	// аналогично
 				stop
 			}
 		std::cout << "Количество переливаний:" << iter << std::endl;		// 159

@@ -15,8 +15,18 @@ class MyString
 
     // метод получения поля
     // почему в определении не видит поле m_pStr
-    const char* GetString() const { return m_pStr; };
+    inline const char* GetString() const
+    {
+        if (m_pStr)
+        {
+            return m_pStr;
+        }
+        else
+        {
+            return "empty...";
+        }
+    };
 
     // метод меняет строку
-    void SetNewString(char* source);
+    void SetNewString(const char* source);
 };

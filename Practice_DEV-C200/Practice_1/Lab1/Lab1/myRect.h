@@ -30,10 +30,10 @@ class Rect{
 		void SetAll(int left, int right, int top, int bottom);
 
 		// метод позволяет получить поле
-		const int* Get();
-		void GetAll(int* x1, int* x2, int* y1, int* y2);
+		const int* Get() const;
+		void GetAll(int* x1, int* x2, int* y1, int* y2) const;
 
 		// метод возвращает объект прямоугольника
-		Rect& BoundingRect(const Rect* rect1, const Rect* rect2);
+		void BoundingRect(const Rect* rect1, const Rect* rect2);
 };
 
