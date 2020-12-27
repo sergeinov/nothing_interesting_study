@@ -5,14 +5,19 @@ class Circle :
 {
 public:
     Circle();
-    Circle(double diametr, eColor color);
+    Circle(int x, int y, double diametr, eColor color);
     ~Circle();
 
     const double GetDiametr() const;
-    const double GetColor() const;
+    const char* GetColor() const;
+    
+    void SetPosition(int x, int y);
+    void SetDiametr(double diametr);
     void SetColor(eColor color);
 private:
     double m_diametr;
+    int m_x;
+    int m_y;
     eColor m_color;
 };
 

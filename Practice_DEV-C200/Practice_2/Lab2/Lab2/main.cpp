@@ -85,16 +85,20 @@ int _tmain(int argc, _TCHAR* argv[])
 		//Подсказка: для хранения цвета объявите перечисление (RED,GREEN,BLUE...);
 
 		Rect rect;
-		// базовый конструктор Shape
-		// конструктор Rect
+		// порядок вызова конструкторов
+		// Shape() -> Rect()
+
 		rect.SetColor(Shape::GREEN);
 		 std::cout << rect.GetColor() << std::endl;
 
 		 Circle circle;
-		 // базовый конструктор Shape
-		 // конструктор Circle
+		 // порядок вызова конструкторов
+		 // Shape() -> Circle()
 		 circle.SetColor(Shape::YELLOW);
 		 std::cout << circle.GetColor() << std::endl;
+
+		 // порядок деструкторов
+		 // ~Shape() > ~Circle() > ~Shape() > ~Rect()
 
 		//В конструкторах производных классов предусмотрите передачу
 		//параметра-цвета конструктору базового класса.
@@ -102,9 +106,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		//последовательность вызовов конструкторов и деструкторов базового
 		//и производного классов
 
-
-
-		 // ~Shape() > ~Circle() > ~Shape() > ~Rect()
+		 
 		stop
 	}
 

@@ -1,30 +1,45 @@
 #include "Circle.h"
 
+
+// конструкторы
 Circle::Circle()
 {
 	m_diametr = 0;
 	m_color = BLACK;
 }
-
-Circle::~Circle() {};
-
-Circle::Circle(double diametr, eColor color)
+Circle::Circle(int x, int y, double diametr, eColor color)
 {
 	m_diametr = diametr;
+	m_x = x;
+	m_y = y;
 	m_color = color;
 }
+
+// деструктор
+Circle::~Circle() {};
+
+void Circle::SetPosition(int x, int y)
+{
+	m_x = x;
+	m_y = y;
+};
+
+void Circle::SetDiametr(double diametr)
+{
+	m_diametr = diametr;
+};
+void Circle::SetColor(eColor color)
+{
+	m_color = color;
+};
 
 const double Circle::GetDiametr() const
 {
 	return m_diametr;
 }
 
-const double Circle::GetColor() const
+const char* Circle::GetColor() const
 {
-	return m_color;
+	static const char* arrColor[] = { "0", "RED", "YELLOW", "GREEN", "BLACK" };
+	return arrColor[m_color];
 }
-
-void Circle::SetColor(eColor color)
-{
-	m_color = color;
-};
