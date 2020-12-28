@@ -10,7 +10,7 @@ public:
 	Rect(int left, int right, int top, int bottom, eColor color);
 
 	// деструктор
-	~Rect() {};
+	virtual ~Rect();
 
 	// метод нормализует прямоуголик при не правилом вводе пользователем параметров
 	void Normalize();
@@ -27,6 +27,10 @@ public:
 
 	// метод позволяет получить цвет
 	const char* GetColor() const;
+
+	void WhereAmI();
+
+	virtual void WhereAmIVirtual();
 
 private:
 	int m_left, m_right, m_top, m_bottom;

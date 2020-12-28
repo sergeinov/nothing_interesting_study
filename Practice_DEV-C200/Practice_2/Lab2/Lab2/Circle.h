@@ -4,9 +4,11 @@ class Circle :
     public Shape
 {
 public:
+    // конструктор
     Circle();
     Circle(int x, int y, double diametr, eColor color);
-    ~Circle();
+    // деструктор
+    virtual ~Circle();
 
     const double GetDiametr() const;
     const char* GetColor() const;
@@ -14,6 +16,10 @@ public:
     void SetPosition(int x, int y);
     void SetDiametr(double diametr);
     void SetColor(eColor color);
+
+    void WhereAmI();
+    virtual void WhereAmIVirtual();
+
 private:
     double m_diametr;
     int m_x;

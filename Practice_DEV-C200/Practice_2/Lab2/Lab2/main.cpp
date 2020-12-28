@@ -14,6 +14,7 @@
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	setlocale(LC_ALL, "Rus");
 	//Задание 1.Массив объектов класса.
 	{
 	//Объявите и проинициализируйте массив ar из объектов
@@ -111,7 +112,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 //////////////////////////////////////////////////////////////////////
-/*
+
 	//Задание 4.Виртуальные функции.
 	//4а) Модифицируйте классы Shape,Rect и Circle:
 	//добавьте в каждый класс public метод void WhereAmI().
@@ -121,34 +122,34 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 	{
-		Shape s(...);
-		Rect r(...);
-		Circle c(...);
+		Shape s;
+		Rect r(-4, 4, 10, -10, Shape::GREEN);
+		Circle c(5, 5,4, Shape::YELLOW);
 
 	
 		//Метод какого класса вызывается в следующих строчках???
-		s.WhereAmI();	//	???
-		r.WhereAmI();	//	???
-		c.WhereAmI();	//	???
+		s.WhereAmI();	//	метод класса Shape
+		r.WhereAmI();	//	метод класса Shape
+		c.WhereAmI();	//	метод класса Shape
 		stop
 
 
 		Shape* pShape = &s;
 		Shape* pRect = &r;
 		Shape* pCircle = &c;
-    	pShape->WhereAmI();	//	???
-		pRect->WhereAmI();	//	???
-		pCircle->WhereAmI(); //	???
+    	pShape->WhereAmI();	//	метод класса Shape
+		pRect->WhereAmI();	//	метод класса Shape
+		pCircle->WhereAmI(); //	метод класса Shape
 		stop
 
 
 		//Заполните ... согласно комментариям
-		Shape& rShape = ...; //псевдоним s
-		Shape& rRect = ...; //псевдоним r
-		Shape& rCircle = ...; //псевдоним c
-    	...WhereAmI();	//вызов посредством rShape	???
-		...WhereAmI();	//вызов посредством	rRect	???
-		...WhereAmI(); //вызов посредством rCircle	???
+		Shape& rShape = s;	//псевдоним s
+		Shape& rRect = r;	//псевдоним r
+		Shape& rCircle = c; //псевдоним c
+		rShape.WhereAmI();	//вызов посредством rShape	// метод класса Shape
+		rRect.WhereAmI();	//вызов посредством	rRect	// метод класса Shape
+		rCircle.WhereAmI(); //вызов посредством rCircle	// метод класса Shape
 		stop
 	}
 
@@ -157,11 +158,42 @@ int _tmain(int argc, _TCHAR* argv[])
 	// виртуальный метод посредством объектов, указателей и
 	// ссылок, определенных в предыдущем фрагменте.
 	//Выполните новый фрагмент, объясните разницу.
+	{
+		std::cout << "\nЗадание 4.б" << std::endl;
+		Shape s;
+		Rect r(-4, 4, 10, -10, Shape::GREEN);
+		Circle c(5, 5,4, Shape::YELLOW);
 
-*/
+	
+		//Метод какого класса вызывается в следующих строчках???
+		s.WhereAmIVirtual();	//	метод класса Shape
+		r.WhereAmIVirtual();	//	метод класса Rect
+		c.WhereAmIVirtual();	//	метод класса Circle
+		stop
+
+
+		Shape* pShape = &s;
+		Shape* pRect = &r;
+		Shape* pCircle = &c;
+		pShape->WhereAmIVirtual();	//	метод класса Shape
+		pRect->WhereAmIVirtual();	//	метод класса Rect
+		pCircle->WhereAmIVirtual(); //	метод класса Circle
+		stop
+
+
+		//Заполните ... согласно комментариям
+		Shape& rShape = s;	//псевдоним s
+		Shape& rRect = r;	//псевдоним r
+		Shape& rCircle = c; //псевдоним c
+		rShape.WhereAmIVirtual();	//вызов посредством rShape	// метод класса Shape
+		rRect.WhereAmIVirtual();	//вызов посредством	rRect	// метод класса Rect
+		rCircle.WhereAmIVirtual(); //вызов посредством rCircle	// метод класса Circle
+		stop
+	}
+
 
 //////////////////////////////////////////////////////////////////////
-/*
+
 	//Задание 5.Виртуальные деструкторы.
 	//Модифицируйте классы:
 	//a) введите соответствующие
@@ -171,10 +203,28 @@ int _tmain(int argc, _TCHAR* argv[])
 	// "Now I am in Shape's destructor!" или
 	// "Now I am in Rect's destructor!"
 	//Выполните фрагмент. Объясните результат.
+	{
+		std::cout << "\nЗадание 5" << std::endl;
+		Shape s;
+		Rect r(-4, 4, 10, -10, Shape::GREEN);
+		Circle c(5, 5, 4, Shape::YELLOW);
+
+		//Now I am in Circle's destructor!
+		//Now I am in Shape's destructor!
+		//Now I am in Rect's destructor!
+		//Now I am in Shape's destructor!
+		//Now I am in Shape's destructor!
+	}
 
 	// b) Добавьте в объявление деструкторов ключевое слово virtual 
 	//Выполните фрагмент.Объясните разницу.
-
+	{
+		std::cout << "\nЗадание 5.б" << std::endl;
+		Shape s;
+		Rect r(-4, 4, 10, -10, Shape::GREEN);
+		Circle c(5, 5, 4, Shape::YELLOW);
+		//  разницы не было
+	}
 	
 	//Подумайте: какие конструкторы вызываются в следующей строке?
 		//Если в разработанных классов каких-то конструкторов
@@ -182,13 +232,13 @@ int _tmain(int argc, _TCHAR* argv[])
 		//Если Вы считаете, что в приведенном фрагменте чего-то
 		//не хватает - добавьте
 
-		Rect r(<параметры>);
-		Shape* ar[]={new Shape(r), new Rect(r), new Circle(r), new Circle() };
-		//Вызовите для каждого элемента массива метод WhereAmIVirtual()
+		//Rect r(<параметры>);
+		//Shape* ar[]={new Shape(r), new Rect(r), new Circle(r), new Circle() };
+		////Вызовите для каждого элемента массива метод WhereAmIVirtual()
 	
 
 	stop
-*/
+
 
 /*
 	//Задание 6*. В чем заключается отличие 1) и 2)

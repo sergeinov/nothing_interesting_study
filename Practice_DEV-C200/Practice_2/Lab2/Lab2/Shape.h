@@ -2,12 +2,14 @@
 class Shape
 {
 public:
+	enum eColor { RED = 1, YELLOW, GREEN, BLACK };
 	Shape();
-	~Shape();	
+	virtual ~Shape();
 
 	void GetShape();
-
-	enum eColor { RED = 1, YELLOW, GREEN, BLACK };
+	void WhereAmI();
+	virtual void WhereAmIVirtual();
+	
 protected:
 
 };

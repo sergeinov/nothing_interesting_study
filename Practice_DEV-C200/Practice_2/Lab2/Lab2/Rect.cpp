@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Rect.h"
 
 
@@ -9,8 +10,15 @@ Rect::Rect(int left, int right, int top, int bottom, eColor color)
 	m_right = right;
 	m_top = top;
 	m_bottom = bottom;
+	m_color = color;
 
 	Normalize();
+};
+
+// деструктор
+Rect::~Rect()
+{
+	std::cout << "Now I am in Rect's destructor!" << std::endl;
 };
 
 // метод нормализации параметров от пользователя
@@ -29,7 +37,7 @@ void Rect::Normalize()
 		m_bottom = m_top;
 		m_top = temp;
 	}
-}
+};
 
 // метод увеличивает сторону треугольникана на значение
 void Rect::InflateRect(int left, int right, int top, int bottom)
@@ -40,7 +48,7 @@ void Rect::InflateRect(int left, int right, int top, int bottom)
 	m_bottom -= bottom;
 
 	Normalize();
-}
+};
 
 void Rect::SetAll(int left, int right, int top, int bottom)
 {
@@ -50,7 +58,7 @@ void Rect::SetAll(int left, int right, int top, int bottom)
 	this->m_bottom = bottom;
 
 	Normalize();
-}
+};
 
 // метод дает цвет фигуре
 void Rect::SetColor(eColor color)
@@ -71,5 +79,15 @@ const char* Rect::GetColor() const
 {
 	static const char* arrColor[] = { "0", "RED", "YELLOW", "GREEN", "BLACK" };
 	return arrColor[m_color];
-	
+
+};
+
+void Rect::WhereAmI()
+{
+	std::cout << "Now I am in class Rect" << std::endl;
+};
+
+void Rect::WhereAmIVirtual()
+{
+	std::cout << "Now I am in class Rect virtual" << std::endl;
 };
