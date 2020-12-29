@@ -19,8 +19,6 @@ public:
 
 	// метод  устанавливает значение поля класса
 	void SetAll(int left, int right, int top, int bottom);
-	// установить цвет
-	void SetColor(eColor color);
 
 	// метод позволяет получить поле
 	void GetAll(int* x1, int* x2, int* y1, int* y2) const;
@@ -28,12 +26,11 @@ public:
 	// метод позволяет получить цвет
 	const char* GetColor() const;
 
-	void WhereAmI();
+	void WhereAmI() const;
 
-	virtual void WhereAmIVirtual();
+	virtual void WhereAmIVirtual() const;
 
 private:
 	int m_left, m_right, m_top, m_bottom;
-	eColor m_color;
 };
 

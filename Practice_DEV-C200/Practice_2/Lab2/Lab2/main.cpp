@@ -8,9 +8,34 @@
 #include "Rect.h"
 #include "Circle.h"
 #include "Shape.h"
+#include <cstdarg>
 
 
 #define	  stop __asm nop
+
+	MyString __cdecl JoinToSentence(char* str1, ...)
+	{
+		MyString mystr;
+		// размер
+		//char* temp = new char[size1 + size2];
+		//temp[0] = 0;
+		char* i = str1;
+		va_list p;				// универсальный указатель
+		va_start(p, str1);		// ставим указатель на первый элемент
+
+		while (i)
+		{
+		//	strcat(temp, i);
+			i = va_arg(p, char*);		// перемещаем указатель на следующий и присваиваем  i
+		}
+		// меняем переменную в классе на нашу строку
+		//mystr.SetNewString(temp);
+		va_end(p);					// обнуляем указатель
+		delete[] i;
+		//delete[] temp;
+		return mystr;
+		
+	}
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -47,16 +72,10 @@ int _tmain(int argc, _TCHAR* argv[])
 		//Печать строк-членов класса
 		for (size_t i = 0; i < M; i++)
 		{
-			if (str2[i])
-			{
+
 				std::cout << str2[i]->GetString() << std::endl;	// Egor
 																// Ivan
 																// Kolja
-			}
-			else
-			{
-				std::cout << "str2" << "[" << i << "]"  << " - (0x00000000 <NULL>)" << std::endl;
-			}
 		}				
 		// для  str2[3]->GetString()  str2[4]->GetString()
 		// ошибка // не выделена память, this  = nullptr. str2[3] - (0x00000000 <NULL>)
@@ -85,17 +104,16 @@ int _tmain(int argc, _TCHAR* argv[])
 		//будет определять цвет фигуры.
 		//Подсказка: для хранения цвета объявите перечисление (RED,GREEN,BLUE...);
 
-		Rect rect;
+		Rect rect(1,2,3,4,Shape::GREEN);
 		// порядок вызова конструкторов
 		// Shape() -> Rect()
 
-		rect.SetColor(Shape::GREEN);
 		 std::cout << rect.GetColor() << std::endl;
 
-		 Circle circle;
+		 Circle circle(-4, 4, 5, Shape::GREEN);
 		 // порядок вызова конструкторов
 		 // Shape() -> Circle()
-		 circle.SetColor(Shape::YELLOW);
+	
 		 std::cout << circle.GetColor() << std::endl;
 
 		 // порядок деструкторов
@@ -129,8 +147,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 		//Метод какого класса вызывается в следующих строчках???
 		s.WhereAmI();	//	метод класса Shape
-		r.WhereAmI();	//	метод класса Shape
-		c.WhereAmI();	//	метод класса Shape
+		r.WhereAmI();	//	метод класса Rect
+		c.WhereAmI();	//	метод класса Circle
 		stop
 
 
@@ -166,12 +184,15 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	
 		//Метод какого класса вызывается в следующих строчках???
+		// Не понятно! По правилу, механизм полиморфизма задействуется, если
+		// вызов методу осуществляется посредством указателя или ссылки.
+		// Почему тут это не сработало
 		s.WhereAmIVirtual();	//	метод класса Shape
 		r.WhereAmIVirtual();	//	метод класса Rect
 		c.WhereAmIVirtual();	//	метод класса Circle
 		stop
 
-
+		
 		Shape* pShape = &s;
 		Shape* pRect = &r;
 		Shape* pCircle = &c;
@@ -189,6 +210,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		rRect.WhereAmIVirtual();	//вызов посредством	rRect	// метод класса Rect
 		rCircle.WhereAmIVirtual(); //вызов посредством rCircle	// метод класса Circle
 		stop
+
+		//	~Shape() > ~Circle() > ~Shape() > ~Rect() > ~Shape()
 	}
 
 
@@ -220,10 +243,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	//Выполните фрагмент.Объясните разницу.
 	{
 		std::cout << "\nЗадание 5.б" << std::endl;
-		Shape s;
-		Rect r(-4, 4, 10, -10, Shape::GREEN);
-		Circle c(5, 5, 4, Shape::YELLOW);
-		//  разницы не было
+		Shape* s = new Shape();
+		Rect* r = new Rect(-4, 4, 10, -10, Shape::GREEN);
+		Circle* c= new Circle(5, 5, 4, Shape::YELLOW);
+		//  По идее, что то должно поменятся. Но разницы не было
+		//Now I am in Circle's destructor!
+		//Now I am in Shape's destructor!
+		//Now I am in Rect's destructor!
+		//Now I am in Shape's destructor!
+		//Now I am in Shape's destructor!
 	}
 	
 	//Подумайте: какие конструкторы вызываются в следующей строке?
@@ -231,16 +259,16 @@ int _tmain(int argc, _TCHAR* argv[])
 		//не хватает - реализуйте
 		//Если Вы считаете, что в приведенном фрагменте чего-то
 		//не хватает - добавьте
-
-		//Rect r(<параметры>);
-		//Shape* ar[]={new Shape(r), new Rect(r), new Circle(r), new Circle() };
-		////Вызовите для каждого элемента массива метод WhereAmIVirtual()
-	
-
-	stop
+	{
+		//Rect r(-4, 4, 10, -10, Shape::GREEN);
+		//Shape* ar[] = { new Shape(r), new Rect(r), new Circle(r), new Circle() };
+		//Вызовите для каждого элемента массива метод WhereAmIVirtual()
 
 
-/*
+		stop
+	}
+
+
 	//Задание 6*. В чем заключается отличие 1) и 2)
 	{
 		Shape* pShapes = new Rect[10];//1)
@@ -248,32 +276,48 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		//Попробуйте вызвать метод WhereAmIVirtual() для каждого элемента обоих массивов -
 		//в чем заключается проблема???
+		//for (size_t i = 0; i < 10; i++)
+		//{
+		//	pShapes[i].WhereAmIVirtual();	// вызов метода Rect
+		//  // ошибка при вызове pShapes[1].WhereAmIVirtual()
+		//}
 
+		for (size_t i = 0; i < 10; i++)
+		{
+			pRects[i].WhereAmIVirtual();	// вызов метода Rect
+		}
+		
 
 		//Освободите динамически захваченную память
-
+		// удаление массива объектов pShapes
+			delete[] pShapes;
+		// удаление массива объектов pRects
+			delete[] pRects;
 	}
 
-*/
+
 
 //////////////////////////////////////////////////////////////////////
-/*
+
 	//Задание 7.Виртуальные функции и оператор разрешения области видимости. 
 
 	{
-		Rect r(...);
+		Rect r(-4, 4, 10, -10, Shape::GREEN);
 		Shape* p = &r;	
-		p->WhereAmIVirtual();//...
+		p->WhereAmIVirtual();  // вызов метода Rect
 		stop
-	
-		
+
+
 		//4a Оператор разрешения области видимости.
 		//Посредством объекта r и указателя p вызовите виртуальную функцию
 		//WhereAmIVirtual()класса Shape
-		
-		
+
+		p->Shape::WhereAmIVirtual(); // Вызов метода Shape
+
+		// деструктор Rect
+		// Деструктор Shape
 	}
-*/
+
 
 //////////////////////////////////////////////////////////////////////
 /*
@@ -296,6 +340,14 @@ int _tmain(int argc, _TCHAR* argv[])
 	//Задание 9. Создайте глобальную функцию, которая будет принимать любое
 	//количество указателей на строки, а возвращать объект MyString,
 	//в котором строка будет конкатенацией параметров
+	
+
+	//MyString str = JoinToSentence("My", "Name", "is", "Sergey", nullptr);
+	char arr1[] = {"My "};
+	char arr2[] = {" Name "};
+	char arr3[] = {" is "};
+	char arr4[] = {" Sergey!"};
+	
 
 ////////////////////////////////////////////////////////////////////////
 /*

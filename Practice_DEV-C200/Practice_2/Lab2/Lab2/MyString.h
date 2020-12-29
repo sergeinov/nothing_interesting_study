@@ -10,7 +10,8 @@ public:
 
 	// метод получения значения
 	const char* GetString() const;
-
+	// метод меняет строку
+	void SetNewString(const char* source);
 private:
 	char* m_pName;
 };

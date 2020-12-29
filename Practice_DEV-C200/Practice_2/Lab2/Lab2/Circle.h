@@ -6,7 +6,7 @@ class Circle :
 public:
     // конструктор
     Circle();
-    Circle(int x, int y, double diametr, eColor color);
+    Circle(int x, int y, double diametr, eColor color) ;
     // деструктор
     virtual ~Circle();
 
@@ -15,15 +15,14 @@ public:
     
     void SetPosition(int x, int y);
     void SetDiametr(double diametr);
-    void SetColor(eColor color);
+    //void SetColor(eColor color);
 
-    void WhereAmI();
-    virtual void WhereAmIVirtual();
+    void WhereAmI() const;
+    virtual void WhereAmIVirtual() const;
 
 private:
     double m_diametr;
     int m_x;
     int m_y;
-    eColor m_color;
 };
 

@@ -23,6 +23,12 @@ MyString::~MyString()
 // метод получения значения
 const char* MyString::GetString() const
 {
+    // проверка на пустой указатель
+    if (!this)
+    {
+        return "NULL...";
+    }
+
     if (m_pName)
     {
         return m_pName;
@@ -32,3 +38,12 @@ const char* MyString::GetString() const
         return "empty...";
     }
 };
+
+// метод меняет строку
+void MyString::SetNewString(const char* source)
+{
+    delete[] m_pName;
+    m_pName = new char[strlen(source) + 1];
+    strcpy(m_pName, source);
+
+}

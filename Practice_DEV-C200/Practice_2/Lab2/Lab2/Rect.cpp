@@ -3,14 +3,13 @@
 
 
 // конструкторы
-Rect::Rect() { m_left = 0; m_right = 0; m_top = 0; m_bottom = 0; m_color = BLACK; };
-Rect::Rect(int left, int right, int top, int bottom, eColor color)
+Rect::Rect() : Shape(RED) { m_left = 0; m_right = 0; m_top = 0; m_bottom = 0; };
+Rect::Rect(int left, int right, int top, int bottom, eColor color) : Shape(color)
 {
 	m_left = left;
 	m_right = right;
 	m_top = top;
 	m_bottom = bottom;
-	m_color = color;
 
 	Normalize();
 };
@@ -60,11 +59,6 @@ void Rect::SetAll(int left, int right, int top, int bottom)
 	Normalize();
 };
 
-// метод дает цвет фигуре
-void Rect::SetColor(eColor color)
-{
-	m_color = color;
-};
 
 void Rect::GetAll(int* x1, int* x2, int* y1, int* y2) const
 {
@@ -82,12 +76,12 @@ const char* Rect::GetColor() const
 
 };
 
-void Rect::WhereAmI()
+void Rect::WhereAmI() const
 {
 	std::cout << "Now I am in class Rect" << std::endl;
 };
 
-void Rect::WhereAmIVirtual()
+void Rect::WhereAmIVirtual() const
 {
 	std::cout << "Now I am in class Rect virtual" << std::endl;
 };
