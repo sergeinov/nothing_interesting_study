@@ -16,21 +16,28 @@
 	MyString __cdecl JoinToSentence(char* str1, ...)
 	{
 		MyString mystr;
-		// размер
+		// узнаем размер нашей строки
+		int* p = &arg1;		// вспомогательный указатель на первый элемент
+
+		while (*p)
+		{
+			std::cout << *p << " ";		// печатаем значение
+			p++;						// перемещаем указатель
+		}
 		//char* temp = new char[size1 + size2];
 		//temp[0] = 0;
-		char* i = str1;
-		va_list p;				// универсальный указатель
-		va_start(p, str1);		// ставим указатель на первый элемент
+		//char* i = str1;
+		//va_list p;				// универсальный указатель
+		//va_start(p, str1);		// ставим указатель на первый элемент
 
-		while (i)
-		{
-		//	strcat(temp, i);
-			i = va_arg(p, char*);		// перемещаем указатель на следующий и присваиваем  i
-		}
+		//while (i)
+		//{
+		////	strcat(temp, i);
+		//	i = va_arg(p, char*);		// перемещаем указатель на следующий и присваиваем  i
+		//}
 		// меняем переменную в классе на нашу строку
 		//mystr.SetNewString(temp);
-		va_end(p);					// обнуляем указатель
+		//va_end(p);					// обнуляем указатель
 		delete[] i;
 		//delete[] temp;
 		return mystr;
@@ -246,12 +253,17 @@ int _tmain(int argc, _TCHAR* argv[])
 		Shape* s = new Shape();
 		Rect* r = new Rect(-4, 4, 10, -10, Shape::GREEN);
 		Circle* c= new Circle(5, 5, 4, Shape::YELLOW);
-		//  По идее, что то должно поменятся. Но разницы не было
-		//Now I am in Circle's destructor!
-		//Now I am in Shape's destructor!
-		//Now I am in Rect's destructor!
-		//Now I am in Shape's destructor!
-		//Now I am in Shape's destructor!
+		//  Деструкторы не вызываются
+
+		delete s;
+		delete r;
+		delete c;
+	/*	Now I am in Shape's destructor!
+		Now I am in Rect's destructor!
+		Now I am in Shape's destructor!
+		Now I am in Circle's destructor!
+		Now I am in Shape's destructor!*/
+		stop
 	}
 	
 	//Подумайте: какие конструкторы вызываются в следующей строке?
