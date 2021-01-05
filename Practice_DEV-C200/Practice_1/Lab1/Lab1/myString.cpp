@@ -31,6 +31,10 @@ MyString::MyString(const MyString& otherStr)
 		m_pStr = new char[strlen(otherStr.m_pStr) + 1];
 		strcpy(m_pStr, otherStr.m_pStr);
 	}
+	else
+	{
+		m_pStr = 0;
+	}
 };
 
 // функция меняет строку
