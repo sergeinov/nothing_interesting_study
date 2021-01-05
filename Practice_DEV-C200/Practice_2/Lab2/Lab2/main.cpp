@@ -13,33 +13,55 @@
 
 #define	  stop __asm nop
 
-	MyString __cdecl JoinToSentence(char* str1, ...)
+// функция обьединяет  принимает любое
+//количество указателей на строки и объединяет в одно предложение
+	MyString __cdecl JoinToSentence(const char* str1, ...)
 	{
 		MyString mystr;
+
+		//char* p = reinterpret_cast<char*>(&n) + sizeof(int);		// вспомогательный указатель на первый элемент
+		int count = 0;												// подсчет символов в строке 
+		int size = 0;												// размер предложения
+		const char* p = str1;										// указатель на первую строку
+
 		// узнаем размер нашей строки
-		//int* p = &arg1;		// вспомогательный указатель на первый элемент
+		// идем по количеству указателей
+		while (p)
+		{
+			// проверка на пустой указатель
+			if (!p)
+			{
+				continue;
+			}
+			// идем по символам
+			while (*p)
+			{
+				std::cout << *p << " ";
+				p++;
+				count++;											// считаем количество символов
+			}
+			p +=  1;												// переходим к следующему элементу	// +1 для тернарного нуля
+			size += count + 1;										// увеличиваем значение размера предложения	// +1 тернарного нуля
+			count = 0;												// обнуляем для следующей строки
+		}
 
-		//while (*p)
-		//{
-		//	std::cout << *p << " ";		// печатаем значение
-		//	p++;						// перемещаем указатель
-		//}
-		//char* temp = new char[size1 + size2];
-		//temp[0] = 0;
-		//char* i = str1;
-		//va_list p;				// универсальный указатель
-		//va_start(p, str1);		// ставим указатель на первый элемент
+		char* temp = new char[size];								// создаем память для строк
+		temp[0] = 0;
+		p = str1;
 
-		//while (i)
-		//{
-		////	strcat(temp, i);
-		//	i = va_arg(p, char*);		// перемещаем указатель на следующий и присваиваем  i
-		//}
+		// записываем в указатель предложение
+		while (p)
+		{
+			strcat(temp, p);			// добавляем строку в указатель
+			int size = strlen(p);		// узнаем размер строки
+			p += size;					// двигаемся на размер строки дальше, к следующему параметру
+		}
 		// меняем переменную в классе на нашу строку
-		//mystr.SetNewString(temp);
-		//va_end(p);					// обнуляем указатель
+		mystr.SetNewString(temp);
+
 		//delete[] i;
-		//delete[] temp;
+		delete[] p;
+		delete[] temp;
 		return mystr;
 		
 	}
@@ -354,12 +376,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	//в котором строка будет конкатенацией параметров
 	
 
-	//MyString str = JoinToSentence("My", "Name", "is", "Sergey", nullptr);
-	char arr1[] = {"My "};
-	char arr2[] = {" Name "};
-	char arr3[] = {" is "};
-	char arr4[] = {" Sergey!"};
-	
+	MyString str = JoinToSentence("My", "Name", "is", "Sergey", nullptr);	
 
 ////////////////////////////////////////////////////////////////////////
 /*
