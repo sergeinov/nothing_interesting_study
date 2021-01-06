@@ -53,3 +53,11 @@ void Circle::WhereAmIVirtual() const
 {
 	std::cout << "Now I am in class Circle virtual" << std::endl;
 };
+
+
+// перегрузка чистого вертуального метода
+// метод изменения размера фигуры
+//void Circle::Inflate(int quantity)
+//{
+//	m_diametr += quantity;
+//};

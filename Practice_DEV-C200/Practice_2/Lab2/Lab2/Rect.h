@@ -12,7 +12,7 @@ public:
 	// деструктор
 	virtual ~Rect();
 
-	// метод нормализует прямоуголик при не правилом вводе пользователем параметров
+	// метод нормализует прямоуголик при не правильном вводе пользователем параметров
 	void Normalize();
 	// метод увеличивает сторону прямоугольника на значение
 	void InflateRect(int left, int right, int top, int bottom);
@@ -29,6 +29,10 @@ public:
 	void WhereAmI() const;
 
 	virtual void WhereAmIVirtual() const;
+
+	// перегрузка чистого вертуального метода
+	// метод изменения размера фигуры
+	//virtual void Inflate(int quantity);
 
 private:
 	int m_left, m_right, m_top, m_bottom;

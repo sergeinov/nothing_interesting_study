@@ -38,7 +38,7 @@ void Rect::Normalize()
 	}
 };
 
-// метод увеличивает сторону треугольникана на значение
+// метод увеличивает сторону прямоугольникана на значение
 void Rect::InflateRect(int left, int right, int top, int bottom)
 {
 	m_left -= left;
@@ -85,3 +85,15 @@ void Rect::WhereAmIVirtual() const
 {
 	std::cout << "Now I am in class Rect virtual" << std::endl;
 };
+
+// перегрузка чистого вертуального метода
+// метод изменения размера фигуры
+// void Rect::Inflate(int quantity)
+//{
+//	m_left -= quantity;
+//	m_right += quantity;
+//	m_top += quantity;
+//	m_bottom -= quantity;
+//
+//	Normalize();
+//};

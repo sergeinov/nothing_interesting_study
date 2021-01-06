@@ -20,6 +20,10 @@ public:
     void WhereAmI() const;
     virtual void WhereAmIVirtual() const;
 
+    // перегрузка чистого вертуального метода
+    // метод изменения размера фигуры
+    //virtual void Inflate(int quantity);
+
 private:
     double m_diametr;
     int m_x;
