@@ -5,7 +5,8 @@ class MyString
 public:
 	MyString();
 	MyString(const char* pName);
-
+	// коструктор копирования
+	MyString(const MyString& otherStr);
 	~MyString();
 
 	// метод получения значения

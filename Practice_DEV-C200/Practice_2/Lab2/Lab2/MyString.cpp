@@ -20,6 +20,21 @@ MyString::~MyString()
 	delete[] m_pName;
 }
 
+// коструктор копирования
+MyString::MyString(const MyString& otherStr)
+{
+    if (otherStr.m_pName)
+    {
+        // выделяем память под строку m_pStr и копируем  в нее параметр конструктора pStr
+        m_pName = new char[strlen(otherStr.m_pName) + 1];
+        strcpy(m_pName, otherStr.m_pName);
+    }
+    else
+    {
+        m_pName = 0;
+    }
+};
+
 // метод получения значения
 const char* MyString::GetString() const
 {
