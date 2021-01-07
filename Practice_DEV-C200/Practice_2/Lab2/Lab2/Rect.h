@@ -1,5 +1,6 @@
 #pragma once
 #include "Shape.h"
+#include "Circle.h"
 class Rect :
     public Shape
 {
@@ -8,6 +9,9 @@ public:
 	Rect();
 	// конструктор с параметрами
 	Rect(int left, int right, int top, int bottom, eColor color);
+	// коструктор копирования
+	Rect(const Rect& copyToOtherClass);
+	Rect(const Circle& copyToOther);
 
 	// деструктор
 	virtual ~Rect();

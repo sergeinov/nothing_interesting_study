@@ -7,6 +7,9 @@ public:
     // конструктор
     Circle();
     Circle(int x, int y, double diametr, eColor color) ;
+    // коструктор копирования
+    Circle(const Circle& copyToOtherClass);
+    
     // деструктор
     virtual ~Circle();
 

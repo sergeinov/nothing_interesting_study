@@ -258,7 +258,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	// "Now I am in Rect's destructor!"
 	//Выполните фрагмент. Объясните результат.
 	{
-		std::cout << "\nЗадание 5" << std::endl;
+		std::cout << "\nЗадание 5.a" << std::endl;
 		Shape s;
 		Rect r(-4, 4, 10, -10, Shape::GREEN);
 		Circle c(5, 5, 4, Shape::YELLOW);
@@ -290,16 +290,34 @@ int _tmain(int argc, _TCHAR* argv[])
 		stop
 	}
 	
-	//Подумайте: какие конструкторы вызываются в следующей строке?
+	// c)//Подумайте: какие конструкторы вызываются в следующей строке?
 		//Если в разработанных классов каких-то конструкторов
 		//не хватает - реализуйте
-		//Если Вы считаете, что в приведенном фрагменте чего-то
+ 		//Если Вы считаете, что в приведенном фрагменте чего-то
 		//не хватает - добавьте
 	{
-		//Rect r(-4, 4, 10, -10, Shape::GREEN);
-		//Shape* ar[] = { new Shape(r), new Rect(r), new Circle(r), new Circle() };
+		std::cout << "\nЗадание 5.c" << std::endl;
+		Rect r(-4, 4, 10, -10, Shape::GREEN);
+		Circle c(5, 5, 4, Shape::YELLOW);
+		//Shape* ar[] = { new Shape(r), new Rect(r), new Circle(r), new Circle(), new Rect(c), new Rect() };
+		Shape* ar[] = { new Shape(r), new Rect(r), new Circle(), new Rect(c), new Rect() };
 		//Вызовите для каждого элемента массива метод WhereAmIVirtual()
-
+		for (size_t i = 0; i < sizeof(ar) / sizeof(Shape*); i++)
+		{
+			ar[i]->WhereAmIVirtual();
+			delete ar[i];
+			/*Now I am in class Shape virtual
+			Now I am in Shape's destructor!
+			Now I am in class Rect virtual
+			Now I am in Rect's destructor!
+			Now I am in Shape's destructor!
+			Now I am in class Circle virtual
+			Now I am in Circle's destructor!
+			Now I am in Shape's destructor!
+			Now I am in class Rect virtual
+			Now I am in Rect's destructor!
+			Now I am in Shape's destructor!*/
+		}
 
 		stop
 	}

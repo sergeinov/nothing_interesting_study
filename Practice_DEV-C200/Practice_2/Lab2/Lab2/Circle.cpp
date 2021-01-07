@@ -16,6 +16,14 @@ Circle::Circle(int x, int y, double diametr, eColor color) : Shape(color)
 	m_y = y;
 };
 
+// коструктор копирования
+Circle::Circle(const Circle& copyToOtherClass)
+{
+	m_diametr = copyToOtherClass.m_diametr;
+	m_x = copyToOtherClass.m_x;
+	m_y = copyToOtherClass.m_y;
+};
+
 // деструктор
 Circle::~Circle() 
 {

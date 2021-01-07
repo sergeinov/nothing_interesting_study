@@ -14,6 +14,22 @@ Rect::Rect(int left, int right, int top, int bottom, eColor color) : Shape(color
 	Normalize();
 };
 
+// коструктор копирования
+Rect::Rect(const Rect& copyToOtherClass)
+{
+	m_left = copyToOtherClass.m_left;
+	m_right = copyToOtherClass.m_right;
+	m_top = copyToOtherClass.m_top;
+	m_bottom = copyToOtherClass.m_bottom;
+}
+Rect::Rect(const Circle& copyToOther)
+{
+	m_left += copyToOther.GetDiametr();
+	m_right += copyToOther.GetDiametr();
+	m_top += copyToOther.GetDiametr();
+	m_bottom += copyToOther.GetDiametr();
+};
+
 // деструктор
 Rect::~Rect()
 {
