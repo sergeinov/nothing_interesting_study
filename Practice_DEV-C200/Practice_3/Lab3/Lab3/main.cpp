@@ -7,13 +7,27 @@
 #include<iostream>
 #include <tchar.h>
 #include"MyString.h"
+#include "Point.h"
 
 #define	  stop __asm nop
+
+// перегрузка оператора -=
+Point& operator-=(Point& other, const int number)
+{
+	other.m_x = other.m_x - number;
+	other.m_y = other.m_y - number;
+	return other;
+};
+Point& operator-=(Point& other, Point& other2)
+{
+	other.m_x = other.m_x - other2.m_x;
+	other.m_y = other.m_y - other2.m_y;
+	return other;
+};
 
 int _tmain(int argc, _TCHAR* argv[])
 {
 //////////////////////////////////////////////////////////////////////
-
 
 
 	//Задание 1.Перегрузка операторов.
@@ -26,15 +40,19 @@ int _tmain(int argc, _TCHAR* argv[])
 	{
 		MyString s1("AAA"), s2;
 		s2=s1;		// MyString& operator=();
+		//s2.operator=(s1);
 		s1="CCC";	// MyString(параметры) -> MyString& operator=() -> ~MyString(); 
+		//s1.operator=("CCC");
 		s2= MyString("tmp"); // MyString(параметры) -> MyString& operator=() -> ~MyString();
+		//s2.operator=(MyString("tmp"));
 		s1=s1;			// MyString& operator=();
+		//s1.operator=(s1);
 		stop
 	}
 
 
 
-/*
+
 	//2.Создайте класс Point, который будет содержать координаты
 	//"точки". Объявите конструктор (конструкторы) класса   
 
@@ -47,38 +65,45 @@ int _tmain(int argc, _TCHAR* argv[])
 	//a) с помощью метода класса (оператор +=)
 	//б) с помощью глобальной функции (оператор -=)
 	//Проверьте корректность работы перегруженного оператора
+	{
+		//(оператор +=)
+		Point pt1(1, 1);
+		Point pt2(2, 2);
+		pt2+=pt1;		//pt2 = {m_x=3 m_y=3 }// вызов Point::operator+=(const Point& other)
+		pt2+=1;			//pt2 = {m_x=4 m_y=4 }		
+		Point pt3(3, 3);
+		pt2+=pt1+=pt3;	//pt2 = {m_x=8 m_y=8 } // вызов Point::operator+=(const Point& other)
+		stop
+		//(оператор -= ) // с помощью глобальной функции
+		pt2 -= pt1;		//pt2 = {m_x=4 m_y=4 }
+		pt2 -= 1;		//pt2 = {m_x=3 m_y=3 }
+		pt2 -= pt1 -= pt3;	//pt2 = {m_x=2 m_y=2 }
+		stop
+	}
 
-	Point pt1(1,1);
-	Point pt2(2,2);
-//	pt2+=pt1;
-//  pt2+=1;
-	Point pt3(3,3);
-//  pt2+=pt1+=pt3;
-	stop
-*/
-/*
 	//Задание 2c. Перегрузите оператор +/- 
 	//a)с помощью методов класса (оператор +)
 	//б) с помощью  глобальных функций (оператор -)
 	//так, чтобы любая из закомментированных строк
 	//кода выполнялась корректно
-	Point pt1(1,1);
-	Point pt2(2,2);
-	Point pt3;
+	{
+		Point pt1(1, 1);
+		Point pt2(2, 2);
+		Point pt3;
 
-//	pt3 = pt1 + 5;
-//	pt3 = 2 + pt1;
-//	pt3 = pt1 + pt2;
+		pt3 = pt1 + 5;
+		//pt3 = 2 + pt1;	// только с помощью глобальной функции
+		pt3 = pt1 + pt2;
+		 
+		//	pt3 = pt1 - 5;
+		//	pt3 = pt1 - pt2;
+		stop
 
-//	pt3 = pt1 - 5;
-//	pt3 = pt1 - pt2;
-	stop
+			//Задание 1d. Перегрузите унарный оператор +/- 
+		//	pt3 = -pt1;
+		//	pt3 = +pt1;
 
-	//Задание 1d. Перегрузите унарный оператор +/- 
-//	pt3 = -pt1;
-//	pt3 = +pt1;
-
-*/
+	}
 
 /*
 	//Задание 2d. Перегрузите оператор << (вывода в поток) для
