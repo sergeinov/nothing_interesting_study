@@ -15,15 +15,28 @@ public:
 
 	// перегрузка оператора +=
 	Point& operator+=(const Point& RightObject);
-	Point& operator+=(const int number);
+	Point& operator+=(const int value);
 
 	// перегрузка оператора -=  с помощью дружественной функции. В глобальной области  main.cpp
-	friend Point& operator-=(Point& leftObject, const int number);
+	friend Point& operator-=(Point& leftObject, const int value);
 	friend Point& operator-=(Point& leftObject,Point& RightObject);
 
 	//Перегрузка оператора +
 	Point& operator+(const Point& RightObject);
-	Point& operator+(const int number);
+	Point& operator+(const int value);
+
+	// перегрузка оператора + с помощью глобальной функции
+	friend Point& operator+(const int value, Point& RightObject);
+
+	// перегрузка оператора - с помощью глобальной функции
+	friend Point operator-(Point& leftObject, const int value);
+	friend Point operator-(Point& leftObject, Point& RightObject);
+
+	// Перегрузика унарного оператора + (+pt1;)
+	Point& operator-();
+
+	// Перегрузика унарного оператора - (-pt1;)
+	Point& operator+();
 
 };
 

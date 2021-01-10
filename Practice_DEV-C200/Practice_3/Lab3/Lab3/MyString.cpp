@@ -74,3 +74,23 @@ MyString& MyString::operator=(const MyString& otherStr)
     }
     return *this;                               // для обеспечения цепочечного присваивания возвращаем по ссылке адрес объекта
 };
+
+//Перегрузка оператора +
+const MyString& MyString::operator+(const MyString& RightObject)
+{
+    if (RightObject.m_pName)                              
+    {
+        strcat(this->m_pName, RightObject.m_pName);      // конкатенация строк
+    }
+    return *this;
+};
+
+//Перегрузка оператора +=
+const MyString& MyString::operator+=(const MyString& RightObject)
+{
+    if (RightObject.m_pName)
+    {
+        strcat(this->m_pName, RightObject.m_pName);      // конкатенация строк
+    }
+    return *this;
+};

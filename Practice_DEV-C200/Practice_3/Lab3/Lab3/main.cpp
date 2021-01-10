@@ -12,17 +12,53 @@
 #define	  stop __asm nop
 
 // перегрузка оператора -=
-Point& operator-=(Point& other, const int number)
+Point& operator-=(Point& leftObject, const int value)
 {
-	other.m_x = other.m_x - number;
-	other.m_y = other.m_y - number;
-	return other;
+	leftObject.m_x = leftObject.m_x - value;
+	leftObject.m_y = leftObject.m_y - value;
+	return leftObject;		// возврат ссылки существующего обьекта
 };
-Point& operator-=(Point& other, Point& other2)
+Point& operator-=(Point& leftObject, Point& RightObject)
 {
-	other.m_x = other.m_x - other2.m_x;
-	other.m_y = other.m_y - other2.m_y;
-	return other;
+	// c временным обьектом Point temp; не получается  pt2 -= pt1 -= pt3;
+	// приходится менять значение  leftObject
+	leftObject.m_x = leftObject.m_x - RightObject.m_x;
+	leftObject.m_y = leftObject.m_y - RightObject.m_y;
+	return leftObject;			// возврат ссылки существующего обьекта
+};
+
+// перегрузка оператора +
+Point& operator+(const int value, Point& RightObject)
+{
+	RightObject.m_x += value;
+	RightObject.m_y += value;
+	return RightObject;			// возврат ссылки существующего обьекта
+};
+
+// перегрузка оператора - 
+Point operator-(Point& leftObject, const int value)
+{
+	// тут с временным обьектом Point temp; можно 
+	Point temp;
+	temp.m_x = leftObject.m_x - value;
+	temp.m_y = leftObject.m_y - value;
+	return temp;		// вызов конструктор копирования Point(const Point& other);
+};
+Point operator-(Point& leftObject, Point& RightObject)
+{
+	Point temp;
+	temp.m_x = leftObject.m_x - RightObject.m_x;
+	temp.m_y = leftObject.m_y - RightObject.m_y;
+	return temp;		// вызов конструктор копирования Point(const Point& other);
+};
+
+// Перегрузка оператора << 
+//если вы попытаетесь возвратить std::ostream по значению, то получите ошибку компилятора. 
+//Это случится из-за того, что std::ostream запрещает свое копирование.
+std::ostream& operator<<(std::ostream& out, const MyString& RightObject)
+{
+	out << "m_pName: " << RightObject.m_pName;
+	return out;
 };
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -70,9 +106,12 @@ int _tmain(int argc, _TCHAR* argv[])
 		Point pt1(1, 1);
 		Point pt2(2, 2);
 		pt2+=pt1;		//pt2 = {m_x=3 m_y=3 }// вызов Point::operator+=(const Point& other)
-		pt2+=1;			//pt2 = {m_x=4 m_y=4 }		
+		//pt2.operator+=(pt1);
+		pt2+=1;			//pt2 = {m_x=4 m_y=4 }	
+		//pt2.operator+=(1);
 		Point pt3(3, 3);
 		pt2+=pt1+=pt3;	//pt2 = {m_x=8 m_y=8 } // вызов Point::operator+=(const Point& other)
+		//pt2.operator+=(pt1.operator+=(pt3));
 		stop
 		//(оператор -= ) // с помощью глобальной функции
 		pt2 -= pt1;		//pt2 = {m_x=4 m_y=4 }
@@ -91,40 +130,54 @@ int _tmain(int argc, _TCHAR* argv[])
 		Point pt2(2, 2);
 		Point pt3;
 
+		// (оператор +)
 		pt3 = pt1 + 5;
-		//pt3 = 2 + pt1;	// только с помощью глобальной функции
+		//pt3.operator+(pt1 + 5);
+		pt3 = 2 + pt1;		 // только с помощью глобальной функции
 		pt3 = pt1 + pt2;
-		 
-		//	pt3 = pt1 - 5;
-		//	pt3 = pt1 - pt2;
+		//pt3.operator+(pt1 + pt2);
+
+		// (оператор - )
+		pt3 = pt1 - 5;
+		pt3 = pt1 - pt2;
+		//pt3.operator+(pt1 - pt2);
 		stop
 
 			//Задание 1d. Перегрузите унарный оператор +/- 
-		//	pt3 = -pt1;
-		//	pt3 = +pt1;
+		// путаницы между отрицательным унарным оператором (-) и бинарным оператором (-) нету.
+		// т.к. они имеют разное количество параметров
+		pt3 = -pt1;
+		//pt3.operator-();	// как написать функциональную форму??
+		pt3 = +pt1;
+		//pt3.operator+();
+		
+		stop
 
+	// Почему нет вызова деструкторов?
 	}
 
-/*
+
 	//Задание 2d. Перегрузите оператор << (вывода в поток) для
 	//класса MyString таким образом, чтобы при выполнении приведенной строки
 	//на экран было выведено:
 	//contents:  "QWERTY"
 
-	MyString s("QWERTY");
-	cout<<s<<endl;
+	// перегрузка возможна только глобальной функцией. Т.к операнд слева библиотечная функция
+	{
+		MyString s("QWERTY");
+		std::cout << s << std::endl;
+		stop
+	}
 
-
-	stop
-*/
-/*//Задание 2e*. Перегрузите операторы + и += для класса MyString таким образом,
+	//Задание 2e*. Перегрузите операторы + и += для класса MyString таким образом,
   //чтобы происходила конкатенация строк
-	MyString s1("QWERTY"), s2("AAA"), s3, s4("BBB");
-	s3 = s1+s2;
-	s4 += s1; 
-	stop
+	{
+		MyString s1("QWERTY"), s2("AAA"), s3, s4("BBB");
+		s3  = s1 + s2;
+		s4 += s1;
+		stop
+	}
 
-*/
 	//Задание 3. Разработать "базу данных" о сотрудниках посредством ассоциативного
 	//массива. Ключом является фамилия (ключ в задании уникален, поэтому нескольких Ивановых
 	//в базе быть не может), а данными: пол, возраст, должность, зарплата...

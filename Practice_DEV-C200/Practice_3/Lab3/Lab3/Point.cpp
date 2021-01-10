@@ -22,10 +22,10 @@ Point& Point::operator+=(const Point& RightObject)
 	return *this;
 
 };
-Point& Point::operator+=(const int number)
+Point& Point::operator+=(const int value)
 {
-	m_x = m_x + number;
-	m_y = m_y + number;
+	m_x = m_x + value;
+	m_y = m_y + value;
 	return *this;
 
 };
@@ -36,9 +36,23 @@ Point& Point::operator+(const Point& RightObject)
 	*this += RightObject;	// вызов перегруженного метода +=
 	return *this;
 };
-Point& Point::operator+(const int number)
+Point& Point::operator+(const int value)
 {
-	this->m_x += number;
-	this->m_y += number;
+	this->m_x += value;
+	this->m_y += value;
+	return *this;
+};
+
+// Перегрузика унарного оператора - (-pt1;)
+Point& Point::operator-()
+{
+	this->m_x = -m_x;
+	this->m_y = -m_y;
+	return *this;
+};
+
+// Перегрузика унарного оператора + (+pt1;)
+Point& Point::operator+()
+{
 	return *this;
 };
