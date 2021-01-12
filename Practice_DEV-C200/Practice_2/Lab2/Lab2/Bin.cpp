@@ -1,9 +1,9 @@
 #include "Bin.h"
+#include<iostream>
 
-
-void ShowBin()
+void Bin::ShowBin()
 {
-
+	std::cout << "" << std::endl;
 };
 
 

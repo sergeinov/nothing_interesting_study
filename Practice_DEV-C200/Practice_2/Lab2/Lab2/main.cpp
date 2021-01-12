@@ -10,6 +10,9 @@
 #include "Circle.h"
 #include "Shape.h"
 #include <cstdarg>
+#include "Oct.h"
+#include "Hex.h"
+#include "Bin.h"
 
 #define	  stop __asm nop
 
@@ -17,7 +20,7 @@
 	MyString _cdecl JoinToSentence(const char* str1, ...)
 	{
 		// создаем временный объект MyString
-		MyString mystr;
+		//MyString mystr;
 
 		//char* p = reinterpret_cast<char*>(&n) + sizeof(int);		// вспомогательный указатель на первый элемент
 		//int count = 0;											// подсчет символов в строке 
@@ -47,7 +50,7 @@
 
 		// создаем память для строк
 		char* temp = new char[sizeAllStr + 1];			
-		temp[0] = 0;												// инициализируем временный дин. указатель
+		temp[0] = '\0';												// инициализируем временный дин. указатель
 		p = &str1;													// указатель на первый параметр
 
 		// соединяем и записываем в указатель предложение
@@ -59,8 +62,8 @@
 		}
 
 		// меняем переменную в классе на нашу строку
-		mystr.SetNewString(temp);
-
+		MyString mystr(temp);
+		
 		// удаляем ненужные указатели
 		p = nullptr;
 		delete[] temp;
@@ -275,8 +278,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	{
 		std::cout << "\nЗадание 5.б" << std::endl;
 		Shape* s = new Shape();
-		Rect* r = new Rect(-4, 4, 10, -10, Shape::GREEN);
-		Circle* c= new Circle(5, 5, 4, Shape::YELLOW);
+		Shape* r = new Rect(-4, 4, 10, -10, Shape::GREEN);
+		Shape* c= new Circle(5, 5, 4, Shape::YELLOW);
 		//  Деструкторы не вызываются
 
 		delete s;
@@ -332,7 +335,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		//в чем заключается проблема???
 		for (size_t i = 0; i < 10; i++)
 		{
-			//pShapes[i].WhereAmIVirtual();	// вызов метода Rect
+			static_cast<Rect*>(pShapes)[i].WhereAmIVirtual();	// вызов метода Rect
 		  // ошибка при вызове pShapes[1].WhereAmIVirtual()
 		}
 
@@ -386,8 +389,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		p->Inflate(5);
 		Circle c(5, 5, 4, Shape::YELLOW);
 		p = &c;
-		p->Inflate(5);*/
-		stop
+		p->Inflate(5);
+		stop*/
 	}
 
 

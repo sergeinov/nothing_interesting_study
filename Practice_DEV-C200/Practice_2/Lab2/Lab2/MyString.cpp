@@ -14,6 +14,16 @@ MyString::MyString(const char* pName)
 	strcpy(m_pName, pName);
 };
 
+//  move  конструктор копирования
+MyString::MyString(MyString&& str)
+{
+    // копируем
+    this->m_pName = new char[strlen(str.m_pName) + 1];  // выделяем память
+    strcpy(this->m_pName, str.m_pName);                 // копируем
+    delete[] str.m_pName;                              // удаляем временный объект
+    str.m_pName = nullptr;
+};
+
 // деструктор
 MyString::~MyString()
 {

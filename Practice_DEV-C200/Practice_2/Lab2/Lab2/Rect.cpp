@@ -15,7 +15,7 @@ Rect::Rect(int left, int right, int top, int bottom, eColor color) : Shape(color
 };
 
 // коструктор копирования
-Rect::Rect(const Rect& copyToOtherClass)
+Rect::Rect(const Rect& copyToOtherClass) : Shape(copyToOtherClass)
 {
 	m_left = copyToOtherClass.m_left;
 	m_right = copyToOtherClass.m_right;

@@ -1,11 +1,10 @@
 #pragma once
 #include "Byte.h"
-class Hex 
+class Oct
 {
 private:
 	MyByte byte;
 public:
-	Hex();
-	void ShowHex();
+	void ShowOct();
 };
 

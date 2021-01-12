@@ -23,6 +23,10 @@ Circle::Circle(const Circle& copyToOtherClass)
 	m_x = copyToOtherClass.m_x;
 	m_y = copyToOtherClass.m_y;
 };
+Circle::Circle(const Rect& copyRectClass) : Shape(copyRectClass)
+{
+
+};
 
 // деструктор
 Circle::~Circle() 
