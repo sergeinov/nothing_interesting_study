@@ -22,13 +22,13 @@ Rect::Rect(const Rect& copyToOtherClass) : Shape(copyToOtherClass)
 	m_top = copyToOtherClass.m_top;
 	m_bottom = copyToOtherClass.m_bottom;
 }
-Rect::Rect(const Circle& copyToOther)
-{
-	m_left += copyToOther.GetDiametr();
-	m_right += copyToOther.GetDiametr();
-	m_top += copyToOther.GetDiametr();
-	m_bottom += copyToOther.GetDiametr();
-};
+//Rect::Rect(const Circle& copyToOther)
+//{
+//	m_left += copyToOther.GetDiametr();
+//	m_right += copyToOther.GetDiametr();
+//	m_top += copyToOther.GetDiametr();
+//	m_bottom += copyToOther.GetDiametr();
+//};
 
 // деструктор
 Rect::~Rect()

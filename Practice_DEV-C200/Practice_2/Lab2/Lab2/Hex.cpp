@@ -1,14 +1,8 @@
 #include "Hex.h"
 #include <iostream>
 
-// конструкторы
-Hex::Hex()
+void Hex::ShowHex() const
 {
-	byte = 0;
-};
-
-
-void Hex::ShowHex()
-{
-	std::cout << std::hex << byte.getChar() << std::endl;
+	std::cout << "\nHex: ";
+	std::cout << std::hex<< he;
 };

@@ -1,11 +1,12 @@
 #pragma once
-#include "Byte.h"
+
 class Hex 
 {
 private:
-	MyByte byte;
+	char he;
 public:
-	Hex();
-	void ShowHex();
+	
+
+	void ShowHex() const;
 };
 

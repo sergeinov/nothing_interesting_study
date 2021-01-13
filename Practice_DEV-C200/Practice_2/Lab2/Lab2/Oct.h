@@ -1,10 +1,11 @@
 #pragma once
-#include "Byte.h"
+
 class Oct
 {
 private:
-	MyByte byte;
+	char oc;
 public:
-	void ShowOct();
+	
+	void ShowOct() const ;
 };
 

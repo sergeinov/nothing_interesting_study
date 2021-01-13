@@ -1,8 +1,11 @@
 #include "Oct.h"
 #include <iostream>
 
-void Oct::ShowOct()
+//конструктор
+
+
+void Oct::ShowOct() const
 {
-	
-	std::cout<< std::oct << byte.getChar() << std::endl;
+	std::cout << "\nOct: ";
+	std::cout<< std::oct << oc;
 };

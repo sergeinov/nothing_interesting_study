@@ -16,11 +16,11 @@ public:
 	MyByte(char c);
 
 	// методы
-	char* getChar();
+	//char getChar() const;
 
-	void ShowBin();
-	void ShowHex();
-	void ShowOct();
+	void ShowBin() const;
+	void ShowHex() const;
+	void ShowOct() const;
 };
 
 

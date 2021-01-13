@@ -10,9 +10,10 @@
 #include "Circle.h"
 #include "Shape.h"
 #include <cstdarg>
-#include "Oct.h"
-#include "Hex.h"
-#include "Bin.h"
+//#include "Oct.h"
+//#include "Hex.h"
+//#include "Bin.h"
+#include"Byte.h"
 
 #define	  stop __asm nop
 
@@ -75,6 +76,9 @@
 int _tmain(int argc, _TCHAR* argv[])
 {
 	setlocale(LC_ALL, "Rus");
+	// проверка на утечку памяти
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	//Задание 1.Массив объектов класса.
 	{
 	//Объявите и проинициализируйте массив ar из объектов
@@ -93,9 +97,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		}
 				
 	//Замените размер const int N=5; , не изменяя список инициализаторов.
-			
+		stop
 	}
-	stop
+	
 
 	//Задание 2.Массив указателей на объекты класса.
 	{
@@ -122,9 +126,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		}
 
 		//Замените размер const int N=5; , не изменяя список инициализаторов.
-
-	}
 		stop
+	}
+		
 
 	{
 		//Задание 3.Простое наследование.Аргументы конструктора,
@@ -303,7 +307,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		Rect r(-4, 4, 10, -10, Shape::GREEN);
 		Circle c(5, 5, 4, Shape::YELLOW);
 		//Shape* ar[] = { new Shape(r), new Rect(r), new Circle(r), new Circle(), new Rect(c), new Rect() };
-		Shape* ar[] = { new Shape(r), new Rect(r), new Circle(), new Rect(c), new Rect() };
+		Shape* ar[] = { new Shape(r), new Rect(r), new Circle(), new Rect() };
 		//Вызовите для каждого элемента массива метод WhereAmIVirtual()
 		for (size_t i = 0; i < sizeof(ar) / sizeof(Shape*); i++)
 		{
@@ -404,7 +408,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		stop
 	}
 ////////////////////////////////////////////////////////////////////////
-/*
+
 	//Задание 10.Объединения (union) C++. Битовые поля.
 	//1.
 	//Создайте следующие классы для различных представлений значений байта:
@@ -425,14 +429,17 @@ int _tmain(int argc, _TCHAR* argv[])
 	//б) выводить отдельные (указанные посредством параметра) шестнадцатеричные,
 	//			восьмеричные, двоичные цифры;
 	//в) изменять отдельные двоичные, восьмеричные или шестнадцатеричные цифры;
+	{
+		MyByte byte(0x1f);
+		stop
+		byte.ShowHex();
+		byte.ShowBin();
+		byte.ShowOct();
+		stop
 
-	MyByte byte(0x1f);
-	byte.ShowHex();
-	byte.ShowBin();
-	//...
+	}
 
 
-*/
 	return 0;
 }//endmain
 

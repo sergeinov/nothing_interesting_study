@@ -11,10 +11,10 @@ MyByte::MyByte(char c)
 }
 
 // методы
-char* MyByte::getChar()
-{
-	return &myC;
-};
+//char MyByte::getChar() const
+//{
+//	return myC;
+//};
 
 void MyByte::ShowBin() const
 {
