@@ -76,11 +76,40 @@ MyString& MyString::operator=(const MyString& otherStr)
 };
 
 //Перегрузка оператора +
-const MyString& MyString::operator+(const MyString& RightObject)
+const MyString MyString::operator+(const MyString& RightObject)
 {
-    if (RightObject.m_pName)                              
+    
+    //if (RightObject.m_pName)                              
+    //{
+    //    return MyString(strcat(this->m_pName, RightObject.m_pName));      // конкатенация строк
+    //}
+    //return *this;
+
+    int size = 0;
+    
+
+    if (RightObject.m_pName)
     {
-        strcat(this->m_pName, RightObject.m_pName);      // конкатенация строк
+        size = strlen(RightObject.m_pName) + strlen(this->m_pName) + 1;     // память для двух строк
+        char* temp = new char[size];            // выделяем память на временную переменную
+
+        // проверка на пустой объект левого операнда
+        if (m_pName)
+        {
+            strcpy(temp, this->m_pName);            // копируем во временную
+        }
+        else
+        {
+            temp[0] = '\0';                 // в пустую память засовываем \0        
+                                            // чтобы strcat нашел конец строки для конкатенации второй строи
+        }
+        
+        strcat(temp, RightObject.m_pName);      // конкатенация строк
+        MyString str(temp);                    // вызов конструктора копирования
+        delete[] temp;                 // освобождаем  памяти
+        return str;
+        // конструктор копирования
+        // деструктор
     }
     return *this;
 };
@@ -92,8 +121,8 @@ const MyString& MyString::operator+=(const MyString& RightObject)
     -выделить память для двух строк, затем 
     -скопировать в новую память первую строку, 
     -затем strcat, 
-    -удалить основную, 
-    -присвоить указатель временной на основную.
+    -удалить this->m_pName, 
+    -присвоить указатель m_pName = temp.
     */
     int size = 0;
 
@@ -107,10 +136,15 @@ const MyString& MyString::operator+=(const MyString& RightObject)
         {
             strcpy(temp, this->m_pName);            // копируем во временную
         }
+        else
+        {
+            temp[0] = '\0';                 // в пустую память засовываем \0        
+                                            // чтобы strcat нашел конец строки для конкатенации второй строи
+        }
         
         strcat(temp, RightObject.m_pName);      // конкатенация строк
         delete[] this->m_pName;                 // освобождаем предидущий блок памяти
-        this->m_pName = temp;                         // присваиваем указатель временной на основную
+        this->m_pName = temp;                   // присваиваем указатель временной на основную
     }
     return *this;
 };

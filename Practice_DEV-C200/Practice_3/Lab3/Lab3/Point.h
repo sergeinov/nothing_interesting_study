@@ -7,7 +7,7 @@ private:
 	int m_y;
 public:
 	// конструктор
-	Point() { m_x = 0; m_y = 0; };
+	explicit Point() { m_x = 0; m_y = 0; };
 	Point(int x, int y);
 	//деструктор
 	// конструктор копирования
@@ -22,8 +22,8 @@ public:
 	friend Point& operator-=(Point& leftObject,Point& RightObject);
 
 	//Перегрузка оператора +
-	Point& operator+(const Point& RightObject);
-	Point& operator+(const int value);
+	Point operator+(const Point& RightObject);
+	Point operator+(const int value);
 
 	// перегрузка оператора + с помощью глобальной функции
 	friend Point& operator+(const int value, Point& RightObject);

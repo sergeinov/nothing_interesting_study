@@ -17,30 +17,33 @@ Point::Point(const Point& otherClass)
 // перегрузка оператора +=
 Point& Point::operator+=(const Point& RightObject)
 {
-	m_x = m_x + RightObject.m_x;
-	m_y = m_y + RightObject.m_y;
+	this->m_x = this->m_x + RightObject.m_x;
+	this->m_y = this->m_y + RightObject.m_y;
 	return *this;
 
 };
 Point& Point::operator+=(const int value)
 {
-	m_x = m_x + value;
-	m_y = m_y + value;
+	this->m_x = this->m_x + value;
+	this->m_y = this->m_y + value;
 	return *this;
 
 };
 
 //Перегрузка оператора +
-Point& Point::operator+(const Point& RightObject)
+Point Point::operator+(const Point& RightObject)
 {
-	*this += RightObject;	// вызов перегруженного метода +=
-	return *this;
+	return Point(m_x + RightObject.m_x, m_y + RightObject.m_y); // возвращаем копию обекта со сложенными параметрами
+	// вызов деструктора
 };
-Point& Point::operator+(const int value)
+Point Point::operator+(const int value)
 {
-	this->m_x += value;
+	/*this->m_x += value;
 	this->m_y += value;
-	return *this;
+	return *this;*/
+
+	return Point(m_x + value, m_y + value); // возвращаем копию обекта со сложенными параметрами
+	// вызов деструктора
 };
 
 // Перегрузика унарного оператора - (-pt1;)

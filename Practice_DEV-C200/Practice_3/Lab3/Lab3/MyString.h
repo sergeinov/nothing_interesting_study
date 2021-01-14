@@ -26,7 +26,7 @@ public:
 	friend std::ostream& operator<<(std::ostream& out, const MyString& RightObject);
 
 	//Перегрузка оператора +
-	const MyString& operator+(const MyString& RightObject);
+	const MyString operator+(const MyString& RightObject);
 
 	//Перегрузка оператора +=
 	const MyString& operator+=(const MyString& RightObject);

@@ -75,13 +75,13 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	{
 		MyString s1("AAA"), s2;
-		s2=s1;		// MyString& operator=();
+		s2 = s1;		// MyString& operator=();
 		//s2.operator=(s1);
-		s1="CCC";	// MyString(параметры) -> MyString& operator=() -> ~MyString(); 
+		s1 ="CCC";	// MyString(параметры) -> MyString& operator=() -> ~MyString(); 
 		//s1.operator=("CCC");
-		s2= MyString("tmp"); // MyString(параметры) -> MyString& operator=() -> ~MyString();
+		s2 = MyString("tmp"); // MyString(параметры) -> MyString& operator=() -> ~MyString();
 		//s2.operator=(MyString("tmp"));
-		s1=s1;			// MyString& operator=();
+		s1 = s1;			// MyString& operator=();
 		//s1.operator=(s1);
 		stop
 	}
@@ -174,13 +174,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	{
 		MyString s1("QWERTY"), s2("AAA"), s3, s4("BBB");
 		s3  = s1 + s2;
-		// если s4 m_pName == 0,
 		s4 += s1;
 		stop
-
-		// ошибка деструктора s1
 	}
-
+	stop
 	//Задание 3. Разработать "базу данных" о сотрудниках посредством ассоциативного
 	//массива. Ключом является фамилия (ключ в задании уникален, поэтому нескольких Ивановых
 	//в базе быть не может), а данными: пол, возраст, должность, зарплата...
