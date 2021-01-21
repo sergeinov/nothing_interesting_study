@@ -10,6 +10,7 @@ public:
     Circle(int x, int y, double diametr, eColor color) ;
     // коструктор копирования
     Circle(const Circle& copyToOtherClass);
+    // конструктор с объектом прямоугольника
     Circle(const Rect& copyRectClass);
     // деструктор
     virtual ~Circle();

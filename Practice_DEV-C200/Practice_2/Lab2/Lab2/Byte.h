@@ -14,6 +14,11 @@ public:
 	// конструктор
 	MyByte();
 	MyByte(char c);
+	MyByte(unsigned char x, unsigned char y)
+	{
+		h_hex.he1 = x;
+		h_hex.he0 = y;
+	};
 
 	// методы
 	//char getChar() const;

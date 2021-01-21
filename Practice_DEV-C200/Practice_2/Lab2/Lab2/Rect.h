@@ -1,5 +1,6 @@
 #pragma once
 #include "Shape.h"
+//#include "Circle.h"
 
 class Rect :
     public Shape
@@ -11,12 +12,14 @@ public:
 	Rect(int left, int right, int top, int bottom, eColor color);
 	// коструктор копирования
 	Rect(const Rect& copyToOtherClass);
+
+	// конструктор с объектом круга
 	//Rect(const Circle& copyToOther);
 
 	// деструктор
 	virtual ~Rect();
 
-	// метод нормализует прямоуголик при не правильном вводе пользователем параметров
+	// метод нормализует прямоугольник при не корректном вводе пользователем параметров
 	void Normalize();
 	// метод увеличивает сторону прямоугольника на значение
 	void InflateRect(int left, int right, int top, int bottom);

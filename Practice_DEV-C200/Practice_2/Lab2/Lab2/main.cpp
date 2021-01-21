@@ -306,8 +306,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		std::cout << "\nЗадание 5.c" << std::endl;
 		Rect r(-4, 4, 10, -10, Shape::GREEN);
 		Circle c(5, 5, 4, Shape::YELLOW);
-		//Shape* ar[] = { new Shape(r), new Rect(r), new Circle(r), new Circle(), new Rect(c), new Rect() };
-		Shape* ar[] = { new Shape(r), new Rect(r), new Circle(), new Rect() };
+		Shape* ar[] = { new Shape(r), new Rect(r), new Circle(r), new Circle(), new Rect() };
+		//Shape* ar[] = { new Shape(r), new Rect(r), new Circle(), new Rect() };
 		//Вызовите для каждого элемента массива метод WhereAmIVirtual()
 		for (size_t i = 0; i < sizeof(ar) / sizeof(Shape*); i++)
 		{
@@ -431,6 +431,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	//в) изменять отдельные двоичные, восьмеричные или шестнадцатеричные цифры;
 	{
 		MyByte byte(0x1f);
+		MyByte byte1(1, 4);
 		stop
 		byte.ShowHex();
 		byte.ShowBin();

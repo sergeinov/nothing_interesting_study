@@ -25,7 +25,15 @@ Circle::Circle(const Circle& copyToOtherClass)
 };
 Circle::Circle(const Rect& copyRectClass) : Shape(copyRectClass)
 {
-
+	int left, right, top, bottom;
+	copyRectClass.GetAll(&left, &right, &top, &bottom);
+	m_x = (left - right) / 2;
+	m_y = (top - bottom) / 2;
+	m_diametr = (left < right) ? left : right; 		// диаметр круга, окружающий прямоугольник // минимальная часть
+	if (m_diametr < 0)
+	{
+		-m_diametr;
+	}
 };
 
 // деструктор

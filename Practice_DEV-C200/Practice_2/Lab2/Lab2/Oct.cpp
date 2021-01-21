@@ -7,6 +7,5 @@
 void Oct::ShowOct() const
 {
 	std::cout << "\nOct: ";
-	std::cout.setf(std::ios::oct);
-	std::cout << oc;
+	std::cout << std::oct << o2 << o1 << o0 ;
 };

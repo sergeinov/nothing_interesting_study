@@ -4,5 +4,5 @@
 void Hex::ShowHex() const
 {
 	std::cout << "\nHex: ";
-	std::cout << std::hex<< he;
+	std::cout << std::hex<< he1 << he0;
 };

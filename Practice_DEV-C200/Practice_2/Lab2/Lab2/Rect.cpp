@@ -24,10 +24,7 @@ Rect::Rect(const Rect& copyToOtherClass) : Shape(copyToOtherClass)
 }
 //Rect::Rect(const Circle& copyToOther)
 //{
-//	m_left += copyToOther.GetDiametr();
-//	m_right += copyToOther.GetDiametr();
-//	m_top += copyToOther.GetDiametr();
-//	m_bottom += copyToOther.GetDiametr();
+//
 //};
 
 // деструктор
