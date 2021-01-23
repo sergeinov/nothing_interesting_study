@@ -8,11 +8,11 @@ Point::Point(int x, int y)
 };
 
 // конструктор копирования
-Point::Point(const Point& otherClass)
-{
-	m_x = otherClass.m_x;
-	m_y = otherClass.m_y;
-};
+//Point::Point(const Point& otherClass)
+//{
+//	m_x = otherClass.m_x;
+//	m_y = otherClass.m_y;
+//};
 
 // перегрузка оператора +=
 Point& Point::operator+=(const Point& RightObject)
@@ -31,12 +31,12 @@ Point& Point::operator+=(const int value)
 };
 
 //Перегрузка оператора +
-Point Point::operator+(const Point& RightObject)
+Point Point::operator+(const Point& RightObject) const
 {
 	return Point(m_x + RightObject.m_x, m_y + RightObject.m_y); // возвращаем копию обекта со сложенными параметрами
 	// вызов деструктора
 };
-Point Point::operator+(const int value)
+Point Point::operator+(const int value) const
 {
 	/*this->m_x += value;
 	this->m_y += value;
@@ -47,15 +47,16 @@ Point Point::operator+(const int value)
 };
 
 // Перегрузика унарного оператора - (-pt1;)
-Point& Point::operator-()
+Point Point::operator-() const
 {
-	this->m_x = -m_x;
-	this->m_y = -m_y;
-	return *this;
+	Point point(-m_x, -m_y);
+	/*this->m_x = -m_x;
+	this->m_y = -m_y;*/
+	return point;
 };
 
 // Перегрузика унарного оператора + (+pt1;)
-Point& Point::operator+()
+const Point& Point::operator+() const
 {
 	return *this;
 };

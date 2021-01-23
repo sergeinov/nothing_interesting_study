@@ -21,6 +21,8 @@ public:
 
 	//Перегрузка оператора присваивания =
 	MyString& operator=(const MyString& otherStr);
+	MyString& operator=(const char* otherStr);
+	MyString& operator=(MyString&& otherStr);
 
 	// Перегрузка оператора << 
 	friend std::ostream& operator<<(std::ostream& out, const MyString& RightObject);

@@ -11,7 +11,7 @@ public:
 	Point(int x, int y);
 	//деструктор
 	// конструктор копирования
-	Point(const Point& other);
+	//Point(const Point& other);
 
 	// перегрузка оператора +=
 	Point& operator+=(const Point& RightObject);
@@ -22,8 +22,8 @@ public:
 	friend Point& operator-=(Point& leftObject,Point& RightObject);
 
 	//Перегрузка оператора +
-	Point operator+(const Point& RightObject);
-	Point operator+(const int value);
+	Point operator+(const Point& RightObject) const; 
+	Point operator+(const int value) const;
 
 	// перегрузка оператора + с помощью глобальной функции
 	friend Point& operator+(const int value, Point& RightObject);
@@ -33,10 +33,10 @@ public:
 	friend Point operator-(Point& leftObject, Point& RightObject);
 
 	// Перегрузика унарного оператора + (+pt1;)
-	Point& operator-();
+	Point operator-() const;
 
 	// Перегрузика унарного оператора - (-pt1;)
-	Point& operator+();
+	const Point& operator+() const;
 
 };
 
