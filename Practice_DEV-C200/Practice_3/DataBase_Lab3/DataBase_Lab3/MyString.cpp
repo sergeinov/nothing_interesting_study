@@ -69,18 +69,48 @@ MyString& MyString::operator=(const MyString& otherStr)
     if (this != &otherStr)                       // проверка для самоприсваивания
     {
         delete[] this->m_pName;                  // освобождаем предидущий блок памяти
-        m_pName = new char[strlen(otherStr.m_pName) + 1];   // выделяем память
-        strcpy(m_pName, otherStr.m_pName);      // копируем
+        if (otherStr.m_pName)
+        {
+            m_pName = new char[strlen(otherStr.m_pName) + 1];   // выделяем память
+            strcpy(m_pName, otherStr.m_pName);      // копируем
+        }
+        else
+        {
+            this->m_pName = nullptr;
+        }
+        
     }
     return *this;                               // для обеспечения цепочечного присваивания возвращаем по ссылке адрес объекта
 };
 
+
 //Перегрузка оператора +
-const MyString& MyString::operator+(const MyString& RightObject)
+const MyString MyString::operator+(const MyString& RightObject)
 {
+
+    int size = 0;
+
+
     if (RightObject.m_pName)
     {
-        strcat(this->m_pName, RightObject.m_pName);      // конкатенация строк
+        if (this->m_pName)
+        {
+            size = strlen(RightObject.m_pName) + strlen(this->m_pName) + 1;     // память для двух строк
+
+            char* temp = new char[size];            // выделяем память на временную переменную
+            strcpy(temp, this->m_pName);            // копируем во временную
+            //  temp[0] = '\0';                 // в пустую память засовываем \0        
+            strcat(temp, RightObject.m_pName);      // конкатенация строк
+            MyString str(temp);                    // вызов конструктора копирования
+            delete[] temp;                 // освобождаем  памяти
+            return str;
+        }
+        else
+        {
+            return RightObject;
+        }
+        // конструктор копирования
+        // деструктор
     }
     return *this;
 };
@@ -88,22 +118,38 @@ const MyString& MyString::operator+(const MyString& RightObject)
 //Перегрузка оператора +=
 const MyString& MyString::operator+=(const MyString& RightObject)
 {
+    /*
+    -выделить память для двух строк, затем
+    -скопировать в новую память первую строку,
+    -затем strcat,
+    -удалить this->m_pName,
+    -присвоить указатель m_pName = temp.
+    */
     int size = 0;
 
     if (RightObject.m_pName)
     {
-        size = strlen(RightObject.m_pName) + strlen(this->m_pName) + 1;     // память для двух строк
-        char* temp = new char[size];            // выделяем память на временную переменную
-
-        // проверка на пустой объект левого операнда
-        if (m_pName)
+        if (this->m_pName)
         {
+            size = strlen(RightObject.m_pName) + strlen(this->m_pName) + 1;     // память для двух строк
+            char* temp = new char[size];            // выделяем память на временную переменную
             strcpy(temp, this->m_pName);            // копируем во временную
+               // temp[0] = '\0';                 // в пустую память засовываем \0        
+                                                // чтобы strcat нашел конец строки для конкатенации второй строи
+            strcat(temp, RightObject.m_pName);      // конкатенация строк
+            delete[] this->m_pName;                 // освобождаем предидущий блок памяти
+            this->m_pName = temp;                   // присваиваем указатель временной на основную
+        }
+        else
+        {
+            return RightObject;
         }
 
-        strcat(temp, RightObject.m_pName);      // конкатенация строк
-        delete[] this->m_pName;                 // освобождаем предидущий блок памяти
-        this->m_pName = temp;                         // присваиваем указатель временной на основную
     }
     return *this;
+};
+
+bool MyString::operator==(const char* str) const
+{
+    return strcmp(this->m_pName, str) != 0;
 };

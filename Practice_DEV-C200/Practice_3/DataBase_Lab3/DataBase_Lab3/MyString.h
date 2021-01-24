@@ -13,6 +13,7 @@ public:
 
 	// конструктор копирования
 	MyString(const MyString& otherStr);
+	MyString(MyString&& object);		// конструктор move
 
 	// метод получения значения
 	const char* GetString() const;
@@ -20,13 +21,17 @@ public:
 	void SetNewString(const char* source);
 
 	//Перегрузка оператора присваивания =
-	MyString& operator=(const MyString& otherStr);
+	MyString& operator=(const MyString& otherStr);	// для обьекта
+
+	MyString& operator=(MyString&& other);		//	для временного обьекта справа
+	MyString& operator=(const char* str);		// для строки справа "programmer"
+	bool operator==(const char* str) const;
 
 	// Перегрузка оператора << 
 	//friend std::ostream& operator<<(std::ostream& out, const MyString& RightObject);
 
 	//Перегрузка оператора +
-	const MyString& operator+(const MyString& RightObject);
+	const MyString operator+(const MyString& RightObject);
 
 	//Перегрузка оператора +=
 	const MyString& operator+=(const MyString& RightObject);

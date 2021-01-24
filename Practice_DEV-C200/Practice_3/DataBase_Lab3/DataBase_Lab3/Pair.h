@@ -6,7 +6,7 @@ class Pair
 private:
 	MyString key;		// ключ - фамилия
 	MyData data;		// данные о сотруднике
-public:
+//public:
 	// конструкторы
 	Pair();
 	Pair(const char* key, const MyData& data);
