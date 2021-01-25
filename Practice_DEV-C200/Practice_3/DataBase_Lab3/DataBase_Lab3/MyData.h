@@ -1,5 +1,7 @@
 #pragma once
 #include "MyString.h"
+#include<iostream>
+
 class MyData 
 
 {
@@ -17,8 +19,8 @@ public:
 	
 
 	// методы перегрузки
-
-	//friend ostream& operator<<(ostream& os, const MyData& data);
+	// для вывода данных о сотруднике std::cout << myBase["Petrova"];
+	friend std::ostream& operator<<(std::ostream& os, const MyData& data);
 
 };
 

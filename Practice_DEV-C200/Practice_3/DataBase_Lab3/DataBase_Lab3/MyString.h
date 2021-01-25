@@ -1,4 +1,5 @@
 #pragma once
+#include<iostream>
 
 class MyString
 {
@@ -28,7 +29,8 @@ public:
 	bool operator==(const char* str) const;
 
 	// Перегрузка оператора << 
-	//friend std::ostream& operator<<(std::ostream& out, const MyString& RightObject);
+	// для вывода m_job в при перегрузке в MyData std::ostream& operator<<(std::ostream& os, const MyData& data)
+	friend std::ostream& operator<<(std::ostream& os, const MyString& RightObject);
 
 	//Перегрузка оператора +
 	const MyString operator+(const MyString& RightObject);

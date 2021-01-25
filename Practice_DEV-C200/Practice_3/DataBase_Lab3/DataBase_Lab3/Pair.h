@@ -1,6 +1,8 @@
 #pragma once
-#include "MyString.h"
+//#include "MyString.h"
 #include "MyData.h"
+#include<iostream>
+
 class Pair
 {
 private:
@@ -15,6 +17,6 @@ private:
 	bool operator==(const char* key) const;		// для проверки есть ли в базе уже
 
 	friend class Base;
-	//friend ostream& operator<<(ostream& os, const Pair& pair);
+	friend std::ostream& operator<<(std::ostream& os, const Pair& pair);
 };
 

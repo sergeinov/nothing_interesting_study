@@ -149,7 +149,17 @@ const MyString& MyString::operator+=(const MyString& RightObject)
     return *this;
 };
 
+// оператор стравнения (специально для двух строк)
 bool MyString::operator==(const char* str) const
 {
-    return strcmp(this->m_pName, str) != 0;
+    // проверяем если сравнение будет с пустой строкой
+    if (str)
+    {
+        return strcmp(this->m_pName, str) != 0;
+    }
+    else
+    {
+        return false;
+    }
+    
 };
