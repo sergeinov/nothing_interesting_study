@@ -16,7 +16,9 @@ private:
 	// методы
 	bool operator==(const char* key) const;		// для проверки есть ли в базе уже
 
-	friend class Base;
+	// перегрузки
 	friend std::ostream& operator<<(std::ostream& os, const Pair& pair);
+
+	friend class Base;
 };
 

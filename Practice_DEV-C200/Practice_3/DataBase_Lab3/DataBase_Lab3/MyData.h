@@ -17,10 +17,9 @@ public:
 	MyData();
 	MyData(Sex s, size_t age, const char* job, float salary);
 	
+	// перегрузки
+	friend std::ostream& operator<<(std::ostream& os, const MyData& data); // для вывода данных о сотруднике std::cout << myBase["Petrova"];
 
-	// методы перегрузки
-	// для вывода данных о сотруднике std::cout << myBase["Petrova"];
-	friend std::ostream& operator<<(std::ostream& os, const MyData& data);
-
+	// методы
 };
 

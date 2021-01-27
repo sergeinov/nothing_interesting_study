@@ -19,7 +19,7 @@ std::ostream& operator<<(std::ostream& os, const MyString& RightObject)
 std::ostream& operator<<(std::ostream& os, const MyData& data)
 {
 	// нужен перегруженный оператор<<  для MyString (для вывода << data.m_job)
-	os << "sex = " << (data.sex == data.MALE ? "MALE\n" : data.sex == data.FEMALE ? "FEMALE\n" : "UNDEF\n")
+	os << "\nsex = " << (data.sex == data.MALE ? "MALE\n" : data.sex == data.FEMALE ? "FEMALE\n" : "UNDEF\n")
 		<< "age = " << data.m_age << "\n"  << "job = " << data.m_job << "\n"
 		<< "salary = " << data.m_salary << "\n";
 	return os;
@@ -29,16 +29,20 @@ std::ostream& operator<<(std::ostream& os, const MyData& data)
 std::ostream& operator<<(std::ostream& os, const Pair& pair)
 {
 	// нужен перегруженный оператор<<  для MyData
+	os << "\nname: " << pair.key << "\nДанные:" << pair.data;
+
+	return os;
 };
 
 // Base
 std::ostream& operator<<(std::ostream& os, const Base& bd)
 {
 	// нужен перегруженный оператор<<  для Pair
+	os << "\nQuanity: " << bd.count << "\n";
 	for (size_t i = 0; i < bd.count; i++)
 	{
 		
-		//os << bd.pBase[i].
+		os << bd.pBase[i];
 	}
 
 	return os;
@@ -58,17 +62,18 @@ int _tmain(int argc, _TCHAR* argv[])
 	myBase["Petrova"] = MyData(MyData::Sex::FEMALE, 22, "HR" , 80000);				//добавление сотрудника в базу
 	myBase["Borisov"] = MyData(MyData::Sex::MALE, 35, "Designer" , 100000);		//добавление сотрудника в базу
 	myBase["Borisov"] = MyData(MyData::Sex::MALE, 35, "Middle Designer", 150000);	//изменение данных сотрудника в базе
-
+	
 	myBase.deletePair("Borisov");				// удаление сотрудника
 
 	std::cout << myBase["Petrova"];			// вывод информации об одном сотруднике, существующего в базе
-	std::cout << myBase["Petrova"];			// вывод информации об одном сотруднике, которого нет в базе
+	// проблема ?
+	std::cout << myBase["Sidorov"];			// вывод информации об одном сотруднике, которого нет в базе
 	std::cout << myBase;						//вывод информации обо всех сотрудниках
 
-	//Base db = myBase;							// конструктор копирования
-	//myBase =  db;								// оператор присваивания
-	//Base db2 = move(db)						// семантика перемещение move
-	//db = move(db2);
+	Base db = myBase;							// конструктор копирования
+	myBase =  db;								// оператор присваивания
+	Base db2 = std::move(db);						// семантика перемещение move
+	db = std::move(db2);
 
 
 	return 0;

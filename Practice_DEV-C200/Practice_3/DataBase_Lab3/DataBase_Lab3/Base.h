@@ -12,18 +12,17 @@ public:
 	//конструкторы
 	Base();
 	~Base();
-	// конструктор копирования не обходим, когда есть динамически выделенная память
-	Base(const Base& bd);
+	Base(const Base& bd); // конструктор копирования необходим, когда есть динамически выделенная память
 	Base(Base&& bd);
 
-	//перезагрузка
-	Base& operator=(const Base& bd); // оптимизированный
-	Base& operator=(Base&& bd);
+	//перезагрузки
+	Base& operator=(const Base& bd);	// оптимизированный оператор присваивания
+	Base& operator=(Base&& bd);			// оператор перемещения move
 	MyData& operator[](const char* key);
+	friend std::ostream& operator<<(std::ostream& os, const Base& bd);
 
 	// методы
-	void deletePair(const char* key);	// удаление сотрудника из базы
+	void deletePair(const char* key);	// удаление сотрудника из базы	
 	
-	friend std::ostream& operator<<(std::ostream& os, const Base& bd);
 };
 

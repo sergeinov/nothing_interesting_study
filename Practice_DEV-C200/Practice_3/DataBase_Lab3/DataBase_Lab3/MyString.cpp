@@ -3,11 +3,14 @@
 #include <string.h>
 #include"MyString.h"
 
-// конструкторы
+/*
+*   конструкторы
+*/
 MyString::MyString()
 {
     m_pName = nullptr;
 };
+
 MyString::MyString(const char* pName)
 {
     m_pName = new char[strlen(pName) + 1];
@@ -35,36 +38,13 @@ MyString::MyString(const MyString& otherStr)
     }
 };
 
-// метод получения значения
-const char* MyString::GetString() const
-{
-    // проверка на пустой указатель
-    if (!this)
-    {
-        return "NULL...";
-    }
 
-    if (m_pName)
-    {
-        return m_pName;
-    }
-    else
-    {
-        return "empty...";
-    }
-};
+/*
+*   перегрузки
+*/
 
-// метод меняет строку
-void MyString::SetNewString(const char* source)
-{
-    delete[] m_pName;
-    m_pName = new char[strlen(source) + 1];
-    strcpy(m_pName, source);
-
-}
-
-//Перегрузка оператора присваивания =
-MyString& MyString::operator=(const MyString& otherStr)
+//Перегрузка оператора присваивания =  для обьекта  вида: str1 = str2;
+MyString& MyString::operator=(const MyString& otherStr)     
 {
     if (this != &otherStr)                       // проверка для самоприсваивания
     {
@@ -83,13 +63,22 @@ MyString& MyString::operator=(const MyString& otherStr)
     return *this;                               // для обеспечения цепочечного присваивания возвращаем по ссылке адрес объекта
 };
 
+////Перегрузка оператора присваивания = для временного обьекта справа вида: = MyString("CCC");
+//MyString& MyString::operator=(MyString&& other)
+//{
+//    return *this;
+//};
+//
+////Перегрузка оператора присваивания = для строки справа вида: = "programmer";
+//MyString& MyString::operator=(const char* str)
+//{
+//    return *this;
+//};
 
 //Перегрузка оператора +
 const MyString MyString::operator+(const MyString& RightObject)
 {
-
     int size = 0;
-
 
     if (RightObject.m_pName)
     {
@@ -144,22 +133,51 @@ const MyString& MyString::operator+=(const MyString& RightObject)
         {
             return RightObject;
         }
-
     }
     return *this;
 };
 
 // оператор стравнения (специально для двух строк)
-bool MyString::operator==(const char* str) const
+bool MyString::operator==(const char* str) const 
 {
     // проверяем если сравнение будет с пустой строкой
     if (str)
     {
-        return strcmp(this->m_pName, str) != 0;
+        return !strcmp(this->m_pName, str);
     }
     else
     {
         return false;
-    }
-    
+    }   
 };
+
+/*
+*   методы
+*/
+
+// метод получения значения
+const char* MyString::GetString() const
+{
+    // проверка на пустой указатель
+    if (!this)
+    {
+        return "NULL...";
+    }
+
+    if (m_pName)
+    {
+        return m_pName;
+    }
+    else
+    {
+        return "empty...";
+    }
+};
+
+// метод меняет строку
+void MyString::SetNewString(const char* source)
+{
+    delete[] m_pName;
+    m_pName = new char[strlen(source) + 1];
+    strcpy(m_pName, source);
+}
