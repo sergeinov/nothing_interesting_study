@@ -12,6 +12,7 @@ private:
 public:
 	Node();			// для вспомогательных оберток стражей (Head, Tail)
 	Node(Node* p, const Circle* data); // Node* p - добавляет в список data
+	// ?   const Circle* data
 	~Node();
 
 	friend class List;		// для доступа к данным списка

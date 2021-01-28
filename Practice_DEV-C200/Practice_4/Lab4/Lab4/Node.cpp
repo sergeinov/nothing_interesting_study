@@ -4,15 +4,23 @@
 //List::Node::Node() : pNext(nullptr), pPrev(nullptr) {};
 
 Node::Node() : pPrev(nullptr), pNext(nullptr) {};  // m_Data  конструктор по умолчанию
-Node::Node(Node* p, const Circle* data) : m_Data(*data)
+Node::Node(Node* p, const Circle* data) : m_Data(*data) // ? const Circle* data
 {
 	//вставка создаваемого Node в список
 	// формирование будущих соседей для this
+	//this->pPrev = p;			// заносим адрес, после которого вставляем свой  Node в список
+	//this->pNext = p->pNext;
+
+	//// формирование соседей у  Node*p
+	//p->pNext = this; // ?
+	//this->pNext->pPrev = this;	// ?
+	Node* n = p->pNext;
 	this->pPrev = p;			// заносим адрес, после которого вставляем свой  Node в список
-	this->pNext = p->pNext;
+	this->pNext = n;
+
 	// формирование соседей у  Node*p
-	p->pNext = this; // ?
-	pNext->pPrev = this->pPrev;
+	p->pNext = this;
+	n->pPrev = this;
 };
 
 Node::~Node()
