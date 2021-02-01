@@ -12,7 +12,7 @@ Counter::Counter(const char* p) : m_nOwners(1)
 
 Counter::~Counter()
 {
-	delete[] m_pStr;	// удаляем созданную строку
+	delete[] m_pStr;	// удаляем созданную строку 
 };
 
 /*
@@ -21,13 +21,15 @@ Counter::~Counter()
 void Counter::AddOwner()	// добавляем владельца
 {
 	m_nOwners++;
+	m_curCounters++;
 };
 void Counter::RemoveOwner()	// удаляем владельца
 {
 	m_nOwners--;
+	m_curCounters--;
 	if (m_nOwners == 0)
 	{
-		delete this;		// вызывает конструктор удаления
+		delete this;		// вызывает конструктор удаления ~Counter()
 	}
 };
 
