@@ -1,6 +1,7 @@
 #pragma once
 
 #include"Node.h"
+#include<iostream>
 
 class List
 {
@@ -9,22 +10,28 @@ private:
 	Node Tail;				// признак конца списка (страж)
 	size_t m_size;			// количество элементов в списке
 public:
+
+	// конструкторы
 	List();
+	List(const List& otherList);	// конструктор копировани€
+	List(List&& otherList);			// конструктор перемещени€ move
 	~List();
 
-	
-	/*
-	TODO
-	- метод добавл€ет элемент к конец списка
-	- сделать список пустым. ”далить все объекты
-	*/
+
 
 	// методы
 	void AddToHead(const Circle& figure);	// добавить в начало списка
+	void AddToEnd(const Circle& figure);	// добавить в конец списка
 	bool RemoveOne(const Circle& figure);	// удалить один из списка
 	int RemoveAll(const Circle& figure);	// удалить все списка
 
+	// перегрузки
+	List& operator=(const List& otherList);		//ѕерегрузка оператора присваивани€ = дл€ обьекта
+	friend std::ostream& operator<<(std::ostream& os, List& list);	// вывод списка
 
+	//TODO
+	// присваивани€
+	// перемешающий
 
 	/*
 	TODO
@@ -37,6 +44,9 @@ public:
 		fout << l;
 		fout.close();
 	4.	„тение из файла
+		ifstream fout(ar);
+		fout >> l;
+		fout.close();
 	*/
 };
 

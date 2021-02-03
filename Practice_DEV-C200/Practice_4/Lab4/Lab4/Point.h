@@ -1,4 +1,5 @@
 #pragma once
+#include<iostream>
 class Point
 {
 public:
@@ -9,6 +10,7 @@ public:
 
 	// перегрузка оператора==
 	bool operator==(const Point& point) const;
+	friend std::ostream& operator<<(std::ostream& os, Point& place); // вывод координат
 
 private:
 	int m_x;

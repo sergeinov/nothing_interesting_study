@@ -12,9 +12,13 @@ private:
 public:
 	Node();			// для вспомогательных оберток стражей (Head, Tail)
 	Node(Node* p, const Circle* data); // Node* p - добавляет в список data
-	// ?   const Circle* data
+	
 	~Node();
 
+	friend std::ostream& operator<<(std::ostream& os, Node& element); // вывод одного эл
+	
+
 	friend class List;		// для доступа к данным списка
+	//friend std::ostream& operator<<(std::ostream& os, List& list);
 };
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include"Point.h"
+#include<iostream>
 
 class Circle
 {
@@ -21,6 +22,7 @@ public:
 
 	// перегрузки
 	bool operator==(const Circle& figure) const;
+	friend std::ostream& operator<<(std::ostream& os, Circle& object);	// вывод объекта
 
 	// методы
 
