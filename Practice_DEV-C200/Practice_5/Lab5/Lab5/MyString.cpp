@@ -6,8 +6,11 @@
 */
 MyString::MyString(const char* str)
 {
+	
 	if (str)
 	{
+		//TODO
+		// написать поиск по списку, если нет такой строки в списке тогда создаем
 		m_pMyCounter = new Counter(str);	// создаем обьект
 	}
 	else

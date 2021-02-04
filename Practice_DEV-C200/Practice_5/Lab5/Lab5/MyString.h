@@ -6,6 +6,7 @@ class MyString
 private:
 	Counter* m_pMyCounter;		// указатель на свой Counter
 
+	//static Counter* ExistCounter(const char* str);
 
 	/*
 	*	конструкторы
