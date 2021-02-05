@@ -8,6 +8,8 @@ private:
 
 	//static Counter* ExistCounter(const char* str);
 
+public:
+
 	/*
 	*	конструкторы
 	*/

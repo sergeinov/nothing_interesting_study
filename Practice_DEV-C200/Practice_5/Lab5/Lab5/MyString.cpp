@@ -11,7 +11,8 @@ MyString::MyString(const char* str)
 	{
 		//TODO
 		// написать поиск по списку, если нет такой строки в списке тогда создаем
-		m_pMyCounter = new Counter(str);	// создаем обьект
+		//m_pMyCounter = new Counter(str);	// создаем обьект
+		m_pMyCounter = Counter::find(str);
 	}
 	else
 	{

@@ -20,12 +20,14 @@ private:
 	/*
 	*	методы
 	*/
+
 	void AddOwner();
 	void RemoveOwner();
+	static Counter* find(const char* str);
 
 	/*
 	*	перегрузки
 	*/
-
+	
 };
 
