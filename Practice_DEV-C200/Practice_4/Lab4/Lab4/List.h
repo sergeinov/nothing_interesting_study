@@ -2,6 +2,7 @@
 
 #include"Node.h"
 #include<iostream>
+#include <fstream>
 
 class List
 {
@@ -17,8 +18,6 @@ public:
 	List(List&& otherList);			// конструктор перемещени€ move
 	~List();
 
-
-
 	// методы
 	void AddToHead(const Circle& figure);	// добавить в начало списка
 	void AddToEnd(const Circle& figure);	// добавить в конец списка
@@ -27,11 +26,11 @@ public:
 
 	// перегрузки
 	List& operator=(const List& otherList);		//ѕерегрузка оператора присваивани€ = дл€ обьекта
-	friend std::ostream& operator<<(std::ostream& os, List& list);	// вывод списка
+	List& operator=(List&& otherList);
+	friend std::ostream& operator<<(std::ostream& os, const List& list);	// вывод списка
+	//friend std::ofstream& operator<<(std::ofstream& of, List& list);	// вывод в файл
+	friend std::ifstream& operator>>(std::ifstream& iff, List& list);	// чтение из файла
 
-	//TODO
-	// присваивани€
-	// перемешающий
 
 	/*
 	TODO
@@ -40,11 +39,11 @@ public:
 		cout << l;
 	3.	¬ывод текущего состо€ни€ списка в файл(в форматированном виде)
 	#include <fstream>
-		ofstream fout(ar);
+		ofstream fout(file);
 		fout << l;
 		fout.close();
 	4.	„тение из файла
-		ifstream fout(ar);
+		ifstream fout(file);
 		fout >> l;
 		fout.close();
 	*/

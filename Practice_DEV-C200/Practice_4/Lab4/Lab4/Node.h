@@ -15,10 +15,13 @@ public:
 	
 	~Node();
 
-	friend std::ostream& operator<<(std::ostream& os, Node& element); // вывод одного эл
-	
+	friend class List;	// дл€ доступа к данным списка
 
-	friend class List;		// дл€ доступа к данным списка
-	//friend std::ostream& operator<<(std::ostream& os, List& list);
+	// перегрузки
+	//friend std::ostream& operator<<(std::ostream& os, Node& element); // вывод одного эл
+	friend std::ostream& operator<<(std::ostream& os, const List& list);
+
+			
+
 };
 

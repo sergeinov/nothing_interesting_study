@@ -1,5 +1,6 @@
 #include "Node.h"
 
+
 // конструкторы
 //List::Node::Node() : pNext(nullptr), pPrev(nullptr) {};
 
