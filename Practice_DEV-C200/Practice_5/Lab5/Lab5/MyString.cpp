@@ -26,9 +26,11 @@ MyString::MyString(const MyString& object)		// конструктор копирования
 	this->m_pMyCounter->AddOwner();				// создаем владельца по этому адресу
 };
 
-MyString::MyString(MyString&& otherStr)			// конструктор перемещения
+MyString::MyString(MyString&& otherStr)			// // перемещающий конструктор move
 {
 	// TODO
+	this->m_pMyCounter = otherStr.m_pMyCounter;
+	otherStr.m_pMyCounter = nullptr;
 };			
 
 MyString::~MyString()
@@ -46,11 +48,17 @@ MyString::~MyString()
 const char* MyString::GetString() const		// метод получения значения
 {
 	// TODO
+	if ( m_pMyCounter->m_pStr )
+	{
+		return m_pMyCounter->m_pStr;
+	}
+	return "empty";
 };
 
 void MyString::SetNewString(const char* source)
 {
 		// TODO
+
 };
 
 /*
@@ -60,5 +68,17 @@ void MyString::SetNewString(const char* source)
 MyString& MyString::operator=(const MyString& object)
 {
 	// TODO
+	if ( this->m_pMyCounter != object.m_pMyCounter )
+	{
+		if ( this->m_pMyCounter )
+		{
+			this->m_pMyCounter->RemoveOwner();
+		}
+		this->m_pMyCounter = object.m_pMyCounter;
+		if ( this->m_pMyCounter )
+		{
+			this->m_pMyCounter->AddOwner();
+		}
+	}
 	return *this;
 };

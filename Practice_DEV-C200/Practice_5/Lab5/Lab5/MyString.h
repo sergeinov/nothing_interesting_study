@@ -28,5 +28,6 @@ public:
 	*/
 	MyString& operator=(const MyString& object);	// перегрузка п
 	//friend std::ostream& operator<<(std::ostream& out, const MyString& RightObject);	// Перегрузка оператора << 
+	MyString& operator=(MyString&& object);		
 };
 

@@ -16,7 +16,9 @@ Counter::Counter(const char* p) : m_nOwners(1)
 	strcpy(this->m_pStr, p);					// копируем 
 
 	//включить в список
-	
+	pNext = pHead;
+	pHead = this;
+	m_curCounters++;
 };
 
 
@@ -24,8 +26,23 @@ Counter::~Counter()
 {
 	delete[] m_pStr;	// удаляем созданную строку 
 
-	//исключить из списка
+	if ( pHead == this)
+	{
+		pHead = pHead->pNext;
+	}
+	else
+	{
+		Counter* p = pHead;
+		while ( p->pNext != this )
+		{
+			p = p->pNext;
+		}
+		p->pNext = this->pNext;
+	}
 
+	//исключить из списка
+	
+	
 };
 
 /*
