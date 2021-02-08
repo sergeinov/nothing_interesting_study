@@ -17,4 +17,8 @@ bool Circle::operator==(const Circle& figure) const
 	return (this->m_radius == figure.m_radius && this->point == figure.point);
 
 }
+bool Circle::operator<(const Circle& figure) const
+{
+	return ((this->m_radius < figure.m_radius)? true : false);
+}
 // методы

@@ -1,7 +1,7 @@
 #pragma once
 
 #include"Node.h"
-#include<iostream>
+//#include<iostream>
 #include <fstream>
 
 class List
@@ -23,29 +23,19 @@ public:
 	void AddToEnd(const Circle& figure);	// добавить в конец списка
 	bool RemoveOne(const Circle& figure);	// удалить один из списка
 	int RemoveAll(const Circle& figure);	// удалить все списка
+	void SortList();
+	void ClearList();
 
 	// перегрузки
 	List& operator=(const List& otherList);		//Перегрузка оператора присваивания = для обьекта
-	List& operator=(List&& otherList);
+	List& operator=(List&& otherList);			// перегрузка оператора move
 	friend std::ostream& operator<<(std::ostream& os, const List& list);	// вывод списка
-	//friend std::ofstream& operator<<(std::ofstream& of, List& list);	// вывод в файл
 	friend std::ifstream& operator>>(std::ifstream& iff, List& list);	// чтение из файла
 
 
 	/*
 	TODO
 	1.	сортировку по возрастанию площади объекта.
-	2.	Вывод текущего состояния списка на консоль
-		cout << l;
-	3.	Вывод текущего состояния списка в файл(в форматированном виде)
-	#include <fstream>
-		ofstream fout(file);
-		fout << l;
-		fout.close();
-	4.	Чтение из файла
-		ifstream fout(file);
-		fout >> l;
-		fout.close();
 	*/
 };
 

@@ -21,9 +21,10 @@ public:
 	// конструктор копировани€ необходим, когда есть динамически выделенна€ пам€ть или ссылочные пол€
 
 	// перегрузки
-	bool operator==(const Circle& figure) const;
+	bool operator==(const Circle& figure) const;	// дл€ метода List::RemoveOne
+	bool operator<(const Circle& figure) const;		// дл€ метода SortList(); в классе List
 	friend std::ostream& operator<<(std::ostream& os, Circle& object);	// вывод объекта
-
+	friend std::ifstream& operator>>(std::ifstream& iff2, Circle::eColor& color); // дл€ с типом  перечислени€ eColor
 	// методы
 
 };

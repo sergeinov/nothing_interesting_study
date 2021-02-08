@@ -14,7 +14,7 @@ public:
 	Node(Node* p, const Circle* data); // Node* p - добавляет в список data
 	
 	~Node();
-
+protected:
 	friend class List;	// для доступа к данным списка
 
 	// перегрузки
