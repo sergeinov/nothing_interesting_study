@@ -26,8 +26,8 @@ public:
 	/*
 	*	перегрузки
 	*/
-	MyString& operator=(const MyString& object);	// перегрузка п
+	MyString& operator=(const MyString& object);	// перегрузка оператора присваивания/копирования
 	//friend std::ostream& operator<<(std::ostream& out, const MyString& RightObject);	// Перегрузка оператора << 
-	MyString& operator=(MyString&& object);		
+	MyString& operator=(MyString&& object);			// оператор перемещения
 };
 

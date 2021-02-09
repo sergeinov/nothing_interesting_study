@@ -1,12 +1,12 @@
 #include "MyString.h"
 #include"Counter.h"		// в тему использования метода неполного обьявления
+#include <tchar.h>
 
 /*
 *	конструкторы
 */
 MyString::MyString(const char* str)
 {
-	
 	if (str)
 	{
 		//TODO
@@ -26,9 +26,8 @@ MyString::MyString(const MyString& object)		// конструктор копирования
 	this->m_pMyCounter->AddOwner();				// создаем владельца по этому адресу
 };
 
-MyString::MyString(MyString&& otherStr)			// // перемещающий конструктор move
+MyString::MyString(MyString&& otherStr)			//  перемещающий конструктор move
 {
-	// TODO
 	this->m_pMyCounter = otherStr.m_pMyCounter;
 	otherStr.m_pMyCounter = nullptr;
 };			
@@ -39,8 +38,7 @@ MyString::~MyString()
 	{
 		m_pMyCounter->RemoveOwner();	// удаляем владельца
 	}
-}
-;
+};
 
 /*
 *	методы
@@ -58,14 +56,17 @@ const char* MyString::GetString() const		// метод получения значения
 void MyString::SetNewString(const char* source)
 {
 		// TODO
+		/*delete[] this->m_pMyCounter->m_pStr;
+		this->m_pMyCounter->m_pStr = new char[ strlen(source) + 1 ];
+		strcpy(this->m_pMyCounter->m_pStr, source);*/
 
+	
 };
 
 /*
 *	перегрузки
 */
-
-MyString& MyString::operator=(const MyString& object)
+MyString& MyString::operator=(const MyString& object)	// перегрузка оператора копирования/ присваивания
 {
 	// TODO
 	if ( this->m_pMyCounter != object.m_pMyCounter )
@@ -80,5 +81,17 @@ MyString& MyString::operator=(const MyString& object)
 			this->m_pMyCounter->AddOwner();
 		}
 	}
+	return *this;
+};
+
+MyString& MyString::operator=(MyString&& object)	// перегрузка оператора перемещения move
+{
+	if ( this != &object )
+	{
+		
+
+	}
+
+
 	return *this;
 };

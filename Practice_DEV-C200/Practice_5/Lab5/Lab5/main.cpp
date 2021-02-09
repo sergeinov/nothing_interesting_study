@@ -17,9 +17,12 @@ int _tmain(int argc, _TCHAR* argv[])
 	MyString str("ABC");
 
 	MyString str1 = str;
-
+	str1 = str;
 	MyString str2 = std::move(str1);	// перемещающий конструктор move
+	str2 = std::move(str1);
 
+	str2.GetString();
+	str2.SetNewString("HELLO");
 
 
 	return 0;
