@@ -41,8 +41,9 @@ Counter::~Counter()
 	}
 
 	//исключить из списка
-	
-	
+	pHead = pNext;
+	pNext = this;
+	m_curCounters--;
 };
 
 /*

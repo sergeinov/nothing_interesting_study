@@ -4,7 +4,7 @@ class Counter
 private:
 	Counter* pNext;					// указатель на следующий Counter
 	char* m_pStr;					// указатель на динамически созданную строку
-	unsigned int m_nOwners;			// счетчик владельцев строки
+	unsigned int m_nOwners;			// счетчик пользователей строки
 
 	static Counter* pHead;				// фиктивный страж
 	static unsigned int m_curCounters;	// счетчик указателей
@@ -35,6 +35,7 @@ private:
 
 // !TODO
 /*
+* создать статические методы
 Х	распечатать все строки
 Х	во всех объектах MyString изменить регистр
 Х	вывести строки по алфавиту

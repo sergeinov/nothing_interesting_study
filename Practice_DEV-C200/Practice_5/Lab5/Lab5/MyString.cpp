@@ -56,10 +56,20 @@ const char* MyString::GetString() const		// метод получения значения
 void MyString::SetNewString(const char* source)
 {
 		// TODO
-		/*delete[] this->m_pMyCounter->m_pStr;
-		this->m_pMyCounter->m_pStr = new char[ strlen(source) + 1 ];
-		strcpy(this->m_pMyCounter->m_pStr, source);*/
-
+	if ( this->m_pMyCounter )
+	{
+		this->m_pMyCounter->RemoveOwner();
+	}
+	
+	if ( source )
+	{
+		//  если нет такой строки в списке тогда создаем
+		m_pMyCounter = Counter::find(source);
+	}
+	else
+	{
+		this->m_pMyCounter = nullptr;
+	}
 	
 };
 
@@ -86,12 +96,14 @@ MyString& MyString::operator=(const MyString& object)	// перегрузка оператора ко
 
 MyString& MyString::operator=(MyString&& object)	// перегрузка оператора перемещения move
 {
-	if ( this != &object )
+	if ( this->m_pMyCounter != object.m_pMyCounter )
 	{
-		
-
+		if ( this->m_pMyCounter )
+		{
+			this->m_pMyCounter->RemoveOwner();
+		}
+		this->m_pMyCounter = object.m_pMyCounter;		// отнимаем
+		object.m_pMyCounter = nullptr;
 	}
-
-
 	return *this;
 };
