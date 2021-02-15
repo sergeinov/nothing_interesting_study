@@ -25,5 +25,6 @@ public:
 	*	перегрузки
 	*/
 	MyString& operator=(const MyString& otherStr);		//Перегрузка оператора присваивания = для обьекта
+	MyString& operator=(MyString&& otherStr);
 };
 

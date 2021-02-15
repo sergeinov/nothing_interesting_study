@@ -6,9 +6,13 @@
 
 
 #include <tchar.h>
+#include<iostream>
 //#include <stdexcept>
 #include"Template.h"
 #include"MyString.h"
+#include"MyStack.h"
+//#include"MyArrayError.h"
+//#include"MyEmptyStack.h"
 
 #define stop __asm nop
 
@@ -37,6 +41,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	//			не только корректно, но и эффективно
 	MyString str1("One"), str2("Two");
 	Swap(str1, str2);
+	//Swap("ABS", "DCB");
 
 
 /////////////////////////////////////////////////////////////////////
@@ -55,14 +60,49 @@ int _tmain(int argc, _TCHAR* argv[])
 	//			4. дополнительно реализуйте operator[] таким образом, чтобы пользователь
 	//			мог читать/изменять значения только тех элементов, которые он формировал
 
+	MyStack<int, 5> stack;
+	try
+	{
+		stack.push(5);
+		stack.push(10);
+		stack.push(15);
+
+		int res = stack.pop();
+		std::cout << res << std::endl;
+
+		int res2 = stack.pop();
+		std::cout << res2 << std::endl;
+
+		int res3 = stack[ 0 ];
+		std::cout << res3 << std::endl;
+
+		std::cout << "Массив:" << std::endl;
+		std::cout << stack << std::endl;
+	}
+	catch(MyStackFullError& error){
+
+		std::cout << "My stack is full! Current size is" << error.m_size << std::endl;
+	}
+	catch ( MyArrayError& error )
+	{
+		std::cout << "Index out of range! " << "Current: " << error.m_wrong_Index << " Must be >= 0  or " << error.m_MaxIndex << std::endl;
+
+	}
+	catch(MyEmptyStack& error)
+	{
+		std::cout << "Stack is empty: " << error.m_number << std::endl;
+
+	}
+	catch ( ... )
+	{
+		std::cout << "Something wrong" << std::endl;
+	}
 	
+
+
 	//С помощью шаблона MyStack создайте стек из 5 элементов int - iStack и
 	//стек из 10 элементов MyString - strStack и поэкспериментируйте с функциями
 	//push() и pop(), operator[]
-
-
-
-
 
 
 

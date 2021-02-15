@@ -67,6 +67,17 @@ MyString& MyString::operator=(const MyString& otherStr)     //Перегрузка операто
     return *this;                               // для обеспечения цепочечного присваивания возвращаем по ссылке адрес объекта
 }
 
+MyString& MyString::operator=(MyString&& otherStr)
+{
+    if ( this != &otherStr )
+    {
+        delete[] this->m_pStr;
+        m_pStr = otherStr.m_pStr;
+        otherStr.m_pStr = nullptr;
+    }
+    return *this;
+}
+
 
 /*
 *   методы
