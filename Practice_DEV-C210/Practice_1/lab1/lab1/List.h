@@ -2,6 +2,8 @@
 
 #include"Node.h"
 
+enum eParametrs {Color, Area };
+
 class List
 {
 private:
@@ -21,19 +23,20 @@ public:
 *	методы
 */
 	void AddToHead(const Shape& figure);	// добавить в начало списка
-	void AddToEnd(const Shape& figure);	// добавить в конец списка
+	void AddToEnd(const Shape& figure);		// добавить в конец списка
 	bool RemoveOne(const Shape& figure);	// удалить один из списка
-
-	//int RemoveAll(const Shape& figure);	// удалить все списка
-	//void SortList();
-	//void ClearList();
+	void ClearList();													// !Done
+	void Sort(eParametrs param);			// сортировку по возрастанию площади объекта		// TODO
+	//int RemoveAll(const Shape& figure);		// удалить все списка	
 
 /*
 *	перегрузки
 */
 	friend std::ostream& operator<<(std::ostream& os, const List& list);	// вывод списка		// TODO
+	friend std::ifstream& operator>>(std::ifstream& iff, List& list);	// чтение из файла		// TODO
 
-	//List& operator=(const List& otherList);		//ѕерегрузка оператора присваивани€ = дл€ обьекта
+	List& operator=(const List& otherList);		//ѕерегрузка оператора присваивани€ = дл€ обьекта
+
 	//List& operator=(List&& otherList);			// перегрузка оператора move
 	//friend std::ifstream& operator>>(std::ifstream& iff, List& list);	// чтение из файла
 
@@ -43,8 +46,9 @@ public:
 
 //! TODO
 /*
-Х	добавить новую фигуру в начало списка  // 
+Х	добавить новую фигуру в начало списка  /
 Х	добавить новую фигуру в конец списка
 Х	исключить фигуру, совпадающую с параметром
-	¬ывод списка в файл и чтение из файла
+	- ¬ывод списка в файл и чтение из файла
+	-сортировку по возрастанию площади объекта (по цвету, по удалению от начала координатЕ).
 */

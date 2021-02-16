@@ -36,10 +36,11 @@ Shape* Circle::Clone() const
 
 std::ostream& Circle::Print(std::ostream& os) const  // ! Done  
 {
-    os << "\nКоординаты: \n"
+    os << "\nCircle: \n"
         << "x: " << m_x << "\n"
         << "y: " << m_y << "\n"
-        << "Диаметр: " << this->Area() << std::endl;
+        << "Radius: " << m_radius << "\n";
+        Shape::Print(os) << std::endl;
     return os;
 }
 

@@ -1,0 +1,33 @@
+
+Список: 
+4
+
+Rect: 
+left: 1
+right: 1
+top: 4
+bottom: 4
+BLACK
+
+
+Rect: 
+left: 6
+right: 6
+top: 8
+bottom: 8
+YELLOW
+
+
+Circle: 
+x: 2
+y: 2
+Radius: 4
+GREEN
+
+
+Circle: 
+x: 4
+y: 4
+Radius: 6
+YELLOW
+

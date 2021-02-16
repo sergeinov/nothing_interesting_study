@@ -30,7 +30,7 @@ public:
 /*
 *	перегрузки
 */
-	//friend std::ostream& operator<<(std::ostream& os, const List& list);
+	friend std::ostream& operator<<(std::ostream& os, const List& list);
 
 };
 

@@ -49,7 +49,7 @@ List::List(List&& otherList) : m_size(otherList.m_size)		// конструктор перемеще
 
 List::~List()
 {
-	//ClearList();
+	ClearList();
 }
 
 ;
@@ -70,18 +70,70 @@ void List::AddToEnd(const Shape& figure)	// !DONE
 
 bool List::RemoveOne(const Shape& fig)
 {
-	Node* p = Head.pNext;
+	Node* p = Head.pNext;			// указатель на следующий после стража
 	while ( p != &Tail )
 	{
+		// если цвета совпадают значит объекты схожи, удал€ем
 		if ( *(p->figure) == fig )	// перегруженный оператор= в Shape (сравнение цвета)
 		{
 			delete p;
 			m_size--;
 			return true;
 		}
-		p = p->pNext;
+		p = p->pNext;				// двигаемс€ дальше по списку, ищем подход€щий объект
 	}
 	return false;
+}
+
+void List::ClearList()				// !DONE
+{
+	while ( Head.pNext != &Tail )	// ? почему продвигаетс€ по списку
+	{
+		delete Head.pNext;
+	}
+	m_size = 0;
+}
+
+void List::Sort(eParametrs param)
+{
+	Node* pCurrent = Head.pNext;
+
+	while ( pCurrent != Tail.pPrev )	// пока следующий не равно предыдущий
+	{
+		Node* pMin = pCurrent;	// на первый Node  // первый элемент списка
+		Node* p = pCurrent->pNext;	// на следующий Node
+		while ( p != &Tail )	// пока первый Node  не страж в конце
+		{
+			// создали перечислени€ с помощью которого мы можем выбирать по какому свойству сортировать enum eParametrs {Color, Area .....};
+			bool flag = false;
+			switch ( param )
+			{
+			case Color:
+				flag = ( p->figure->GetColor() < pMin->figure->GetColor() );
+				break;
+			case Area:
+				flag = ( p->figure->Area() < pMin->figure->Area() );
+				break;
+			}
+			//if ( p->figure->Area() < pMin->figure->Area())	// сравниваем два объекта по результату метода вычислени€ площади Area()
+			//{
+			//	pMin = p;
+			//}
+
+			if ( flag )
+			{
+				pMin = p;
+			}
+			p = p->pNext;		// двигаемс€ дальше
+		}
+
+		Shape* temp = pCurrent->figure;
+		pCurrent->figure = pMin->figure;
+		pMin->figure = temp;
+
+		pCurrent = pCurrent->pNext;		// двигаемс€ дальше
+
+	}
 }
 
 /*
@@ -89,3 +141,38 @@ bool List::RemoveOne(const Shape& fig)
 */
 
 
+List& List::operator=(const List& otherList)	//ѕерегрузка оператора присваивани€ = дл€ обьекта		//TODO
+{
+	
+	Node* pThis = this->Head.pNext;
+	Node* pOther = otherList.Head.pNext;
+	// копировани€
+	while ( pThis != &this->Tail && pOther != &otherList.Tail )
+	{
+		if ( typeid(*pThis->figure) == typeid(*pOther->figure) )
+		{
+			*pThis->figure = *pOther->figure;	// TODO  перегрузку оператора=  (виртуальный)
+		}
+		else
+		{
+			delete pThis->figure;
+			pThis->figure = pOther->figure->Clone();		// копируем
+		}
+		//pThis->m_Data = pOther->m_Data;				// если фигурки одинакового типа, замен€ем значение  слева на справа в Node. ≈сли разное удал€ем свое, копируем вторую
+		pThis = pThis->pNext;
+		pOther = pOther->pNext;
+	}
+	// this больше  otherList
+	for ( size_t i = otherList.m_size; i < this->m_size; i++ )
+	{
+		delete Tail.pPrev;
+	}
+	// otherList больше this
+	for ( size_t i = this->m_size; i < otherList.m_size; i++ )
+	{
+		this->AddToEnd(pOther->m_Data);
+		pOther = pOther->pNext;
+	}
+	this->m_size = otherList.m_size;
+	return *this;
+}
