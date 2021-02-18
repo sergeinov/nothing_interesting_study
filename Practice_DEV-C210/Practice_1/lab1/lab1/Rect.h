@@ -23,13 +23,14 @@ public:
 	virtual Shape* Clone() const;
 	virtual std::ostream& Print(std::ostream& os) const;
 
-	void GetAllFields(int* x, int* x2, int* y, int* y2);
-	void SetAllFields(int left, int right, int top, int bottom);
+	//void GetAllFields(int* x, int* x2, int* y, int* y2);
+	//void SetAllFields(int left, int right, int top, int bottom);
 	const char* GetColor();
 
 /*
 *	перегрузки
 */
+	virtual Shape& operator=(const Rect& other);			// оператор копирования
 	virtual bool operator==(const Shape& r) const;
 
 };

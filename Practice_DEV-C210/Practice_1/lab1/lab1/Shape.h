@@ -1,7 +1,7 @@
 #pragma once
 #include<iostream>
 
-//
+static const char* arr[] = { "", "RED", "YELLOW", "GREEN", "BLACK" };	// для текстового обозначения перечисления  Ecolor
 
 class Shape
 {
@@ -28,8 +28,10 @@ public:
 /*
 *	перегрузки
 */
+	virtual Shape& operator=(const Shape& other) { return *this; };		//Перегрузка оператора присваивания = для обьекта
 	virtual bool operator==(const Shape&) const = 0;
 
+	friend std::ifstream& operator>>(std::ifstream& iff2, Shape::eColor& color); // для с типом  перечисления eColor
 
 };
 

@@ -31,6 +31,7 @@ public:
 /*
 *	перегрузки
 */
+	virtual Shape& operator=(const Circle& other);				// оператор копирования
 	virtual bool operator==(const Shape&) const;
 
 

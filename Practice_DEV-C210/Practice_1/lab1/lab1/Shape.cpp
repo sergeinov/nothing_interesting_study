@@ -1,7 +1,7 @@
 #include "Shape.h"
 #include<iostream>
 
-static const char* arr[] = { "", "RED", "YELLOW", "GREEN", "BLACK" };	// для текстового обозначения перечисления  Ecolor
+
 
 /*
 *	Конструкторы

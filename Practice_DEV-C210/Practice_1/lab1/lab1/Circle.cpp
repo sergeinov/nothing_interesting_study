@@ -26,7 +26,7 @@ Circle::~Circle()
 */
 double Circle::Area() const
 {  
-    return ( PI* m_radius * m_radius);
+    return ( PI * ( m_radius * m_radius));
 }
 
 Shape* Circle::Clone() const
@@ -36,10 +36,12 @@ Shape* Circle::Clone() const
 
 std::ostream& Circle::Print(std::ostream& os) const  // ! Done  
 {
-    os << "\nCircle: \n"
+    os << "\nCircle:\n"
         << "x: " << m_x << "\n"
         << "y: " << m_y << "\n"
-        << "Radius: " << m_radius << "\n";
+        << "Radius: " << m_radius << "\n"
+        << "Area: " << this->Area() 
+        << std::endl;
         Shape::Print(os) << std::endl;
     return os;
 }
@@ -47,6 +49,15 @@ std::ostream& Circle::Print(std::ostream& os) const  // ! Done
 /*
 *	перегрузки
 */
+Shape& Circle::operator=(const Circle& other)                // оператор копирования
+{
+    this->m_x = other.m_x;
+    this->m_y = other.m_y;
+    this->m_radius = other.m_radius;
+    // ? цвет
+    return *this;
+}
+
 bool Circle::operator==(const Shape& object) const
 {
     if ( this->Shape::operator==(object) )

@@ -62,7 +62,7 @@ void List::AddToHead(const Shape& figure)
 	m_size++;
 }
 
-void List::AddToEnd(const Shape& figure)	// !DONE
+void List::AddToEnd(const Shape& figure)
 {
 	new Node(Tail.pPrev, &figure);
 	m_size++;
@@ -126,7 +126,7 @@ void List::Sort(eParametrs param)
 			}
 			p = p->pNext;		// двигаемся дальше
 		}
-
+		// обмен объектов
 		Shape* temp = pCurrent->figure;
 		pCurrent->figure = pMin->figure;
 		pMin->figure = temp;
@@ -146,19 +146,21 @@ List& List::operator=(const List& otherList)	//Перегрузка оператора присваивания
 	
 	Node* pThis = this->Head.pNext;
 	Node* pOther = otherList.Head.pNext;
-	// копирования
+
 	while ( pThis != &this->Tail && pOther != &otherList.Tail )
 	{
+		// если фигурки одинакового типа, заменяем значение  слева на справа в Node. Если разное удаляем свое, копируем вторую
 		if ( typeid(*pThis->figure) == typeid(*pOther->figure) )
 		{
 			*pThis->figure = *pOther->figure;	// TODO  перегрузку оператора=  (виртуальный)
 		}
 		else
 		{
-			delete pThis->figure;
+			// если разное
+			delete pThis->figure;							// удаляем свое 
 			pThis->figure = pOther->figure->Clone();		// копируем
 		}
-		//pThis->m_Data = pOther->m_Data;				// если фигурки одинакового типа, заменяем значение  слева на справа в Node. Если разное удаляем свое, копируем вторую
+		//pThis->m_Data = pOther->m_Data;				
 		pThis = pThis->pNext;
 		pOther = pOther->pNext;
 	}
@@ -170,7 +172,7 @@ List& List::operator=(const List& otherList)	//Перегрузка оператора присваивания
 	// otherList больше this
 	for ( size_t i = this->m_size; i < otherList.m_size; i++ )
 	{
-		this->AddToEnd(pOther->m_Data);
+		this->AddToEnd(*pOther->figure);
 		pOther = pOther->pNext;
 	}
 	this->m_size = otherList.m_size;

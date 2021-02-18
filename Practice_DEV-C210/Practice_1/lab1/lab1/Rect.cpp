@@ -35,12 +35,13 @@ Shape* Rect::Clone() const
 
 std::ostream& Rect::Print(std::ostream& os)   const  // ! Done
 {
-    os << "\nRect: \n"
+    os << "\nRect:\n"
         << "left: " << m_left<< "\n"
         << "right: " << m_right << "\n"
         << "top: " << m_top << "\n"
-        << "bottom: " << m_bottom 
-        << << std::endl;
+        << "bottom: " << m_bottom << "\n"
+        << "Area: " << this->Area()
+        << std::endl;
         Shape::Print(os) << std::endl;
     return os;
 }
@@ -49,6 +50,17 @@ std::ostream& Rect::Print(std::ostream& os)   const  // ! Done
 /*
 *	перегрузки
 */
+
+Shape& Rect::operator=(const Rect& other)          // оператор копирования
+{
+    this->m_left = other.m_left;
+    this->m_right = other.m_right;
+    this->m_top = other.m_top;
+    this->m_bottom = other.m_bottom;
+    // ? цвет
+
+    return *this;
+}
 
 bool Rect::operator==(const Shape& r) const
 {

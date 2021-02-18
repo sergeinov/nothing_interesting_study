@@ -25,7 +25,7 @@ public:
 	void AddToHead(const Shape& figure);	// добавить в начало списка
 	void AddToEnd(const Shape& figure);		// добавить в конец списка
 	bool RemoveOne(const Shape& figure);	// удалить один из списка
-	void ClearList();													// !Done
+	void ClearList();						// очистить список от объектов
 	void Sort(eParametrs param);			// сортировку по возрастанию площади объекта		// TODO
 	//int RemoveAll(const Shape& figure);		// удалить все списка	
 
@@ -44,7 +44,7 @@ public:
 };
 
 
-//! TODO
+//! TODO  !Done
 /*
 •	добавить новую фигуру в начало списка  /
 •	добавить новую фигуру в конец списка
