@@ -11,6 +11,7 @@
 #include"Template.h"
 #include"MyString.h"
 #include"MyStack.h"
+#include "MyStack2.h"
 //#include"MyArrayError.h"
 //#include"MyEmptyStack.h"
 
@@ -19,7 +20,7 @@
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	
+	setlocale(LC_ALL, "Russian");
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -66,22 +67,31 @@ int _tmain(int argc, _TCHAR* argv[])
 		stack.push(5);
 		stack.push(10);
 		stack.push(15);
+		std::cout << stack << std::endl;
 
 		int res = stack.pop();
-		std::cout << res << std::endl;
+		std::cout << stack << std::endl;
+
+		stop
 
 		int res2 = stack.pop();
-		std::cout << res2 << std::endl;
+		std::cout << stack << std::endl;
+
+		stop
 
 		int res3 = stack[ 0 ];
-		std::cout << res3 << std::endl;
+		std::cout << "Значение по индексу: "<<res3 << std::endl;
+
+		stop
 
 		std::cout << "Массив:" << std::endl;
 		std::cout << stack << std::endl;
+
+		stop
 	}
 	catch(MyStackFullError& error){
 
-		std::cout << "My stack is full! Current size is" << error.m_size << std::endl;
+		std::cout << "My stack is full! Current size is" << error.GetSize() << std::endl;
 	}
 	catch ( MyArrayError& error )
 	{
@@ -111,9 +121,38 @@ int _tmain(int argc, _TCHAR* argv[])
 	//для хранения элементов использовался ОДНОСВЯЗНЫЙ список.
 	//Реализуйте возможность распечатать элементы стека в том порядке, в котором их заносил (push())
 	//пользователь
+	{
+		std::cout << "\n**************Задание 2***********" << std::endl;
+
+		MyStack2<int> list;
+
+		list.push(3);
+		list.push(5);
+		list.push(22);
+		std::cout << "\nСписок!\n" << std::endl;
+		for ( size_t i = 0; i < list.GetSize(); i++ )
+		{
+			std::cout << list[ i ] << " ";
+		}
+
+		stop
+
+		std::cout << "\n\nУдаляем элемент сверху списка!\n" << std::endl;
+		list.pop();
+		for ( size_t i = 0; i < list.GetSize(); i++ )
+		{
+			std::cout << list[ i ] << " ";
+		}
+
+		std::cout << "\n\nУдаляем список!\n" << std::endl;
+		list.clear();
+		for ( size_t i = 0; i < list.GetSize(); i++ )
+		{
+			std::cout << list[ i ] << " ";
+		}
 
 
-
+	}
 
 
 
