@@ -28,7 +28,10 @@ public:
 /*
 *	перегрузки
 */
-	virtual Shape& operator=(const Shape& other) { return *this; };		//Перегрузка оператора присваивания = для обьекта
+	virtual Shape& operator=(const Shape& other) { 
+		this->color = other.color;
+		return *this; 
+	};		//Перегрузка оператора присваивания = для обьекта
 	virtual bool operator==(const Shape&) const = 0;
 
 	friend std::ifstream& operator>>(std::ifstream& iff2, Shape::eColor& color); // для с типом  перечисления eColor

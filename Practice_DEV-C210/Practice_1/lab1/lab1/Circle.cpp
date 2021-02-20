@@ -49,12 +49,13 @@ std::ostream& Circle::Print(std::ostream& os) const  // ! Done
 /*
 *	перегрузки
 */
-Shape& Circle::operator=(const Circle& other)                // оператор копирования
+Shape& Circle::operator=(const Shape& other)                // оператор копирования
 {
-    this->m_x = other.m_x;
+    /*this->m_x = other.m_x;
     this->m_y = other.m_y;
-    this->m_radius = other.m_radius;
-    // ? цвет
+    this->m_radius = other.m_radius;*/
+    *this = static_cast< const Circle& >( other );
+    
     return *this;
 }
 

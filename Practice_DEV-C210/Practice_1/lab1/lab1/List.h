@@ -38,7 +38,7 @@ public:
 	List& operator=(const List& otherList);		//Перегрузка оператора присваивания = для обьекта
 
 	//List& operator=(List&& otherList);			// перегрузка оператора move
-	//friend std::ifstream& operator>>(std::ifstream& iff, List& list);	// чтение из файла
+
 
 
 };

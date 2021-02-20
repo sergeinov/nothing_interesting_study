@@ -60,7 +60,7 @@ std::ifstream& operator>>(std::ifstream& iff, List& list)		// чтение списка из ф
 			iff.ignore(10, ':');
 			iff >> n4;
 			iff.ignore(10, ':');
-			iff >> n5;				// ? как пропустить строку // считывание  Area   - пропускаем 
+			iff.ignore(10, '\n');				// ? как пропустить строку // считывание  Area   - пропускаем 
 			iff >> n6;				// eColor
 			list.AddToEnd(Rect(n1, n1, n3, n4, n6));	// добавляем считанные данные в список
 		}
@@ -113,6 +113,15 @@ int main()
 	l.AddToEnd(Circle(8, 8, 10, Shape::YELLOW));
 	//l.ClearList();
 
+
+	//List l6;				// для теста   List& List::operator=(const List& otherList)	//Перегрузка оператора присваивания = для обьекта
+	//l.AddToEnd(Circle(8, 8, 10, Shape::YELLOW));
+	//l.AddToHead(Rect(1, 1, 4, 4, Shape::BLUE));
+	//l.AddToEnd(Rect(6, 6, 8, 8, Shape::YELLOW));
+	//l.AddToHead(Circle(2, 2, 4, Shape::GREEN));
+	//l.AddToEnd(Circle(4, 4, 6, Shape::YELLOW));
+
+
 	List l2 = l;		// конструктор копирования
 	std::cout << "\n********Коструктор копирования:************" << std::endl;
 	std::cout << "\nСписок l:" << std::endl;
@@ -120,12 +129,13 @@ int main()
 	std::cout << l2;			// распечатать список
 
 	List l3;
-	l3 = l2;				// оператор присваивание/ копирования
+	l3 = l2;					// оператор присваивание/ копирования
+	//l6 = l2;					// для проверки виртуального  virtual Shape& operator=()
 	std::cout << "\n************Присваивание:*****************" << std::endl;
 	std::cout << "\nСписок l2:" << std::endl;
 	std::cout << l2;
 	std::cout << "\nСписок l3:" << std::endl;
-	std::cout << l;
+	std::cout << l3;
 
 	std::cout << "\n*********Сортировка по цвету:**************" << std::endl;
 	l.Sort(Color);

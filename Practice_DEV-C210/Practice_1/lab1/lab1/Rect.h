@@ -30,7 +30,7 @@ public:
 /*
 *	перегрузки
 */
-	virtual Shape& operator=(const Rect& other);			// оператор копирования
+	virtual Shape& operator=(const Shape& other);			// оператор копирования
 	virtual bool operator==(const Shape& r) const;
 
 };
