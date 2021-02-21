@@ -1,38 +1,41 @@
 #pragma once
+#include<iostream>
 
 class MyString
 {
 private:
 	char* m_pName;
 public:
-	//конструкторы
+	/*
+	*	конструкторы
+	*/
 	MyString();
-	MyString(const char* pName);
-	// деструктор
-	~MyString();
+	MyString(const char* pName);			// конструктор с параметрами
 
-	// конструктор копирования
-	MyString(const MyString& otherStr);
+	~MyString();							// деструктор
 
-	// метод получения значения
-	const char* GetString() const;
-	// метод меняет строку
-	void SetNewString(const char* source);
+	MyString(const MyString& otherStr);		// конструктор копирования
+	MyString(MyString&& otherStr);			// конструктор перемещения move
 
-	//Перегрузка оператора присваивания =
-	MyString& operator=(const MyString& otherStr);
-	MyString& operator=(const char* otherStr);
-	MyString& operator=(MyString&& otherStr);
+	/*
+	*	методы
+	*/
+	const char* GetString() const;	// метод получения значения
+	void SetNewString(const char* source);	// метод меняет строку
 
-	// Перегрузка оператора << 
-	friend std::ostream& operator<<(std::ostream& out, const MyString& RightObject);
+	/*
+	*	перегрузки
+	*/
+	MyString& operator=(const MyString& otherStr);		//Перегрузка оператора присваивания = для обьекта
+	MyString& operator=(const char* otherStr);			// для строки справа типа   = "programmer";
+	MyString& operator=(MyString&& otherStr);			//	для временного обьекта справа
+	bool operator==(const char* str) const;				// перегрузка оператора сравнения строк
 
-	//Перегрузка оператора +
-	const MyString operator+(const MyString& RightObject);
-
-	//Перегрузка оператора +=
-	const MyString& operator+=(const MyString& RightObject);
+	friend std::ostream& operator<<(std::ostream& out, const MyString& RightObject);	// Перегрузка оператора << 
+	const MyString operator+(const MyString& RightObject);								//Перегрузка оператора +
+	const MyString& operator+=(const MyString& RightObject);							//Перегрузка оператора +=
 };
+
 
 
 

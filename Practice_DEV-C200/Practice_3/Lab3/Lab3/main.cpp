@@ -83,6 +83,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		//s2.operator=(MyString("tmp"));
 		s1 = s1;			// MyString& operator=();
 		//s1.operator=(s1);
+		MyString s3 = std::move(s1);
 		stop
 	}
 
