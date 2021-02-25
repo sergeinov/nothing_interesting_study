@@ -26,7 +26,7 @@ std::ostream& operator<<(std::ostream& os, const MyString& RightObject)
 };
 
 // Point
-std::ostream& operator<<(std::ostream& os, Point& place)	// распечатать координаты
+std::ostream& operator<<(std::ostream& os, const Point& place)	// распечатать координаты
 {
 	os << "\n оординаты:\n"
 		<< "x = " << place.m_x
@@ -36,7 +36,7 @@ std::ostream& operator<<(std::ostream& os, Point& place)	// распечатать координа
 };
 
 // Point перегрузка дл€  Point*
-std::ostream& operator<<(std::ostream& os, Point* place)
+std::ostream& operator<<(std::ostream& os, const Point* place)
 {
 	os << "\n оординаты:\n"
 		<< "x = " << place->m_x
@@ -98,25 +98,28 @@ int main()
 	//ѕопробуйте "выйти" за границы вектора с помощью at() и
 	//с помощью []. 
 	vector<MyString> str(5, "A");
-	str.at(3) = "C";
+	try
+	{
+		str.at(3) = "C";
+		str.at(5) = "B";	// Exception thrown at 0x76A746D2 in Lab3.exe: Microsoft C++ exception: std::out_of_range at memory location 0x0137F500.
+	}
+	catch ( std::out_of_range& ) { };
+	
 	str[ 4 ] = "D";
 	PrintVector(str);
 	stop;
 
-	//str.at(5) = "B";	// Exception thrown at 0x76A746D2 in Lab3.exe: Microsoft C++ exception: std::out_of_range at memory location 0x0137F500.
-
-	stop
-
 	//str[ 5 ] = "F";			// прерывание дебагера о  out_of_range at memory
+	
 
 	stop
 	//вектор вещественных - vDouble3, который €вл€етс€ копией элементов
 	// [0,5) массива вещественных чисел dMas. ѕредворительно массив dMas 
 	//нужно создать и проинициализировать!
 
-	vector<double>dMas = { 3, 4, 5, 10, 11, 15, 16 };
-	PrintVector(dMas);
-	vector<double>vDouble3(dMas.begin(), dMas.begin() + 5);
+	double dMas [] = { 3, 4, 5, 10, 11, 15, 16 };
+	//PrintVector(dMas);
+	vector<double>vDouble3(dMas, (dMas + sizeof(dMas) / sizeof(double)));
 	PrintVector(vDouble3);
 	stop;
 
@@ -133,37 +136,38 @@ int main()
 	vector<Point> point1(3);			//  вызов конструктора по умолчанию
 
 	vector<Point> point2(5, Point(1,1));	// вызов конструктора с инициализацией
-	//PrintVector(point2);					// ?как сделать так
-	for ( size_t i = 0; i < point2.size(); i++)
+	PrintVector(point2);					// const
+	/*for ( size_t i = 0; i < point2.size(); i++)
 	{
 		std::cout << point2[ i ] << " ";
-	}
+	}*/
 
 	stop;
 
 	//вектор указателей на Point - vpPoint с начальным размером 5
 	//ѕодумайте: как корректно заставить эти указатели "указывать" на объекты Point
 	{
-		vector<Point*>vpPoint(5, new Point(2, 2));
+		vector<Point*>vpPoint(5);
+		for ( size_t i = 0; i < vpPoint.size(); i++ )
+		{
+			vpPoint[ i ] = new Point(i, i);
+		}
 	//ѕодсказка: дл€ вывода на печать значений скорее всего ¬ам понадобитс€
 		//а) специализаци€ ¬ашей шаблонной функции
 		//б) или перегрузка operator<< дл€ Point*
 
 		std::cout << "\n\nVector указателей vpPoint" << std::endl;
 		// печатаем
-		for ( size_t i = 0; i < vpPoint.size(); i++ )
-		{
-			std::cout << *vpPoint[ i ] << " ";
-		}
+		PrintVector(vpPoint);
 		stop;
 		std::cout << "”даление Point" << std::endl;
 
 		// удал€ем динамически созданный Point
-		/*for ( size_t i = 0; i < vpPoint.size(); i++ )
+		for ( size_t i = 0; i < vpPoint.size(); i++ )
 		{
 			delete vpPoint[ i ];
 		}
-		stop;*/
+		stop;
 	}// акие дополнительные действи€ нужно предприн€ть дл€ такого вектора?		// будут удалены указатели вектора
 
 	stop
@@ -239,7 +243,7 @@ int main()
 		// увеличиваем дл€ теста Capacity
 		vInt2.reserve(10);
 		PrintVector(vInt2);
-		vInt2.shrink_to_fit();
+		vInt2.shrink_to_fit();				// убирает capacity
 		PrintVector(vInt2);
 		stop;
 	
@@ -248,18 +252,19 @@ int main()
 	//«адан одномерный массив int ar[] = {11,2,4,3,5};
 	//—оздайте вектор векторов следующим образом:
 	//вектор vv[0] - содержит 11 элементов со значением 11
-	//vv[1] - содержит 2,2
+	//vv[1] - содержит 2,2,
 	//vv[2] - содержит 4,4,4,4
-	//...
+	//vv[3] - 3,3,3
 	//–аспечатайте содержимое такого двухмерного вектора по строкам
 		int ar[] = { 11,2,4,3,5 };
 		vector<vector<int>>vv;
 		vv.resize(11);
-		//for ( size_t i = 0; i < 11; i++ )
-		//{
-		//	//vv[ 0 ].assign(ar[ 0 ])
-		//}
-	
+		for ( size_t i = 0; i < 3; i++ )
+		{
+			vv[ i ].assign(ar[ i ], ar[ i ]);
+		}
+		
+		//std::cout << vv << std::endl;
 		stop;
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
