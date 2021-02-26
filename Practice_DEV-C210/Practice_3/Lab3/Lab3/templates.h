@@ -2,7 +2,7 @@
 #include<vector>
 #include<iostream>
 
-template<typename T>void PrintVector(const std::vector<T>& v) 
+template<typename T>void PrintVector(const std::vector<T>& v)		// распечатать вектор
 { 
 	for ( size_t i = 0; i < v.size(); i++ )
 	{
@@ -12,7 +12,7 @@ template<typename T>void PrintVector(const std::vector<T>& v)
 
 };
 
-template<typename T>void PrintVector(const std::vector<T*>& v)
+template<typename T>void PrintVector(const std::vector<T*>& v)		// распечатать указателей
 {
 	for ( size_t i = 0; i < v.size(); i++ )
 	{
@@ -24,7 +24,19 @@ template<typename T>void PrintVector(const std::vector<T*>& v)
 
 
 
+template<typename T> void PrintAll(const T &data)		// распечатать любой контейнер
+{
+	typename T::const_iterator it;									// переменная итератор
+	typename T::value_type type = typename T::value_type();					// тип контейнера
+	// for ( auto = data.begin(); auto != data.end(); p++ )
+	for ( it = data.begin(); it != data.end(); it++ )
+	{
+		std::cout << *it << " ";
+	}
 
+	std::cout << type << std::endl;
+	std::cout << std::endl;
+}
 
 
 

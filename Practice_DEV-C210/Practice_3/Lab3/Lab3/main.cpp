@@ -241,7 +241,7 @@ int main()
 		// !vInt2.swap(vector<int>(vInt2));
 
 		// увеличиваем для теста Capacity
-		vInt2.reserve(10);
+		vInt2.reserve(10);					// резервируем память
 		PrintVector(vInt2);
 		vInt2.shrink_to_fit();				// убирает capacity
 		PrintVector(vInt2);
@@ -361,8 +361,8 @@ int main()
 		//push_front, insert()
 
 		list<int> list1;
-		list <int> :: iterator itb = list1.begin();
-		advance(itb, 5);
+		//list <int> :: iterator itb = list1.begin();
+		//advance(itb, 5);
 		list1.push_back(1);
 		list1.push_back(2);
 		list1.push_front(4);
@@ -373,12 +373,13 @@ int main()
 	//Напишите шаблон функции, которая будет выводить элементы
 	//ЛЮБОГО КОНТЕЙНЕРА на печать. Проверьте работу шаблона на контейнерах
 	//vector и list. Подсказка - хотелось бы увидеть тип контейнера.
-
-
+		PrintAll(list1);
+		stop;
 
 	//Сделайте любой из списков "реверсивным" - reverse()
 		list1.reverse();
-
+		PrintAll(list1);
+		stop;
 	//Создайте список ptList2 из элементов Point таким образом, чтобы он стал 
 	//копией вектора элементов типа Point, но значения элементов списка располагались
 	//бы в обратном порядке 
