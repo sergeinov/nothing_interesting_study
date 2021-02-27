@@ -10,6 +10,8 @@ public:
 
 	// перегрузка оператора==
 	bool operator==(const Point& point) const;
+	bool operator<(const Point& point) const;
+
 	friend std::ostream& operator<<(std::ostream& os, const Point& place); // вывод координат
 	friend std::ostream& operator<<(std::ostream& os, const Point* place); // вывод координат
 

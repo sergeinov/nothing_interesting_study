@@ -45,6 +45,7 @@ std::ostream& operator<<(std::ostream& os, const Point* place)
 	return os;
 }
 
+
 int main()
 {
 	setlocale(LC_ALL, "Russian");
@@ -255,16 +256,23 @@ int main()
 	//vv[1] - содержит 2,2,
 	//vv[2] - содержит 4,4,4,4
 	//vv[3] - 3,3,3
+	// vv[5] - 5,5,5,5,5
+
 	//Распечатайте содержимое такого двухмерного вектора по строкам
 		int ar[] = { 11,2,4,3,5 };
 		vector<vector<int>>vv;
-		vv.resize(11);
-		for ( size_t i = 0; i < 3; i++ )
+		vv.resize(5);
+		for ( size_t i = 0; i < (sizeof(ar) / sizeof(ar[0])); i++ )
 		{
-			vv[ i ].assign(ar[ i ], ar[ i ]);
+			vv[ i ].assign(ar[ i ], ar[ i ]);		// void assign(size_type count, const Type& value);	
+													// Количество копий элемента -11, Значение элемента, вставляемого в вектор - 11
+													// Количество копий элемента - 2, Значение элемента, вставляемого в вектор - 2
+													// Количество копий элемента - 4, Значение элемента, вставляемого в вектор - 4
+													// Количество копий элемента - 3, Значение элемента, вставляемого в вектор - 3
+													// Количество копий элемента - 5, Значение элемента, вставляемого в вектор - 5
 		}
-		
-		//std::cout << vv << std::endl;
+		// распечатать  // шаблон функции operator<<  для двумерного vector
+		std::cout << vv << std::endl;
 		stop;
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -289,7 +297,7 @@ int main()
 		// вставляем символ
 		for ( size_t i = 0; i < size; i++ )
 		{
-			// проверк, что есть в векторе символ
+			// проверкa, что есть в векторе символ
 			if ( vChar2[i] == ch )
 			{
 				flag = false;
@@ -301,7 +309,7 @@ int main()
 		{
 			vChar2.insert(itb, ch);
 		}
-		// распечатаем
+
 		PrintVector(vChar2);
 	
 	//Вставьте перед каждым элементом вектора vChar2 букву 'W'	
@@ -336,20 +344,20 @@ int main()
 
 	//DeleteSameElementsWithErase(vChar2);
 	PrintVector(vChar2);
-	stop
+	stop;
 
 
-		///////////////////////////////////////////////////////////////////
-			//Создайте новый вектор таким образом, чтобы его элементы стали
-			//копиями элементов любого из созданных ранее векторов, но расположены
-			//были бы в обратном порядке
-		vector<int> vInt4;
-		for ( vector<int>::reverse_iterator itb = vInt1.rbegin(); itb != vInt1.rend(); ++itb )
-		{
-			vInt4.push_back(*itb);
-		}
-		PrintVector(vInt4);
-		stop;
+	///////////////////////////////////////////////////////////////////
+	//Создайте новый вектор таким образом, чтобы его элементы стали
+	//копиями элементов любого из созданных ранее векторов, но расположены
+	//были бы в обратном порядке
+	vector<int> vInt4;
+	for ( vector<int>::reverse_iterator itb = vInt1.rbegin(); itb != vInt1.rend(); ++itb )
+	{
+		vInt4.push_back(*itb);
+	}
+	PrintVector(vInt4);
+	stop;
 
 
 
@@ -360,42 +368,51 @@ int main()
 		//его значениями с помощью методов push_back(),
 		//push_front, insert()
 
-		list<int> list1;
-		//list <int> :: iterator itb = list1.begin();
-		//advance(itb, 5);
-		list1.push_back(1);
-		list1.push_back(2);
-		list1.push_front(4);
-		list1.push_front(3);
-		list1.insert(list1.end(), 10);
+		list<Point> ptList1;			
+		/*list <int> :: iterator itb = list1.begin();
+		advance(itb, 5);*/
+		ptList1.push_back(Point(1,1));
+		ptList1.push_back(Point(2, 2));
+		ptList1.push_front(Point(3, 3));
+		ptList1.push_front(Point(4, 4));
+		ptList1.insert(ptList1.end(), ( Point(5, 5) ));	 //  Вставляет элемент или количество элементов или диапазон элементов в указанное положение в списке.
 
 
 	//Напишите шаблон функции, которая будет выводить элементы
 	//ЛЮБОГО КОНТЕЙНЕРА на печать. Проверьте работу шаблона на контейнерах
 	//vector и list. Подсказка - хотелось бы увидеть тип контейнера.
-		PrintAll(list1);
+
+		PrintAll(ptList1);			// для вывода пользовательских типов нужен перегруженный operator<<
 		stop;
 
 	//Сделайте любой из списков "реверсивным" - reverse()
-		list1.reverse();
-		PrintAll(list1);
+
+		ptList1.reverse();
+		PrintAll(ptList1);
 		stop;
+
 	//Создайте список ptList2 из элементов Point таким образом, чтобы он стал 
 	//копией вектора элементов типа Point, но значения элементов списка располагались
 	//бы в обратном порядке 
 
+		list<Point> ptList2;
+		list<Point>::iterator it12 = ptList1.begin();
+		ptList2.splice(ptList2.end(), ptList1, it12, ptList1.end());
+		PrintAll(ptList2);
 
-
+		stop;
 	//Отсортируйте списки  ptList1 и ptList2 - методом класса list - sort()
 	//по возрастанию.
 	//Подумайте: что должно быть перегружено в классе Point для того, чтобы
 	//работала сортировка
+		ptList1.sort();			//  сортирует по возрастанию (operator<)  // для пользовательских классов нужно перегрузить operator<
+		PrintAll(ptList1);
+		stop;
 
+		ptList2.sort();
+		PrintAll(ptList2);
+		stop;
 
-	
-
-
-	stop
 
 	//Объедините отсортированные списки - merge(). Посмотрите: что
 	//при этом происходит с каждым списком.

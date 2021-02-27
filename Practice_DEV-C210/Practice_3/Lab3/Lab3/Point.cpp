@@ -11,6 +11,11 @@ Point::Point(int x, int y) : m_x(x), m_y(y) {};
 bool Point::operator==(const Point& point) const
 {
 	return (this->m_x == point.m_x && this->m_y == point.m_y);
-};
+}
+bool Point::operator<(const Point& point) const
+{
+	return (this->m_x < point.m_x);
+}
+;
 
 // методы
