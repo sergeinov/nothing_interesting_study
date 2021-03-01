@@ -14,7 +14,7 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& os, const Point& place); // вывод координат
 	friend std::ostream& operator<<(std::ostream& os, const Point* place); // вывод координат
-
+	friend bool NegPoint(const Point& object);
 private:
 	int m_x;
 	int m_y;

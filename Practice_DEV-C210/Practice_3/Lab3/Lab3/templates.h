@@ -2,7 +2,9 @@
 #include<vector>
 #include<iostream>
 
-template<typename T>void PrintVector(const std::vector<T>& v)		// распечатать вектор
+
+// распечатать вектор
+template<typename T>void PrintVector(const std::vector<T>& v)		
 { 
 	for ( size_t i = 0; i < v.size(); i++ )
 	{
@@ -12,7 +14,8 @@ template<typename T>void PrintVector(const std::vector<T>& v)		// распечатать ве
 
 };
 
-template<typename T>void PrintVector(const std::vector<T*>& v)		// распечатать указателей
+// распечатать вектор указателей
+template<typename T>void PrintVector(const std::vector<T*>& v)		
 {
 	for ( size_t i = 0; i < v.size(); i++ )
 	{
@@ -22,78 +25,132 @@ template<typename T>void PrintVector(const std::vector<T*>& v)		// распечатать у
 
 };
 
+//  способ
 // vector<vector<T>> - печать для  двумерного вектора
-template<typename T>std::ostream& operator<<(std::ostream& os, const std::vector<std::vector<T>> vv)
+//template<typename T>std::ostream& operator<<(std::ostream& os, const std::vector<std::vector<T>> vv)
+//{
+//	for ( size_t i = 0; i < vv.size(); i++ )
+//	{
+//		for ( size_t j = 0; j < vv[ i ].size(); j++ )
+//		{
+//			os << vv[ i ][ j ] << " ";
+//		}
+//		os << std::endl;	
+//	}
+//	return os;
+//}
+
+//  работает для одномерных и двумерных векторов
+template<typename T>std::ostream& operator<<(std::ostream& os, const std::vector<T>& vv)	// vector<vector<T>> -печать для  двумерного вектора
 {
 	for ( size_t i = 0; i < vv.size(); i++ )
 	{
+		os << vv[ i ] << " ";					//  при одномерном массиве будет печатать значения
+												// при двумерном инстанцируется - вызывается второй раз на уровне <<   и печатает значения как для одномерного массива
+		/*
+		* // не подходящий способ
 		for ( size_t j = 0; j < vv[ i ].size(); j++ )
 		{
 			os << vv[ i ][ j ] << " ";
-		}
-		os << std::endl;	
+		}*/	
 	}
+	os << std::endl;
 	return os;
 }
 
-
-template<typename T> void PrintAll(const T &data)		// распечатать любой контейнер
+// функция добавляет значение, если нет в векторе
+template<typename T> void MyAdd(std::vector<T>& v, const T& data)	
 {
-	typename T::const_iterator it;									// переменная итератор
-	typename T::value_type type = typename T::value_type();					// тип контейнера
-	// for ( auto = data.begin(); auto != data.end(); p++ )
+	for ( size_t i = 0; i < v.size(); i++ )
+	{
+		if ( v[i] == data )				// проверяем есть ли значение в векторе
+		{
+			return;
+		}
+	}
+	v.insert(v.begin(), data);			// добавляем  в начало
+}
+
+
+// распечатать любой контейнер
+template<typename T> void PrintAll(const T &data)		
+{
+	typename T::const_iterator it;										// переменная итератор
+	//typename T::value_type type = typename T::value_type();					// тип контейнера
+	std::cout << typeid( T ).name() << std::endl;						// вывод типа контейнера
+	std::cout << typeid( typename T::value_type ).name() << std::endl;	//  вывод  имени контейнера
 	for ( it = data.begin(); it != data.end(); it++ )
 	{
-		std::cout << *it << " ";
+		std::cout << *it << " ";										// распечатываем
 	}
 
-	std::cout << type << std::endl;
+	//std::cout << type << std::endl;
 	std::cout << std::endl;
 }
 
 
-
-
-
-template<typename T>void DeleteSameElements(const std::vector<T>& v)
+// удаляет только повторяющиеся последовательности.
+//Например: было - "qwerrrrty12222r3", стало - "qwety1r3"
+template<typename T>void DeleteSameElements(std::vector<T>& v)		
 {
-	int size = v.size();
-	for ( size_t i = 0; i < size; i++ )
+	typename std::vector<T>::iterator it = v.begin();
+	while ( it != v.end() )
 	{
-		if ( v[i] == v[i+1] )
+		typename std::vector<T>::iterator first = it;		// переменная на начало вектора
+		typename std::vector<T>::iterator last = it + 1;	// переменая и на следующий элемент
+
+		while ( last != v.end() )			//  
 		{
-			v[i] = v.erase(v.begin());
-			size = v.size();
+			if ( *first == *last )		// сравниваем значения
+			{
+				last++;					// если равно увеличиваем итератор дальше
+			}
+			else
+			{
+				break;
+			}
 		}
-	}
-	//while ( v1)
-	//{
-	//	if ( ( *v1 == *( v1 + 1 ) ) )
-	//	{
-	//		delete v1;
-	//	}
-	//	else
-	//	{
-	//		++v1;
-	//	}
-	//}
-};
-
-
-template<typename T>void DeleteSameElementsWithErase(const std::vector<T>& v1)
-{
-
-	typename std::vector<T>::const_iterator itb = v1.begin();		// ? зачем typename
-	while ( itb != v1.end() )
-	{
-		if ( (*itb == *(itb + 1)) )
+		if ( last != it + 1 )	
 		{
-			itb = v1.erase(itb);
+			it = v.erase(first, last);		// удаляем диапазон.
 		}
 		else
 		{
-			++itb;
+			++it;						// увеличиваем  начальный адрес вектора
 		}
 	}
+};
+
+
+//	 функция удаления из любого вектора всех дублей 
+//Например: было - "qwerrrrty12222r3", стало - "qwerty123"
+template<typename T>void DeleteSameElementsWithErase(std::vector<T>& v1)
+{
+
+	typename std::vector<T>::iterator it1 = v1.begin();
+	while ( it1 != (v1.end() - 1) )
+	{
+		typename std::vector<T>::iterator first = it1;		// переменная на начало вектора
+		typename std::vector<T>::iterator last = it1 + 1;	// переменая и на следующий элемент
+
+		if ( *first == *last )			// сравниваем значения
+		{
+			it1 = v1.erase(first);		// удаляем значение.
+			
+		}
+		else
+		{
+			it1++;						// увеличиваем итератор цикла
+		}
+	}
+};
+
+
+//Функция удаляет из deque все элементы, в которых строчки
+//начинаются с 'A' или 'a'
+template<typename T>void DeleteElemForDeque(std::deque<T>& v2)
+{
+
+
 };
 

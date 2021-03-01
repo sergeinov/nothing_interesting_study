@@ -12,6 +12,7 @@ bool Point::operator==(const Point& point) const
 {
 	return (this->m_x == point.m_x && this->m_y == point.m_y);
 }
+
 bool Point::operator<(const Point& point) const
 {
 	return (this->m_x < point.m_x);
@@ -19,3 +20,4 @@ bool Point::operator<(const Point& point) const
 ;
 
 // методы
+
