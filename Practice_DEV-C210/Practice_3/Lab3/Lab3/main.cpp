@@ -52,6 +52,25 @@ bool NegPoint(const Point& object)
 	return ( object.m_x < 0 && object.m_y < 0 );
 }
 
+//Функция удаляет из deque все элементы, в которых строчки
+//начинаются с 'A' или 'a'
+void DeleteElemForDeque(std::deque<MyString>& str, char data)
+{
+	typename std::deque<MyString>::iterator it = str.begin();
+	while ( it !=  str.end())
+	{
+		char ch = *( *it ).GetString();
+		if ( tolower(ch) == tolower(data) )
+		{
+			it = str.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
+
 int main()
 {
 	setlocale(LC_ALL, "Russian");
@@ -413,7 +432,7 @@ int main()
 	//Объедините отсортированные списки - merge(). Посмотрите: что
 	//при этом происходит с каждым списком.
 
-		ptList1.merge(ptList2);		// рещультат отсортирован
+		ptList1.merge(ptList2);		// результат отсортирован
 		std::cout << "merge  ptList1" << std::endl;
 		PrintAll(ptList1);
 		// в ptList2  пусто
@@ -424,7 +443,7 @@ int main()
 	//Исключите из списка элемент с определенным значением.
 	//Подумайте: что должно быть перегружено в классе Point?
 
-	ptList1.remove(Point(1,1));							// для Point перегрузить operator=
+	ptList1.remove(Point(1,1));							// для Point перегрузить operator==
 	std::cout << "remove  Point(1,1) ptList1" << std::endl;
 	PrintAll(ptList1);
 	stop;
@@ -468,19 +487,20 @@ int main()
 	//с помощью push_back(), push_front(), insert()
 	//С помощью erase удалите из deque все элементы, в которых строчки
 	//начинаются с 'A' или 'a'
-
-	deque<MyString> pDeque;
-	pDeque.push_front("I");
-	pDeque.push_back("am");
-	pDeque.push_back("Aliss");
-	pDeque.insert(pDeque.end(), "Grett");
+	
+	deque<MyString> pDeque2;
+	pDeque2.push_front("I");
+	pDeque2.push_back("am");
+	pDeque2.push_back("Aliss");
+	pDeque2.insert(pDeque2.end(), "Grett");
 
 	std::cout << "\ndeque ->" << std::endl;
-	PrintAll(pDeque);
+	PrintAll(pDeque2);
 
-	std::cout << "\ndeque -> удаление" << std::endl;
-	DeleteElemForDeque(pDeque);
-	PrintAll(pDeque);
+	char simbol = 'A';									// символ с которым удаляются строки
+	std::cout << "\ndeque -> удаление строк начинающиеся с символа: " << simbol << std::endl;
+	DeleteElemForDeque(pDeque2, simbol);
+	PrintAll(pDeque2);
 
 	return 0;
 }

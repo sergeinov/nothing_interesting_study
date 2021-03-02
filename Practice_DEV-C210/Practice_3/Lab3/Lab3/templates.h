@@ -79,12 +79,12 @@ template<typename T> void PrintAll(const T &data)
 	//typename T::value_type type = typename T::value_type();					// тип контейнера
 	std::cout << typeid( T ).name() << std::endl;						// вывод типа контейнера
 	std::cout << typeid( typename T::value_type ).name() << std::endl;	//  вывод  имени контейнера
+
 	for ( it = data.begin(); it != data.end(); it++ )
 	{
 		std::cout << *it << " ";										// распечатываем
 	}
 
-	//std::cout << type << std::endl;
 	std::cout << std::endl;
 }
 
@@ -128,29 +128,26 @@ template<typename T>void DeleteSameElementsWithErase(std::vector<T>& v1)
 {
 
 	typename std::vector<T>::iterator it1 = v1.begin();
-	while ( it1 != (v1.end() - 1) )
+	while ( it1 != (v1.end()) )
 	{
 		typename std::vector<T>::iterator first = it1;		// переменная на начало вектора
 		typename std::vector<T>::iterator last = it1 + 1;	// переменая и на следующий элемент
 
-		if ( *first == *last )			// сравниваем значения
+		while ( last != v1.end())			//  от следующего элемента до конца vector
 		{
-			it1 = v1.erase(first);		// удаляем значение.
-			
+			if ( *first == *last )			// сравниваем значения
+			{
+				it1 = v1.erase(first);		// удаляем значение.	
+			}
+			else
+			{
+				last++;					//  увеличиваем итератор дальше
+			}
 		}
-		else
-		{
-			it1++;						// увеличиваем итератор цикла
-		}
+
+		it1++;						// увеличиваем итератор цикла
+
 	}
 };
 
-
-//Функция удаляет из deque все элементы, в которых строчки
-//начинаются с 'A' или 'a'
-template<typename T>void DeleteElemForDeque(std::deque<T>& v2)
-{
-
-
-};
 
