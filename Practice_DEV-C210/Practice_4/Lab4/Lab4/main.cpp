@@ -13,6 +13,7 @@
 #include <clocale>
 #include"template.h"
 #include"Point.h"
+#include"Case.h"
 
 #include <iostream>
 
@@ -108,9 +109,12 @@ int main()
 	//в) проверьте "упорядоченность" значений (с помощью pop() ) - если они оказываются не упорядоченными, подумайте:
 	//		что сравнивается при вставке?
 	const char* ar[] = { "Bool", "is", "also", "important" };
-	//priority_queue<const char*, std::vector<const char*>, std::greater<const char*>> pr(ar);
+	priority_queue<const char*, std::vector<const char*>, Case> pr(ar, ar + 4);
 
+	PrintAdapter(pr);		// не упорядочены	// для сравнения используются адреса  и сравнивается видом  "return x < y"
+							// создали предикат Case, который сравнивает первые символы строки, таким образом сортируется
 	
+	stop;
 
 
 
@@ -156,6 +160,15 @@ int main()
 	//	при этом строки задаются строковыми литералами
 	//б) заполните контейнер значениями посредством operator[] и insert()
 	//в) распечатайте содержимое
+
+	pair<const char*, int> pr1("Иванова", 20000);
+
+	map<const char*, int> mp;
+	// 3 способа заполнения
+	mp.insert(pr1);
+	mp.insert(pair<const char*, int>("Сидоров", 15000));
+	mp[ "Петров" ] = 40000;
+
 
 	//г) замените один из КЛЮЧЕЙ на новый (была "Иванова", вышла замуж => стала "Петрова")
 

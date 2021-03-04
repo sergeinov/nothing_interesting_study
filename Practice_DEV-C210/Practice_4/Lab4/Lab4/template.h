@@ -2,6 +2,7 @@
 #include<iostream>
 #include <queue>
 #include<deque>
+#include <map>
 
 template<typename T> const typename T::value_type& topAll(const T& adapter)
 {
@@ -44,4 +45,17 @@ template<typename T> void PrintAll(const T& data)
 	}
 
 	std::cout << std::endl;
+}
+
+
+
+// распечатать map / multimap
+template<typename T, typename A> void PrintAll(const std::map<T, A>& m)
+{
+	typedef map<T, A>::iterator it = m.begin();
+	while ( it != m.end() )
+	{
+		std::cout << "\n" << (*it).first << ": " << (*it).second << std::endl;
+		++it;
+	}
 }
