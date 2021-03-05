@@ -3,7 +3,7 @@ class Case
 {
 public:
 
-	bool operator()(const char* first, const char* second);
+	bool operator()(const char* first, const char* second) const;
 
 };
 

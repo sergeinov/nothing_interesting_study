@@ -42,7 +42,7 @@ std::ostream& operator<<(std::ostream& os, const Point* place)
 }
 
 // функция условия для list  remove_if
-bool NegPoint(const Point& object)
+bool NegPoint(const Point& object) 
 {
 	return ( object.m_x < 0 && object.m_y < 0 );
 }
@@ -55,9 +55,11 @@ int main()
 	//обратите внимание на то, что контейнеры предоставляют РАЗНЫЕ методы для 
 	//получения значений
 	
-
-	// PrintAdapter();
-
+	queue<int, list<int>> myQueue;
+	myQueue.push(4);
+	myQueue.push(6);
+	PrintAdapter(myQueue);
+	stop;
 
 
 	////////////////////////////////////////////////////////////////////////////////////
@@ -67,10 +69,15 @@ int main()
 	//а) элементы стека стали копиями элементов вектора
 	//б) при выводе значений как вектора, так и стека порядок значений был одинаковым 
 	vector<int> vInt = { 1, 2, 3, 4, 5 };
-	stack<int, std::vector<int>> st(vector<int>(vInt.rbegin(), vInt.rend()));
+	stack<int, std::vector<int>> st(vector<int>(vInt.rbegin(), vInt.rend()));	// создаем новый вектор, реверсивный  vector<int>(vInt.rbegin(), vInt.rend())
 
 	PrintAdapter(st);
 	stop;
+
+	stack<int, std::vector<int>> st2(vInt);
+	PrintAdapter(st2);
+	stop;
+
 
 
 	////////////////////////////////////////////////////////////////////////////////////
@@ -81,24 +88,44 @@ int main()
 	//Измените значения первого и последнего элементов посредством front() и back()
 	//Подумайте, что требуется сделать при уничтожении такой очереди?
 	
-	queue<Point, deque<Point>> q1;
-	q1.push(Point(5, 5));
-	q1.push(Point(1, 1));
-	q1.push(Point(8, 8));
-	Point& fr = q1.front();
-	Point& bk = q1.back();
-	PrintAdapter(q1);
-	
-	fr = Point(2, 2);
-	bk = Point(4, 4);
-	PrintAdapter(q1);
+	{
+		queue<Point, deque<Point>> q1;
+		q1.push(Point(5, 5));
+		q1.push(Point(1, 1));
+		q1.push(Point(8, 8));
+		Point& fr = q1.front();
+		Point& bk = q1.back();
+		PrintAdapter(q1);
+
+		fr = Point(2, 2);
+		bk = Point(4, 4);
+		PrintAdapter(q1);
+
+		while ( !q1.empty() )
+		{
+			q1.pop();
+		};
+
+		PrintAdapter(q1);
+	}
+
+	queue<Point*, deque<Point*>> q1;
+	q1.push(new Point(5, 5));
+	q1.push(new Point(1, 1));
+	q1.push(new Point(8, 8));
+	Point* fr = q1.front();
+	Point* bk = q1.back();
+	*fr = Point(9, 9);
+	*q1.back() = Point(10, 10);
+
+	//PrintAdapter(q1);
 
 	while ( !q1.empty() )
 	{
+		delete q1.front();
 		q1.pop();
-	};
+	}
 
-	PrintAdapter(q1);
 
 	stop;
 
@@ -109,7 +136,7 @@ int main()
 	//в) проверьте "упорядоченность" значений (с помощью pop() ) - если они оказываются не упорядоченными, подумайте:
 	//		что сравнивается при вставке?
 	const char* ar[] = { "Bool", "is", "also", "important" };
-	priority_queue<const char*, std::vector<const char*>, Case> pr(ar, ar + 4);
+	priority_queue<const char*, std::vector<const char*>, Case> pr(ar, (ar + sizeof(ar) / sizeof(ar[0])));
 
 	PrintAdapter(pr);		// не упорядочены	// для сравнения используются адреса  и сравнивается видом  "return x < y"
 							// создали предикат Case, который сравнивает первые символы строки, таким образом сортируется
@@ -138,7 +165,7 @@ int main()
 	stop;
 
 	set<Point>::iterator it = mySet.begin();
-	//*it = Point(22, 22);					// ! итератор предназначен только для чтения
+	//*it = Point(22, 22);					// ! set предназначен только для чтения
 
 	set<int> mySet2 = { 1,2,3,4,5 };			// 1, 2, 3, 4, 5
 	mySet2.insert(2);							// 1, 2, 3, 4, 5		// дубли игнорируются
@@ -149,13 +176,17 @@ int main()
 
 	int arr5[] = { 1, 2, 3, 6, 7 };
 	mySet3.insert(arr5, arr5 + 5);				// 1, 2, 3, 4, 5, 6, 7		// дубли игнорируются
-	PrintAll(mySet3);						
+	PrintAll(mySet3);	
+
+	//set<int, greater<int>> mySet4(arr5, arr5 + ( sizeof(arr5) / sizeof(arr5[ 0 ])));
+	set<int, greater<int>> mySet4(arr5, arr5 + 5 );			// используем другой компаратор
+	PrintAll(mySet4);
 
 	stop;
 
 
 	////////////////////////////////////////////////////////////////////////////////////
-	//map, multiset
+	//map, multiset 
 	//а) создайте map, который хранит пары "фамилия, зарплата" - pair<const char*, int>,
 	//	при этом строки задаются строковыми литералами
 	//б) заполните контейнер значениями посредством operator[] и insert()
@@ -163,40 +194,57 @@ int main()
 
 	pair<const char*, int> pr1("Иванова", 20000);
 
-	map<const char*, int> mp;
+	map<const char*, int , Case> mp;
 	// 3 способа заполнения
 	mp.insert(pr1);
 	mp.insert(pair<const char*, int>("Сидоров", 15000));
 	mp[ "Петров" ] = 40000;
 
-
+	PrintMap(mp);
+	stop;
 	//г) замените один из КЛЮЧЕЙ на новый (была "Иванова", вышла замуж => стала "Петрова")
+	const char* temp1 = "Иванова";
+	const char* temp2 = "Петрова";
+	//changeKeyName(mp, "Иванова","Петрова");
+	changeKeyName(mp, temp1, temp2);
 
-	stop
+	stop;
+
+
+
+
+	//д) Сформируйте любым способом вектор с элементами типа string.
+	//Создайте (и распечатайте для проверки) map<string, int>, который будет
+	//содержать упорядоченные по алфавиту строки и
+	//количество повторений каждой строки в векторе
+
+	vector<string> vString = { "Green", "Yellow", "Blue", "Pink", "Black","Green" };
+	map<string, int> mp2;
+	vector<string>::iterator iter1 = vString.begin(), iter2 = vString.end();		// итераторы
+	while ( iter1 != iter2 )
+	{
+		mp2[ *iter1 ]++;			// если нет в Map объекта создает "Green" - значение 0....."Yellow" = 0 ....."Blue" 0
+									//  и возвращает адрес на значение, далее мы делаем ++
+									//  и Pair становится  -  "Green"  1
+									// после нахождения второй похожей строки Pair становится  -  "Green" = 2
+		++iter1;
+	}
+	PrintAll(mp2);
+	stop;
+
+
+	//е) 
+	//задан массив:
+	const char* words[] = {"Abba", "Alfa", "Beta", "Beauty"};
+	//создайте map, в котором каждой букве будет соответствовать совокупность 
+	//лексиграфически упорядоченных слов, начинающихся с этой буквы.
+	//Подсказка: не стоит хранить дубли одной и той же строки
 	
-
-	
-		
-		//д) Сформируйте любым способом вектор с элементами типа string.
-		//Создайте (и распечатайте для проверки) map<string, int>, который будет
-		//содержать упорядоченные по алфавиту строки и
-		//количество повторений каждой строки в векторе
-	
-
-
-
-
-		//е) 
-		//задан массив:
-		//const char* words[] = {"Abba", "Alfa", "Beta", "Beauty" ,...};
-		//создайте map, в котором каждой букве будет соответствовать совокупность 
-		//лексиграфически упорядоченных слов, начинающихся с этой буквы.
-		//Подсказка: не стоит хранить дубли одной и той же строки
-	
-		//'A' -  "Abba" "Alfa"
-		//'B' -  "Beauty" "Beta"  ...
+	//'A' -  "Abba" "Alfa"
+	//'B' -  "Beauty" "Beta"  ...
 		//...
-		
+	map<char, set<string>> mp3;
+
 
 		//ж)
 		//создайте структуру данных, которая будет хранить информацию о студенческих группах.
