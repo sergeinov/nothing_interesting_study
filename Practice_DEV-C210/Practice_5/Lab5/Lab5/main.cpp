@@ -8,14 +8,28 @@
 #include <set>
 #include <map>
 #include <algorithm>
+#include<iterator>				// для работы с итераторами
+#include"Point.h"
+#include"template.h"
 
-using namespace std;	
+//using namespace std;	
 #define	  stop __asm nop
+
+
+// Point
+std::ostream& operator<<(std::ostream& os, const Point& place)	// распечатать координаты
+{
+	os << "\nКоординаты:\n"
+		<< "x = " << place.m_x
+		<< "\n"
+		<< "y = " << place.m_y;
+	return os;
+};
 
 
 int main()
 {
-	
+	setlocale(LC_ALL, "Rus");
 ///////////////////////////////////////////////////////////////////
 
 	//Задание 1. Итераторы
@@ -23,11 +37,25 @@ int main()
 	//Реверсивные итераторы. Сформируйте set<Point>. Подумайте, что
 	//нужно перегрузить в классе Point. Создайте вектор, элементы которого 
 	//являются копиями элементов set, но упорядочены по убыванию
+	std::set<Point> mySet = { Point(1,1),Point(3,3),Point(12,12),Point(6,6),Point(10,10) };
 
+	std::vector<Point> myVec(mySet.size());	// ! нельзя копировать в пустой вектор / создаем достаточно памяти для принятия диапазона
+	//std::vector<Point> myVec(mySet.size());	// можно так создать память
+	//myVec.reserve(mySet.size());		//  с этим не работает
+	myVec.resize(mySet.size());		//  ок
 
+	std::copy(mySet.rbegin(), mySet.rend(), myVec.begin());		// копируем из set  в vector, в обратном порядке
+																//  ? не работает для set / map
+	stop;
 	//Потоковые итераторы. С помощью ostream_iterator выведите содержимое
 	//vector и set из предыдущего задания на экран.
 
+	std::ostream_iterator<Point> iter(std::cout, " ");		// создаем переменную - итератор вывода cout
+	std::copy(mySet.begin(), mySet.end(), iter);					// не забыть перегрузить operator<<   для Point
+	std::cout << "\n\n************" << std::endl;
+	std::copy(myVec.begin(), myVec.end(), iter);					// вывод вектора на консоль с помощью copy
+
+	stop;
 
 	//Итераторы вставки. С помощью возвращаемых функциями:
 	//back_inserter()
@@ -35,9 +63,18 @@ int main()
 	//inserter()
 	//итераторов вставки добавьте элементы в любой из созданных контейнеров. Подумайте:
 	//какие из итераторов вставки можно использовать с каждым контейнером.
+	Point myArr[] = { Point(13, 13), Point(14, 14) };
 
+	std::copy(myArr, myArr + 2, std::back_inserter(myVec));		// вызов insertor - push_back  для  Vector
+	//std::copy(myArr, myArr + 2, std::front_inserter(mySet));		// вызов insertor - front_back  для  mySet
+	PrintAll(myVec);
+	std::cout << "\n\n************" << std::endl;
 
+	stop;
 
+	std::copy(myArr, myArr + 2, std::inserter(mySet, mySet.begin()));	// более универсальный. подходящий для контейнеров
+	PrintAll(mySet);
+	stop;
 ///////////////////////////////////////////////////////////////////
 
 	//Задание 2. Обобщенные алгоритмы (заголовочный файл <algorithm>). Предикаты.
@@ -47,18 +84,25 @@ int main()
 	//С помощью алгоритма for_each в любой последовательности с элементами любого типа
 	//распечатайте значения элементов
 	//Подсказка : неплохо вызываемую функцию определить как шаблон
+	std::set<int> mySet2 = { 1,2,3,4,5 };
 
+	std::for_each(mySet2.begin(), mySet2.end(), printElement<int>);
 
+	//printContainer(mySet2);
 
-	stop
+	stop;
 
 	//С помощью алгоритма for_each в любой последовательности с элементами типа Point
 	//измените "координаты" на указанное значение (такой предикат тоже стоит реализовать 
 	//как шаблон) и выведите результат с помощью предыдущего предиката
+	std::cout << "\nДо" << std::endl;
+	PrintAll(mySet);
 
+	std::for_each(mySet.begin(), mySet.end(), changeValue<Point>);
+	std::cout << "\nПосле" << std::endl;
+	PrintAll(mySet);
 
-
-
+	stop;
 	//С помощью алгоритма find() найдите в любой последовательности элементов Point
 	//все итераторы на элемент Point с указанным значением.
 
@@ -119,7 +163,7 @@ int main()
 		//Дан multimap, содержаций пары: "месяц - количество денй в месяце"
 		//pair<string, int>. С помощью copy_if сформируйте ДВА map-а: первый -
 		//с парами, содержащими четное количество дней, 2-ой - нечетное.
-		std::multimap<string, int> month {
+		std::multimap<std::string, int> month {
 			{"January", 31}, {"February", 28}, {"February", 29}, { "March", 31},
 			{"April", 30}, {"May",31}, {"June", 30}, {"July", 31}, {"August",31},
 			{"September",30}, {"October", 31}, {"November",30}, {"December",31}
