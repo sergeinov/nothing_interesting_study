@@ -75,7 +75,7 @@ template<typename T, typename A, typename P> void PrintMap(const std::map<T, A, 
 // сменить ключ-‘амилию
 template<typename T, typename A, typename P> void changeKeyName(std::map<T, A, P>& m, const T& changeSurname , const T& surname)
 {
-	typename std::map<const char*, int>::iterator iter;
+	typename std::map<const char*, int>::iterator iter = m.begin();
 	//auto iter = m.find(changeSurname);
 
 	if ( iter != m.end() )			// если указывает на конец значит »вановой нету в Map
@@ -86,4 +86,33 @@ template<typename T, typename A, typename P> void changeKeyName(std::map<T, A, P
 
 		m[ surname ] = temp;					// создаем Ќовую пару, с новой фамилией, со старым значением вз€того из удаленной пары
 	}
+
+	bool temp = m.contains(changeSurname);		// contains из  с++20 стандарта. дл€ поддержкив компил€тор вставл€ем ключик /std:c++latest
+	
+}
+
+
+// перевод слова
+template<typename T, typename A, typename P> void myTranslater(const std::multimap<T, A, P>& m, T& word)
+{
+	typename std::multimap<T, A, P>::const_iterator it1;
+	typename std::multimap<T, A, P>::const_iterator it2;		// используем второй итератор дл€ поиска всех ключей по заданному ключу
+
+	std::cout << "\n" << "—лово: " << word << std::endl;
+	
+	it1 = m.lower_bound(word);		//  возвращаетс€  указатель на слово
+	it2 = m.upper_bound(word);		// возвращаетс€ указатель следующий адрес после последнего похожего слова
+
+	if ( it1 == it2 )			// если слово не найдено выход
+	{
+		std::cout << "\n" << "—овпадений не найдено" << std::endl;
+	}
+
+	while ( it1 != it2 )		// проходим по диапазону  между it1 - it2
+	{
+		std::cout << "\n" << "перевод: " << ( *it1 ).second << std::endl;
+		++it1;								// двигаемс€ по итератору к следующему слову	
+	}
+
+
 }

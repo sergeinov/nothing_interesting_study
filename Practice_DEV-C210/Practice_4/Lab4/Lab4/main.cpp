@@ -205,11 +205,10 @@ int main()
 	//г) замените один из КЛЮЧЕЙ на новый (была "Иванова", вышла замуж => стала "Петрова")
 	const char* temp1 = "Иванова";
 	const char* temp2 = "Петрова";
-	//changeKeyName(mp, "Иванова","Петрова");
+	//changeKeyName(mp, "Иванова","Петрова");		// не работает 
 	changeKeyName(mp, temp1, temp2);
 
 	stop;
-
 
 
 
@@ -217,13 +216,14 @@ int main()
 	//Создайте (и распечатайте для проверки) map<string, int>, который будет
 	//содержать упорядоченные по алфавиту строки и
 	//количество повторений каждой строки в векторе
+	// Пример:  map -> ключ/значение ->  "Green"  2
 
 	vector<string> vString = { "Green", "Yellow", "Blue", "Pink", "Black","Green" };
 	map<string, int> mp2;
 	vector<string>::iterator iter1 = vString.begin(), iter2 = vString.end();		// итераторы
 	while ( iter1 != iter2 )
 	{
-		mp2[ *iter1 ]++;			// если нет в Map объекта создает "Green" - значение 0....."Yellow" = 0 ....."Blue" 0
+		mp2[ *iter1 ]++;			// если нет в Map объекта, создает "Green" - значение 0....."Yellow" = 0 ....."Blue" 0
 									//  и возвращает адрес на значение, далее мы делаем ++
 									//  и Pair становится  -  "Green"  1
 									// после нахождения второй похожей строки Pair становится  -  "Green" = 2
@@ -267,9 +267,26 @@ int main()
 	//г) Выведите на экран только варианты "переводов" для заданного ключа. Подсказка: для нахождения диапазона
 	//		итераторов можно использовать методы lower_bound() и upper_bound()
 
+	std::pair <std::string, std::string> p1 = make_pair("attitude", "отношение");
+	std::pair <std::string, std::string> p2 = make_pair("attitude", "позиция");
+	std::pair <std::string, std::string> p3 = make_pair("order", "порядок");
+	std::pair <std::string, std::string> p4 = make_pair("order", "заказ");
+	std::pair <std::string, std::string> p5 = make_pair("order", "приказ");
+	std::pair <std::string, std::string> p6 = make_pair("denote", "означать");
+	std::pair <std::string, std::string> p7 = make_pair("denote", "указывать");
 
+	std::multimap<std::string, std::string> mMap;
+	mMap.insert(p1);
+	mMap.insert(p2);
+	mMap.insert(p3);
+	mMap.insert(p4);
+	mMap.insert(p5);
+	mMap.insert(p6);
+	mMap.insert(p7);
 
-
+	PrintAll(mMap);
+	string word = "ord";
+	myTranslater(mMap, word);
    
 
   stop
