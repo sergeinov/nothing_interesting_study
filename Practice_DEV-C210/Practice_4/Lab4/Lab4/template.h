@@ -93,7 +93,7 @@ template<typename T, typename A, typename P> void changeKeyName(std::map<T, A, P
 
 
 // перевод слова
-template<typename T, typename A, typename P> void myTranslater(const std::multimap<T, A, P>& m, T& word)
+template<typename T, typename A, typename P> void myTranslater(const std::multimap<T, A, P>& m, const T& word)
 {
 	typename std::multimap<T, A, P>::const_iterator it1;
 	typename std::multimap<T, A, P>::const_iterator it2;		// используем второй итератор для поиска всех ключей по заданному ключу
