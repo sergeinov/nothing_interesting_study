@@ -129,11 +129,16 @@ int _tmain(int argc, _TCHAR* argv[])
 		list.push(3);
 		list.push(5);
 		list.push(22);
+
+		MyStack2<int> list2 = list;
+
 		std::cout << "\nСписок!\n" << std::endl;
-		for ( size_t i = 0; i < list.GetSize(); i++ )
-		{
-			std::cout << list[ i ] << " ";
-		}
+		//for ( size_t i = 0; i < list.GetSize(); i++ )
+		//{
+		//	std::cout << list[ i ] << " ";
+		//}
+		std::cout << list << std::endl;
+		std::cout << list2;
 
 		stop
 
@@ -143,6 +148,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		{
 			std::cout << list[ i ] << " ";
 		}
+
 
 		std::cout << "\n\nУдаляем список!\n" << std::endl;
 		list.clear();
