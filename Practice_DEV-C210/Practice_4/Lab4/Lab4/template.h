@@ -42,6 +42,15 @@ template<typename T, typename V> std::ostream& operator<<(std::ostream& os, cons
 	return os;
 }
 
+
+//template<class M>
+//void printMultiMap(const M& mmap)
+//{
+//	for ( auto& e : mmap )
+//		std::cout << "{" << e.first << "," << e.second << "} ";
+//	std::cout << '\n';
+//}
+
 // распечатать любой контейнер
 template<typename T> void PrintAll(const T& data)
 {
@@ -71,6 +80,7 @@ template<typename T, typename A, typename P> void PrintMap(const std::map<T, A, 
 		++it;
 	}
 }
+
 
 // сменить ключ-Фамилию
 template<typename T, typename A, typename P> void changeKeyName(std::map<T, A, P>& m, const T& changeSurname , const T& surname)

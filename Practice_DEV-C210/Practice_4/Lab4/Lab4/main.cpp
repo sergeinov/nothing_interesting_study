@@ -246,7 +246,10 @@ int main()
 	map<char, set<string>> mp3;
 	for ( size_t i = 0; i < sizeof(words) / sizeof(words[0]); i++ )
 	{
-		mp3[ words[ i ][ 0 ] ].insert(words[ i ]);
+		mp3[ words[ i ][ 0 ] ].insert(words[ i ]);	//T& operator[]( const Key& key );
+													// Возвращает ссылку на значение, которое сопоставлено с ключом, эквивалентным ключу, 
+													// выполняя вставку, если такой ключ еще не существует.
+													// и insert  добавляет значение в .second
 	}
 	
 
@@ -259,10 +262,19 @@ int main()
 	//Сами группы тоже должны быть упорядочены по номеру
 	//
 	//номера 
-	map<int, multiset<string>> mp4;
+	const char* words2[] = { "Ivanov", "Petrov", "Ivanov", "Petrov", "Grechkin", "Holol", "Abdulov", "Bregin" };
+	map<size_t, multiset<string>> mp4;
 
+	for ( size_t i = 0; i < sizeof(words2) / sizeof(words2[ 0 ]); i++ )
+	{
+		mp3[ i ].insert(words2[ i ]);				//T& operator[]( const Key& key );
+													// Возвращает ссылку на значение, которое сопоставлено с ключом, эквивалентным ключу, 
+													// выполняя вставку, если такой ключ еще не существует.
+													// и insert  добавляет значение в .second
+	}
 
-
+	printMultiMap(mp4);
+	stop;
 
 	////////////////////////////////////////////////////////////////////////////////////
 	//multimap
@@ -292,7 +304,7 @@ int main()
 	mMap.insert(p7);
 
 	PrintAll(mMap);
-	string word = "ord";
+	string word = "order";
 	myTranslater(mMap, word);
    
 
