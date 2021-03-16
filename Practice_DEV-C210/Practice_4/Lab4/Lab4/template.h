@@ -3,6 +3,7 @@
 #include <queue>
 #include<deque>
 #include<map>
+#include<set>
 
 template<typename T> const typename T::value_type& topAll(const T& adapter)
 {
@@ -34,13 +35,26 @@ template<typename A>void PrintAdapter(A a)
 	}
 	std::cout << std::endl;
 }
+template<typename T> std::ostream& operator<<(std::ostream& os, const std::multiset<const T>& v)
+{
+	for ( auto it = v.begin(); it != v.end(); it++ )
+	{
+		os << "\n" << *it << std::endl;										// распечатываем  // для Map используется перегруженный operator<< для распечатки Pair используется
+	}
 
+	return os;
+
+}
 // распечатать пару ключ/значение
 template<typename T, typename V> std::ostream& operator<<(std::ostream& os, const std::pair<const T, V>& v)
 {
-	os << "\n" << v.first << ": " << v.second << std::endl;
-	return os;
+	os << "\n" << v.first << ": " << 
+		v.second << std::endl;
+	return os;	
+
 }
+
+
 
 
 //template<class M>

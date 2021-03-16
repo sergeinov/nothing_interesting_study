@@ -252,7 +252,7 @@ int main()
 													// и insert  добавляет значение в .second
 	}
 	
-
+	PrintAll(mp3);
 
 
 	//ж)
@@ -265,15 +265,14 @@ int main()
 	const char* words2[] = { "Ivanov", "Petrov", "Ivanov", "Petrov", "Grechkin", "Holol", "Abdulov", "Bregin" };
 	map<size_t, multiset<string>> mp4;
 
-	for ( size_t i = 0; i < sizeof(words2) / sizeof(words2[ 0 ]); i++ )
+	for ( size_t i = 1; i < (sizeof(words2) / sizeof(words2[ 0 ]) + 1); i++ )
 	{
 		mp3[ i ].insert(words2[ i ]);				//T& operator[]( const Key& key );
 													// Возвращает ссылку на значение, которое сопоставлено с ключом, эквивалентным ключу, 
 													// выполняя вставку, если такой ключ еще не существует.
 													// и insert  добавляет значение в .second
 	}
-
-	printMultiMap(mp4);
+	PrintAll(mp4);
 	stop;
 
 	////////////////////////////////////////////////////////////////////////////////////
