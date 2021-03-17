@@ -1,6 +1,6 @@
 #pragma once
 #include<iostream>
-
+#include"Rect.h"
 
 
 // распечатать пару ключ/значение
@@ -42,9 +42,25 @@ template<typename T> void printContainer(const T& value)
 {
 	std::for_each(
 		value.begin(), 
-		value.end(), 
-		printElement<T>);
+		value.end(),
+		printElement<typename T::value_type>);
 }
+
+
+// шаблон класса
+template<typename T> class changeValue		// ?не понятно
+{
+	int val;
+
+public:
+	changeValue(int n) : val(n) { };
+
+	T  operator()(T& v) const
+	{
+		return v + val;
+	}
+
+};
 
 
 // через лямбда функции
@@ -57,9 +73,43 @@ template<typename T> void printContainer(const T& value)
 //	);
 //}
 
-
-// изменение  значений входящих данных
-template<typename T> void changeValue(T& data)
+class Case
 {
-	
+	int m_x;
+	int m_y;
+public:
+	Case(int x, int y) :m_x(x), m_y(y) { };
+	bool operator()(const Point& p) const
+	{
+		return (p.GetX() < m_x && p.GetY() > m_y);
+	} 
+
+};
+
+bool CaseSort(const Rect& p1, const Rect& p2);
+
+class CaseSort2
+{
+public:
+	bool operator()(const Rect& p1, const Rect& p2) const
+	{
+		return true;
+	}
+
+};
+
+
+class SomeCase
+{
+public:
+	char operator()(char ch)const
+	{
+		return tolower(ch);			// берем по одному символу 
+	}
+};
+
+
+inline char SomeCasefoo(char ch)
+{
+	return tolower(ch);
 }

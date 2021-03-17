@@ -13,14 +13,17 @@ public:
 	bool operator<(const Point& point) const;
 	bool operator!=(const Point& point) const;
 
+	
 
 	friend std::ostream& operator<<(std::ostream& os, const Point& place); // вывод координат
 	friend std::ostream& operator<<(std::ostream& os, const Point* place); // вывод координат
 	friend bool NegPoint(const Point& object);
 
+	Point operator+(const int val) const;
+
 	// методы
-	int GetX();
-	int GetY();
+	int GetX() const;
+	int GetY() const ;
 
 private:
 	int m_x;

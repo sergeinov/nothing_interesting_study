@@ -18,19 +18,28 @@ bool Point::operator!=(const Point& point) const
 	return !(this->m_x == point.m_x && this->m_y == point.m_y);
 }
 
-int Point::GetX()
+
+Point Point::operator+(const int val) const
+{
+	Point temp(this->m_x + val, this->m_y + val);
+	//this->m_x = this->m_x + val;
+	//this->m_y = this->m_y + val;
+	return temp;
+}
+
+int Point::GetX() const
 {
 	return m_x;
 }
 
-int Point::GetY()
+int Point::GetY() const
 {
 	return m_y;
 }
 
 bool Point::operator<(const Point& point) const
 {
-	return (this->m_x < point.m_x);
+	return (this->m_x < point.m_x /*&& this->m_y < point.m_y*/);
 }
 ;
 
