@@ -15,6 +15,7 @@
 #include"template.h"
 #include"String.h"
 #include <list>
+#include <deque>
 
 
 std::ostream& operator<<(std::ostream& out, const String& s) 
@@ -167,17 +168,18 @@ int main()
 
 	//  перегрузить operator-  для string/  Для изменения использовать tolower/toupper
 	{
+		std::cout << "\n" << "Negative convertor:" << std::endl;
 		std::vector<double> vd{ 1.1,2.2,3.3 };
 		NegateAll(vd);
 		PrintAnyCont(vd);
 
 		std::list<std::string> ls{ "aBc", "Qwerty", "n12" };
-//		NegateAll(ls);
+		NegateAll(ls);
 		PrintAnyCont(ls);
 
-		//int ar[]{ 1, 2, 3 };
-		////NegateAll(ar);
-		//PrintAnyCont(ar);
+		int ar[]{ 1, 2, 3 };
+		NegateAll(ar);
+		PrintAnyCont(ar);
 
 		__asm nop
 
@@ -190,6 +192,7 @@ int main()
 	//Собственно для сортировки можно использовать обобщенный
 	//алгоритм sort(), а для задания условия - лямбда-функцию
 	{
+		std::cout << "\n" << "Sort:" << std::endl;
 		std::vector<double> vd = { -3.3,  2.2, -1.1 };
 		absSort(vd);
 		PrintAnyCont(vd);
@@ -197,6 +200,7 @@ int main()
 
 		int ar[] = { -3, 2, -1 };
 		absSort(ar);
+		PrintAnyCont(ar);
 		__asm nop
 	}
 
@@ -220,20 +224,23 @@ int main()
 
 	//например:
 	{
-		//std::vector<int> v{ 1,2,3,4 };
-		//std::list<double> l{ 1.1, 2.2, 3.3, 4.4, 5.5 };
+		std::cout << "\n" << "Sort:" << std::endl;
 
-		////??? = SumCont(v, l);
-		//
+		std::vector<int> v{ 1,2,3,4 };
+		std::list<double> lt{ 1.1, 2.2, 3.3, 4.4, 5.5 };
 
-		//std::list<int> ll{ 1, 2, 3, 4, 5, 6, 7, 8 };
-		//double ar[] = { 1.1, 2.2, 3.3, 4.4, 5.5 };
-		////??? = SumCont(ar, ll);
-		//
+		auto resultVector = SumCont(v, lt);
+		PrintAnyCont(resultVector);
 
-		//std::set<std::string> s{ "abc", "qwerty", "my"};
-		//std::deque<const char*> d{ "111", "22" };
-		////??? = SumCont(s, d);
+		std::list<int> ll{ 1, 2, 3, 4, 5, 6, 7, 8 };
+		double ar[] = { 1.1, 2.2, 3.3, 4.4, 5.5 };
+		auto resultVector2 = SumCont(ar, ll);
+		PrintAnyCont(resultVector2);
+
+		std::set<std::string> s{ "abc", "qwerty", "my"};
+		std::deque<const char*> d{ "111", "22" };
+		auto resultVector3 = SumCont(s, d);
+		PrintAnyCont(resultVector3);
 
 		__asm nop
 	}
@@ -249,12 +256,18 @@ int main()
 	//согласно заданному условию. Условие задать лябда-функцией
 	//Исходная последовательность при этом не меняется
 	{
+		std::cout << "\n" << "Separate:" << std::endl;
 		////Например:
-		//std::vector<int> v{ 1,2,3,4,5 };
-		//std::list<int> l; //сюда четные
-		//std::deque<int> d; //а сюда нечетные
-		////Separate(v, l, d, <условие>);
-		
+		std::vector<int> v{ 1,2,3,4,5 };
+		std::list<int> l; //сюда четные
+		std::deque<int> d; //а сюда нечетные
+		Separate(v, l, d, [](auto num) 
+			{
+				return  num % 2;
+			});
+
+		PrintAnyCont(l);
+		PrintAnyCont(d);
 		__asm nop
 	}
 
@@ -266,9 +279,20 @@ int main()
 	//  Использовать лямбда функцию
 	{
 		char s[] = "Hello World!";
+
+
 		//for_each
 
+		int count = 0;
+		auto result = std::for_each(s, std::end(s), [&count] (char v)
+			{ 
+				if ( isupper(v) )		// проверка функцией, что буква Большая
+				{
+					count++;			// считаем сколько букв
+				}
+			});
 		
+		std::cout <<  "\n" << "count: " << count << std::endl;
 		__asm nop
 	}
 
