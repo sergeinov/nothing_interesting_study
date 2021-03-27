@@ -106,3 +106,28 @@ template<typename T, typename C, typename A, typename P> void Separate(const T& 
 	}
 
 }
+
+
+///  задание 10
+
+enum COLOR: unsigned char { GREEN, YELLOW };
+enum DAYS: unsigned char {MONDAY, TUESDAY };
+
+template <typename T> std::map<std::string, T> mp;
+
+template <typename T> T stringToEnum(const std::string& str)
+{
+	return mp<T>.at(str);
+}
+
+template <typename T> const std::string& enumToString(T _enums)
+{
+	for ( auto& [key, value] : mp<T> )
+	{
+		if ( value == _enums )
+		{
+			return key;
+		} 
+	}
+	throw "Not found";
+}

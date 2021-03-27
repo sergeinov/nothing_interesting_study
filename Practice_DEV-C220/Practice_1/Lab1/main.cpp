@@ -23,6 +23,12 @@ std::ostream& operator<<(std::ostream& out, const String& s)
 	return out << s.str;
 };
 
+// задание 10
+// специализации
+template <> std::map<std::string, COLOR> mp<COLOR> { {"GREEN", COLOR::GREEN }, {"YELLOW", COLOR::YELLOW}};
+template <> std::map<std::string, DAYS> mp<DAYS> { {"MONDAY", DAYS::MONDAY}, {"TUESDAY", DAYS::TUESDAY}};
+
+
 int main()
 {
 	//Задание 1. 
@@ -331,19 +337,25 @@ int main()
 
 	{
 	//Например:
-/*
-		COLORS c1;
+
+		COLOR c1;
 		try {
-			c1 = stringToEnum<COLORS>("blue");
+			c1 = stringToEnum<COLOR>("GREEN");
 		}
 		catch (...)
 		{
-		//...
+			std::cout << "Pair undefined" << std::endl;
+		}
+		std::string Str;
+		try
+		{
+			Str = enumToString(c1);
+		}
+		catch ( const char* )
+		{
+			std::cout << "error" << std::endl;
 		}
 
-	
-		auto Str = enumToString(c1);
-*/
 
 		__asm nop
 	}
