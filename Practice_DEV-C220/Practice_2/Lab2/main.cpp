@@ -9,6 +9,8 @@
 
 #include"MyVector.h"
 #include"MyQueue.h"
+#include"MyString.h"
+
 
 int main()
 {
@@ -37,6 +39,26 @@ int main()
 		std::cout << i << " ";
 	}
 
+	MyQueue<MyString>  q1{ MyString("AAA"), MyString("qwerty")/*<другие_инициализаторы>*/ };
+	for ( const auto& el : q1 ) 
+	{ 
+		std::cout << el << ' '; 
+	}
+
+	MyString s("abc");
+	q1.push(s);
+	q1.push(MyString("123"));
+	MyString s1 = q1.pop();
+	q1.push("qqq");
+	MyQueue < MyString >  q2 = q1;
+	MyQueue < MyString >  q22 = std::move(q1);
+	q1.push("Test");
+	q22 = std::move(q22);
+
+	MyQueue < MyString >  q3{ 10, MyString("!") }; //очередь должна содержать 10 элементов со строкой «!» 
+	q1 = q3;
+	q2 = MyQueue < MyString >(5, MyString(" ? "));
+	//q1 = { MyString("bbb"), MyString("ssss") };
 
 	__asm nop
 
