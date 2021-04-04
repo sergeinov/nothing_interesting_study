@@ -58,7 +58,7 @@ int main()
 	MyQueue < MyString >  q3{ 10, MyString("!") }; //очередь должна содержать 10 элементов со строкой «!» 
 	q1 = q3;
 	q2 = MyQueue < MyString >(5, MyString(" ? "));
-	//q1 = { MyString("bbb"), MyString("ssss") };
+	q1 = { MyString("bbb"), MyString("ssss") };
 
 	__asm nop
 
