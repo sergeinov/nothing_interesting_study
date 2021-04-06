@@ -18,11 +18,13 @@ int main()
 	//в) добавьте разделители (Delimeter)
 
 	{
-		const char* str = "Marina";
-		std::cout << "myname is " << str << std::endl;
+		std::cout << "my name is \"Marina\"" << std::endl;
 
+		std::string str1 = R"(my name is "Marina")";							// использование префмкс R  - предписывающий компилятору не обрабатывать \<символ>
+		std::cout << str1 << std::endl;
 
-
+		std::string str2 = R"delimeter(my name is "Marina")delimeter";			// использование delimeter
+		std::cout << str2 << std::endl;
 		__asm nop
 	}
 
