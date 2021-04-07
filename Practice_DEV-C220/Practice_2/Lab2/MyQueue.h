@@ -158,16 +158,17 @@ public:
 		return *this;
 	}
 
-	//MyQueue& operator=(std::initializer_list&& list)			// перегрузка оператора присваивания
-	//{
-	//	delete[] this->m_p;
-	//	m_size = list.size();
-	//	m_cap = m_size + 1;
-	//	m_p = new T[ m_cap ];
-	//	std::copy(list.begin(), list.end(), m_p);
-	//	m_begin = 0;
-	//	m_end = m_size;
-	//}
+	MyQueue& operator=(std::initializer_list<T>&& list)			// перегрузка оператора присваивания
+	{
+		delete[] this->m_p;
+		m_size = list.size();
+		m_cap = m_size + 1;
+		m_p = new T[ m_cap ];
+		std::copy(list.begin(), list.end(), m_p);
+		m_begin = 0;
+		m_end = m_size;
+		return *this;
+	}
 
 
 	MyQueue& operator=(MyQueue&& other)		// оператор перемещения

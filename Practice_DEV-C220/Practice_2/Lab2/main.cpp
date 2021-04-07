@@ -6,11 +6,12 @@
 #include <map>
 #include <algorithm>
 #include<iterator>
+#include<string>
 
 #include"MyVector.h"
 #include"MyQueue.h"
 #include"MyString.h"
-
+#include"MyUniquePTR.h"
 
 int main()
 {
@@ -65,24 +66,32 @@ int main()
 
 
 	//*********************************************************//
-	/*
-	MyUniquePTR<MyString> p1(new MyString(УabcФ));
+	
+	MyUniquePTR<MyString> p1(new MyString("abc"));
 	std::cout << p1->GetString();
-	p1->SetNewString(УqwertyФ);
+	p1->SetNewString("qwerty");
 	MyString  s2 = *p1;
-	MyUniquePTR< MyString > p2 = p1; //здесь компил€тор должен выдавать ошибку =>  //»справьте!
+	//MyUniquePTR< MyString > p2 = p1; //здесь компил€тор должен выдавать ошибку =>  //»справьте! // конструктор копировани€
 
 		if(p1) //а это должно работать
 		{ 
-			std::cout << ФNo object!Ф 
+			std::cout << "No object!";
 		} 
 
-	MyUniquePTR< MyString > p3(new MyString(УvvvФ));
-	p3 = p2;	//и здесь компил€тор должен выдавать ошибку
+	MyUniquePTR< MyString > p3(new MyString("vvv"));
+	//p3 = p2;	//и здесь компил€тор должен выдавать ошибку
 
-	vector< MyUniquePTR< MyString >> v; //как проинициализировать???
-	list< MyUniquePTR< MyString >> l;   //как скопировать из v в l ???
-	*/
+	std::vector< MyUniquePTR< MyString >> v; //как проинициализировать???
+	v.reserve(2);
+	for ( size_t i = 0; i < 2; i++ )
+	{
+		v.push_back(MyUniquePTR<MyString>(new MyString(std::to_string(i).c_str())));
+	}
+	std::list< MyUniquePTR< MyString >> l;   //как скопировать из v в l ???
+	/*std::copy(std::move_iterator<decltype(v)::iterator>(v.begin()), 
+		std::move_iterator<decltype( v )::iterator>(v.end()), std::back_inserter(l));*/
+	std::copy(std::move_iterator(v.begin()), 
+		std::move_iterator(v.end()), std::back_inserter(l));
 }
 
 
