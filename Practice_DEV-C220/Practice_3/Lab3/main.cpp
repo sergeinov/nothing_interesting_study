@@ -5,6 +5,10 @@
 #include <algorithm>
 #include <iterator>
 #include <memory>
+#include"functions.h"
+#include <vector>
+#include"MySaveClass.h"
+#include <list>
 
 using namespace std;
 
@@ -20,7 +24,7 @@ int main()
 	{
 		std::cout << "my name is \"Marina\"" << std::endl;
 
-		std::string str1 = R"(my name is "Marina")";							// использование префмкс R  - предписывающий компилятору не обрабатывать \<символ>
+		std::string str1 = R"(my name is "Marina")";							// использование префикс R  - предписывающий компилятору не обрабатывать \<символ>
 		std::cout << str1 << std::endl;
 
 		std::string str2 = R"delimeter(my name is "Marina")delimeter";			// использование delimeter
@@ -44,19 +48,20 @@ int main()
 	//				посредством constexpr-функции:
 
 	{	//Например:
-		//int ar[factorial(3)];
+		int ar[factorial(3)];
 
 		//или
-		//constexpr int n = factorial(5);
-		//int ar1[n];
+		constexpr int n = factorial(5);
+		int ar1[n];
 
 		//попробуйте:
-		//int m = 7;
-		//constexpr int n1 = factorial(m);
+		int m = 7;
+		//constexpr int n1 = factorial(m);	// ошибка, значение не const
 		//int ar1[n1];
 		
 		//а так?
-		//int n2 = factorial(m);
+		int n2 = factorial(m);
+
 		__asm nop
 	}
 	
@@ -76,7 +81,8 @@ int main()
 	//		  компилятор вычислит результат вызова рекурсивной функции на этапе компиляции)
 
 	{
-
+	/*constexpr*/ auto result = 100000000_convertToDec;
+	std::cout << result << std::endl;			// 256
 		__asm nop
 
 	}
@@ -89,7 +95,7 @@ int main()
 	//Подсказка: количество разрядов в байте определяет константа CHAR_BIT - <cstdint>
 
 	{
-		//std::string sBin= 256_toBinStr;
+		std::string sBin= 256_toBinStr;		// 100000000
 		__asm nop
 	}
 
@@ -109,6 +115,13 @@ int main()
 	//Проверьте тот факт, что компилятор вычисляет значение на этапе компиляции. 
 
 	{
+		constexpr MySaveClass test(0, 10);
+		constexpr auto val = test.getMin();
+		int res = test.findValue(-1);
+		int res2 = test.findValue(3);
+
+		MySaveClass test1("1"s, "2"s);
+		//constexpr auto val1 = test1.getMax();		// ошибка
 
 	__asm nop
 	}	
@@ -121,17 +134,33 @@ int main()
 	Подсказки: if constexpr
 	*/
 	{
+		std::vector<std::string> vec{"T-Shirt", "Shirt", "Tie", "Jacket"};
+		PrintAll(vec);
 
+		std::list<std::string*> l{ new std::string("ZZZ"), new std::string("AAA") };
+		PrintAll(l);
+
+		// delete l
+		__asm nop
 	}
 
 	/***************************************************************/
-	//Задание 5.
+	//Задание 6.
 		/* Реализуйте шаблон функции сложения двух значений.
 		Если первое слагаемое является вектором, то все элементы вектора нужно увеличить на значение второго параметра. При этом элементы вектора и второй параметр должны быть одного и того же типа.
 		Подсказки: if constexpr, is_same
 		*/
 	{
+		std::vector<int> vect{ 3,4,5,6,7 };
+		auto result = Sum(vect, 5);
+		//auto result2 = Sum(10, 5);			// ошибкаб первое слагаемое не вектор
+		std::cout << "\nVector:" << std::endl;
+		for ( const auto& i : vect )
+		{
+			std::cout << i << " ";
+		}
 
+		__asm nop
 	}
 
 
@@ -142,7 +171,19 @@ int main()
 	Предусмотрите вывод значений, если в адаптере хранятся указатели.
 	*/
 	{
+		std::queue<std::string> q;
+		q.push("Lead");
+		q.push("Build");
+		q.push("Release");
+		PrintAdapter(q);
 
+		stack <int> st;
+		st.push(10);
+		st.push(20);
+		st.push(30);
+		PrintAdapter(st);
+
+		__asm nop
 	}
 
 	/***************************************************************/
