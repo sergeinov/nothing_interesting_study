@@ -5,6 +5,7 @@
 #include<deque>
 #include<stack>
 #include<queue>
+#include<type_traits>
 
 
 constexpr int factorial(int value)      // вычисление факториала числа
@@ -102,40 +103,56 @@ template<typename T, typename A> decltype( auto ) Sum(T& v1, const A& v2)
 }
 
 
-//template<typename T> const typename T::value_type& topAll(const T& adapter)
-//{
-//    return adapter.top();
-//}
-//
 ////template<typename T> const typename T::value_type& topAll(const T& adapter)
 ////{
 ////	return *(adapter.top());
 ////}
 //
-//template<typename T, typename C> const T& topAll(const std::queue<T, C>& adapter)
+
+
+//template<typename A>void PrintAdapter(A adapter)
 //{
-//    return adapter.front();
+//    if ( adapter.empty() )
+//    {
+//        std::cout << "\nEmpty!!!" << std::endl;
+//    }
+//
+//    while ( !adapter.empty() )
+//    {
+//        if constexpr ( std::is_same<A, std::queue<typename A::value_type, typename A::container_type>> )
+//        {
+//            std::cout << adapter.front() << " ";
+//        } 
+//        else //if constexpr( std::is_same<A::value_type, std::priority_queue<A>::value_type>/* && std::is_same<A::value_type, std::stack<A>::value_type>*/  )
+//        {
+//            std::cout << adapter.top() << " ";
+//        }
+//        adapter.pop();
+//    }
+//    std::cout << std::endl;
 //}
 
-template<typename A>void PrintAdapter(A adapter)
+
+// возврщает разные типы
+template<int N> constexpr auto Smth() 
 {
-    if ( adapter.empty() )
+    if constexpr ( N == 1 )
     {
-        std::cout << "\nEmpty!!!" << std::endl;
+        return 1;
+        //std::cout << std::is_scalar<int>::value << std::endl;
     }
-
-    while ( !adapter.empty() )
+    else if constexpr ( N == 2 )
     {
-        if constexpr ( std::is_same<A, std::queue<A>> )
-        {
-            std::cout << adapter.front() << " ";
-        } 
-        else if constexpr( std::is_same<A, std::priority_queue<A>> && std::is_same<A, std::stack<A>>  )
-        {
-            std::cout << adapter.top() << " ";
-        }
-
-        adapter.pop();
+        return 2.2;
+        //std::cout << is_floating_point<value>::value << std::endl;
+    } 
+    else if constexpr ( N == 3 )
+    {
+        return "abc";
+        //std::cout << std::is_scalar<value>::value << std::endl;
     }
-    std::cout << std::endl;
+    else
+    {
+        return NULL;
+    }    
 }

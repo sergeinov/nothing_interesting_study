@@ -9,6 +9,7 @@
 #include <vector>
 #include"MySaveClass.h"
 #include <list>
+#include"MyArray.h"
 
 using namespace std;
 
@@ -141,6 +142,8 @@ int main()
 		PrintAll(l);
 
 		// delete l
+		l.clear();
+		
 		__asm nop
 	}
 
@@ -175,13 +178,19 @@ int main()
 		q.push("Lead");
 		q.push("Build");
 		q.push("Release");
-		PrintAdapter(q);
+		//PrintAdapter(q);
+
+		std::queue<std::string, std::list<std::string>> q1;
+		q1.push("Lead");
+		q1.push("Build");
+		q1.push("Release");
+		//PrintAdapter(q1);
 
 		stack <int> st;
 		st.push(10);
 		st.push(20);
 		st.push(30);
-		PrintAdapter(st);
+		//PrintAdapter(st);
 
 		__asm nop
 	}
@@ -191,37 +200,37 @@ int main()
 	/* 	Реализуйте шаблон constexpr функции Smth(), которая должна возвращать значения разного типа
 	Подсказки: constexpr, if constexpr
 	*/
-	//constexpr int res1 = /*<вызов Smth()>;*/ //res1 = 1
-	//constexpr double res2 = /*<вызов Smth()>; */ //res2 = 2.2
-	//  /*constexpr???*/ std::string res3 = /*<вызов Smth()>; */ //res3 = "abc"
+	/*const int x1 = 1;
+	const double x2 = 2.2;
+	const char* x3 = "abc";*/
 
+	constexpr int res1 = Smth<1>();							//res1 = 1
+	constexpr double res2 = Smth<2>();							//res2 = 2.2
+	//  /*constexpr???*/ std::string res3 = Smth(3);				//res3 = "abc"
 
+	__asm nop
 	//***************************************************************/
 	//Задание 9.
 
 		/*Пользовательский deduction guide – для вывода типов параметров шаблона
 		Задан шаблон класса, который инкапсулирует внедренный ограниченный массив известной
 		размерности с элементами любого типа. */
-		/*
-		template<typename T, size_t size> class MyArray
-			{
-				T ar[size]; //как обеспечить инициализацию элементов базового типа по умолчанию нулем?
-				…
-				
+		
+		
 
-			};
-
-		*/
-		/*
+		
 		//Требуется обеспечить работоспособность приведенных примеров использования.
 			{
-				MyArray<int, 5> ar1;//MyArray<int,5>
-				MyArray ar2{"ABC"}; //MyArray<char,4>
+				MyArray<int, 5> ar1;
+
+				MyArray ar2("ABC");
+				MyArray<char, 4> ar22;
 				int ar[] = { 1,2,3 };
 				MyArray ar3{ ar };
 
+				MyArray<int, 5> ar33{ar, 3};
 			}
-		*/
+		
 
 	
 }
