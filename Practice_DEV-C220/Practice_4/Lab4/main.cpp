@@ -4,8 +4,22 @@
 #include <set>
 #include <algorithm>
 #include <string>
+#include"Header.h"
+#include <list>
+#include<ostream>
+#include<fstream>
+#include"WriterDeleter.h"
+#include<stdio.h>
 
+size_t SIZE;
 
+void deleterFoo(std::string** str)
+{
+	for ( size_t i = 0; i < SIZE; i++ )
+	{
+		delete str[ i ];
+	}
+}
 
 int main()
 {
@@ -24,14 +38,14 @@ int main()
 			}
 			__asm nop
 
-			/*for ( auto& i : v )
+			for ( auto& i : v )
 			{
 				delete i;
-			}*/
-			v.clear();
+			}
+			//v.clear();
 			__asm nop
 
-		} //???
+		} //??? деструкторы для указателей
 
 		//1.b - модифицируйте задание 1.а:
 		 //обеспечьте посредством std::unique_ptr: 
@@ -43,14 +57,24 @@ int main()
 
 		{
 			//Распечатайте все строки
+			std::vector<std::unique_ptr<std::string>> vec;
+			//{ new std::string("aa"), new std::string("bb"), new std::string("cc") };
+			vec.reserve(5);
+			vec.push_back(std::unique_ptr<std::string>(new std::string("aa")));
+			vec.push_back(std::make_unique<std::string>(std::string("bb")));
+			vec.push_back(std::make_unique<std::string>("cc"));
+
 
 			__asm nop
 			//??? Уничтожение динамически созданных объектов?
-		} //???
+		 //???
 
-		{//1.c - дополните задание 1.b добавьте возможность изменять хранящиеся строки
+		//1.c - дополните задание 1.b добавьте возможность изменять хранящиеся строки
 		 //следующим образом (например, добавить указанный суффикс: "AAA" -> "AAA_1")  
-
+			for ( auto& i : vec )
+			{
+				*i += "_1";
+			}
 
 
 			__asm nop
@@ -62,6 +86,13 @@ int main()
 		 //с элементами std::string
 		 //С помощью unique_ptr::operator[] заполните обернутый массив значениями
 		 //Когда происходит освобождения памяти?
+			int size = 10;
+			std::unique_ptr<int[]> arr(new int[ size ]);
+			for ( size_t i = 0; i < size; i++ )
+			{
+				arr[ i ] = i * 2;
+				std::cout << arr[i] << " ";
+			}
 
 			__asm nop
 		}
@@ -74,6 +105,35 @@ int main()
 
 			std::string* arStrPtr[] = { new std::string("aa"), new std::string("bb"), new std::string("cc") };
 
+			auto deleter = [ s = std::size(arStrPtr) ](std::string** str)
+			{
+				for ( size_t i = 0; i < s; i++ )
+				{
+					delete str[ i ];
+				}
+			};
+			std::unique_ptr<std::string*, decltype( deleter )> arrStr(arStrPtr, deleter);
+
+			
+			__asm nop
+		}
+
+		{
+			// форма с классом - функтор
+			std::string* arStrPtr[] = { new std::string("aa"), new std::string("bb"), new std::string("cc") };
+
+			std::unique_ptr<std::string*, Mydeleter> arrStr(arStrPtr, Mydeleter(std::size(arStrPtr)));	
+		}
+
+		{
+			// через функцию - функтор
+			std::string* arStrPtr[] = { new std::string("aa"), new std::string("bb"), new std::string("cc") };
+
+			SIZE = std::size(arStrPtr);
+
+			std::unique_ptr<std::string*, decltype( &deleterFoo )> arrStr(arStrPtr, deleterFoo);
+
+
 			__asm nop
 		}
 
@@ -81,6 +141,15 @@ int main()
 			//Посредством алгоритмя copy() скопируйте элементы вектора в пустой список с элементами 
 			//того же типа
 			//Подсказка: перемещающие итераторы и шаблон std::make_move_iterator
+			std::vector<std::unique_ptr<std::string>> vec;
+
+			vec.reserve(5);
+			vec.push_back(std::unique_ptr<std::string>(new std::string("aa")));
+			vec.push_back(std::make_unique<std::string>(std::string("bb")));
+			vec.push_back(std::make_unique<std::string>("cc"));
+
+			std::list<std::unique_ptr<std::string>> L;
+			std::copy(std::make_move_iterator(vec.begin()), std::make_move_iterator(vec.end()), std::back_inserter(L));
 
 			__asm nop
 
@@ -102,16 +171,24 @@ int main()
 	//в. Последний владелец указателя должен закрыть файл
 
 	//Подсказка: имитировать порядок записи можно с помощью функции rand()
-	/*
+	
 	{
+	std::string path = "test.txt";
+	std::ofstream fOut(path);
+	//fOut.open(path, std::ofstream::app);
+
 
 	//"писатели":
 	//Создать writer1, writer2
-
+	/*std::shared_ptr<std::ofstream> writer1(&fOut, WriterDeleter("test.txt"));
+	std::shared_ptr<std::ofstream> writer2 = writer1;*/
 
 	//например, источники данных:
 	char ar1[] = "Writer1";
 	char ar2[] = "Writer2";
+
+	fputs(ar1, stdout);
+	fputs(ar2, stdout);
 
 	//заданное число итераций случайным образом позволяем одному из "писателей" записать в файл
 	//свою строчку
@@ -121,7 +198,7 @@ int main()
 	__asm nop
 	}//закрытие файла???
 
-	*/
+	
 /***************************************************************/
 //Задание 3.
 	{
@@ -130,9 +207,26 @@ int main()
 		//До завершения фрагмента строки должны существовать в единственном экземпляре.
 		//Требуется обеспечить манипулирование строками а) без копирования и б) без изменения порядка
 		//элементов в массиве!
-		
+
+		auto comp = [](const auto& a, const auto& b)		// компаратор для сортировки значений в set
+		{
+			return (*a < *b);
+		};
+		std::set<std::shared_ptr < std::string>, decltype( comp )> s;		// set  для хранения  значений
+
 		//В std::set "складываем" по алфавиту обертки для строк, которые содержат только буквы 
-		
+		for ( size_t i = 0; i < sizeof(strings) / sizeof(strings[0]); i++ )
+		{
+			bool flag = false;
+			if ( std::isalpha(strings[i][i]))
+			{
+				flag = true;
+			}
+			if ( flag )
+			{
+				s.insert(std::shared_ptr<std::string>(&strings[ i ], [](std::string*) { }));
+			}
+		}
 
 		__asm nop
 		/******************************************************************************************/
@@ -141,13 +235,25 @@ int main()
 		//Выводим на экран
 		//Находим сумму
 		
-		//std::vector<std::shared_ptr < std::string>>
+		std::vector<std::shared_ptr < std::string>> vec;
+		for ( size_t i = 0; i < sizeof(strings) / sizeof(strings[ 0 ]); i++ )
+		{
+	
+			if (  true)
+			{
+				vec.push_back(std::shared_ptr<std::string>(&strings[ i ], [](std::string*) { }));
+			}
+		}
+
+		__asm nop
 
 		/******************************************************************************************/
 		//сюда "складываем" обертки для строк, которые не содержат ни символов букв, ни символов цифр
 		//и просто выводим
 
 
+
+		__asm nop
 	}
 
 	
@@ -158,12 +264,14 @@ int main()
 		std::string ar[] = {"my","Hello", "World"};
 		std::vector < std::shared_ptr<std::string>> v = {std::make_shared<std::string>("good"), std::make_shared<std::string>("bye")};
 		
-
+		//v = std::move(ar);
+		
+		__asm nop
 
 		//а) Требуется добавить в вектор обертки для элементов массива, НЕ копируя элементы массива! 
 		//б) Отсортировать вектор по алфавиту и вывести на экран
 		//в) Обеспечить корректное освобождение памяти
-
+		 
 
 		__asm nop
 	}
