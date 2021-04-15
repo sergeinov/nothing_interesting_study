@@ -95,7 +95,11 @@ template<typename T, typename A> decltype( auto ) Sum(T& v1, const A& v2)
                  return x + v2;
              });
          return v1;
-    }
+     }
+     else if constexpr( std::is_integral<T> )
+     {
+         return v1 + v2;
+     }
     else
     {
          return v1 + v2;
@@ -103,34 +107,29 @@ template<typename T, typename A> decltype( auto ) Sum(T& v1, const A& v2)
 }
 
 
-////template<typename T> const typename T::value_type& topAll(const T& adapter)
-////{
-////	return *(adapter.top());
-////}
-//
 
+template<typename A>void PrintAdapter(A adapter)
+{
+    if ( adapter.empty() )
+    {
+        std::cout << "\nEmpty!!!" << std::endl;
+    }
 
-//template<typename A>void PrintAdapter(A adapter)
-//{
-//    if ( adapter.empty() )
-//    {
-//        std::cout << "\nEmpty!!!" << std::endl;
-//    }
-//
-//    while ( !adapter.empty() )
-//    {
-//        if constexpr ( std::is_same<A, std::queue<typename A::value_type, typename A::container_type>> )
-//        {
-//            std::cout << adapter.front() << " ";
-//        } 
-//        else //if constexpr( std::is_same<A::value_type, std::priority_queue<A>::value_type>/* && std::is_same<A::value_type, std::stack<A>::value_type>*/  )
-//        {
-//            std::cout << adapter.top() << " ";
-//        }
-//        adapter.pop();
-//    }
-//    std::cout << std::endl;
-//}
+    while ( !adapter.empty() )
+    {
+        if constexpr ( std::is_same_v<A, std::queue<typename A::value_type, typename A::container_type>> )
+        // if constexpr ( std::is_same<A, std::queue<typename A::value_type, typename A::container_type>>::value )                   // 2 вариант
+        {
+            std::cout << adapter.front() << " ";
+        } 
+        else //if constexpr( std::is_same<A::value_type, std::priority_queue<A>::value_type>/* && std::is_same<A::value_type, std::stack<A>::value_type>*/  )
+        {
+            std::cout << adapter.top() << " ";
+        }
+        adapter.pop();
+    }
+    std::cout << std::endl;
+}
 
 
 // возврщает разные типы

@@ -1,5 +1,5 @@
 #pragma once
-
+#include<iostream>
 
 template<typename T, size_t size> class MyArray
 {
@@ -7,7 +7,14 @@ template<typename T, size_t size> class MyArray
 
 public:
 	MyArray() = default;
-	MyArray(const T* val, size_t size2) { };
+	MyArray(const T* val, size_t size2 = size) 
+	{ 
+		size_t s = std::min(size, size2);
+		for ( size_t i = 0; i < s; i++ )
+		{
+			ar[ i ] =  val[ i ];
+		}
+	};
 
 };
 

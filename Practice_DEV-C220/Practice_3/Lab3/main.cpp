@@ -156,7 +156,7 @@ int main()
 	{
 		std::vector<int> vect{ 3,4,5,6,7 };
 		auto result = Sum(vect, 5);
-		//auto result2 = Sum(10, 5);			// ошибкаб первое слагаемое не вектор
+		auto result2 = Sum(10, 5);			// ошибка первое слагаемое не вектор
 		std::cout << "\nVector:" << std::endl;
 		for ( const auto& i : vect )
 		{
@@ -178,19 +178,19 @@ int main()
 		q.push("Lead");
 		q.push("Build");
 		q.push("Release");
-		//PrintAdapter(q);
+		PrintAdapter(q);
 
 		std::queue<std::string, std::list<std::string>> q1;
 		q1.push("Lead");
 		q1.push("Build");
 		q1.push("Release");
-		//PrintAdapter(q1);
+		PrintAdapter(q1);
 
 		stack <int> st;
 		st.push(10);
 		st.push(20);
 		st.push(30);
-		//PrintAdapter(st);
+		PrintAdapter(st);
 
 		__asm nop
 	}
@@ -229,6 +229,8 @@ int main()
 				MyArray ar3{ ar };
 
 				MyArray<int, 5> ar33{ar, 3};
+
+				__asm nop
 			}
 		
 
