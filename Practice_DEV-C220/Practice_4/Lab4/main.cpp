@@ -173,22 +173,38 @@ int main()
 	//Подсказка: имитировать порядок записи можно с помощью функции rand()
 	
 	{
+	//например, источники данных:
+	char ar1[] = "Writer1";
+	char ar2[] = "Writer2";
+
+
 	std::string path = "test.txt";
 	std::ofstream fOut(path);
 	//fOut.open(path, std::ofstream::app);
+	WriterDeleter writer1(fOut);
+	WriterDeleter writer2 = writer1;
 
+	for ( int i = 0; i < 10; i++ )
+	{
+		if ( rand() & 1 )
+		{
+			writer1.toFile();
+		}
+		else
+		{
+			writer2.toFile();
+		}
+	}
 
 	//"писатели":
 	//Создать writer1, writer2
 	/*std::shared_ptr<std::ofstream> writer1(&fOut, WriterDeleter("test.txt"));
 	std::shared_ptr<std::ofstream> writer2 = writer1;*/
 
-	//например, источники данных:
-	char ar1[] = "Writer1";
-	char ar2[] = "Writer2";
+	
 
-	fputs(ar1, stdout);
-	fputs(ar2, stdout);
+	//fputs(ar1, stdout);
+	//fputs(ar2, stdout);
 
 	//заданное число итераций случайным образом позволяем одному из "писателей" записать в файл
 	//свою строчку
@@ -212,16 +228,25 @@ int main()
 		{
 			return (*a < *b);
 		};
-		std::set<std::shared_ptr < std::string>, decltype( comp )> s;		// set  для хранения  значений
+
+		std::set<std::shared_ptr < std::string>, decltype( comp )> s(comp);		// set  для хранения  значений
 
 		//В std::set "складываем" по алфавиту обертки для строк, которые содержат только буквы 
 		for ( size_t i = 0; i < sizeof(strings) / sizeof(strings[0]); i++ )
 		{
-			bool flag = false;
-			if ( std::isalpha(strings[i][i]))
+			auto temp = strings[ i ];
+			int k = 0;
+			bool flag = true;
+			while ( temp[k] )
 			{
-				flag = true;
+				if ( !std::isalpha(temp[k]) )			//  определяет что символ буква
+				{
+					flag = false;
+					break;
+				}
+				k++;
 			}
+			
 			if ( flag )
 			{
 				s.insert(std::shared_ptr<std::string>(&strings[ i ], [](std::string*) { }));
@@ -236,12 +261,25 @@ int main()
 		//Находим сумму
 		
 		std::vector<std::shared_ptr < std::string>> vec;
+	
 		for ( size_t i = 0; i < sizeof(strings) / sizeof(strings[ 0 ]); i++ )
 		{
-	
-			if (  true)
+			auto temp = strings[ i ];
+			int k = 0;
+			bool flag = true;
+			while ( temp[ k ] )							// проходим по массиву
+			{
+				if ( !std::isdigit(temp[ k ]) )			//  определяет что символ число
+				{
+					flag = false;
+					break;
+				}
+				k++;
+			}
+			if ( flag )
 			{
 				vec.push_back(std::shared_ptr<std::string>(&strings[ i ], [](std::string*) { }));
+
 			}
 		}
 
@@ -250,8 +288,27 @@ int main()
 		/******************************************************************************************/
 		//сюда "складываем" обертки для строк, которые не содержат ни символов букв, ни символов цифр
 		//и просто выводим
+		std::vector<std::shared_ptr < std::string>> vec2;
+		for ( size_t i = 0; i < sizeof(strings) / sizeof(strings[ 0 ]); i++ )
+		{
+			auto temp = strings[ i ];
+			int k = 0;
+			bool flag = true;
+			while ( temp[ k ] )							// проходим по массиву
+			{
+				if ( (std::isalpha(temp[ k ])) || (std::isdigit(temp[ k ])) )			//  определяет что ги буква ни число
+				{
+					flag = false;
+					break;
+				}
+				k++;
+			}
+			if ( flag )
+			{
+				vec2.push_back(std::shared_ptr<std::string>(&strings[ i ], [](std::string*) { }));
 
-
+			}
+		}
 
 		__asm nop
 	}
@@ -264,17 +321,25 @@ int main()
 		std::string ar[] = {"my","Hello", "World"};
 		std::vector < std::shared_ptr<std::string>> v = {std::make_shared<std::string>("good"), std::make_shared<std::string>("bye")};
 		
-		//v = std::move(ar);
-		
-		__asm nop
-
 		//а) Требуется добавить в вектор обертки для элементов массива, НЕ копируя элементы массива! 
+		v.reserve(std::size(ar) + v.size());	// выделяем память
+		for ( auto& i : ar )					// проходим по массиву
+		{
+			v.push_back(std::shared_ptr<std::string>(&i, [](const std::string*) { }));		// добавляем в обертку из массива данные
+		}
+
 		//б) Отсортировать вектор по алфавиту и вывести на экран
-		//в) Обеспечить корректное освобождение памяти
-		 
+		std::sort(v.begin(), v.end(), [](auto& x, auto& y) { return *x < *y; });			// сортируем
 
 		__asm nop
-	}
+
+		//в) Обеспечить корректное освобождение памяти
+		 // deleter  в виде  лямбда [](const std::string*) { }  обеспечивает корректное удаление памяти.  
+
+
+	}// вызываются деструкторы мектора после закрывающейся скобки
+
+
 	/***************************************************************/
 		//Задание 5. shared_ptr и weak_ptr
 		//Создаем генеалогическое дерево посредством класса human. В классе хранятся:
