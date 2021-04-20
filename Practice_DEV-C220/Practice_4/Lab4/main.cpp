@@ -10,6 +10,7 @@
 #include<fstream>
 #include"WriterDeleter.h"
 #include<stdio.h>
+#include"human.h"
 
 size_t SIZE;
 
@@ -337,7 +338,7 @@ int main()
 		 // deleter  в виде  лямбда [](const std::string*) { }  обеспечивает корректное удаление памяти.  
 
 
-	}// вызываются деструкторы мектора после закрывающейся скобки
+	}// вызываются деструкторы вектора после закрывающейся скобки
 
 
 	/***************************************************************/
@@ -362,9 +363,11 @@ int main()
 		//(то есть на самом деле два деда и две бабы):
 
 
-		//std::shared_ptr<human> grandM1(new human("Eva"));
-		//...
+		std::shared_ptr<human> grandM1(new human("Eva"));
+		std::shared_ptr<human> grandF2(new human("Adam"));
+		auto first = human::childCreate("First", grandM1, grandF2);
 
+		//childCreate();
 		//у них появились дети - child():
 
 

@@ -12,21 +12,19 @@ class human
 	std::string name;
 public:
 	human() = default;
-	human(std::string& name) : name(name) { };
+	human(const std::string& name) : name(name) { };
+
 	human(const human& human) = delete;						// конструктор копирования // копировать нельзя
-	human(human&& other)									//  перемещать можно
-	{
-		this->m_ptr = other.m_ptr;
-		other.m_ptr = nullptr;
-	}
+	human(human&& other) = delete;							//  конструктор перемещения
+
 	human& operator=(const human& other) = delete;			// оператор присваивания	// присваивать нельзя
-	human& operator=(human&& other)							// перемещать можно 
-	{
-		
-		return *this;
-	}
+	human& operator=(human&& other)	= delete;				// конструктор
 
 
-	static void childP();
+	std::string getName() const;
+	std::string setName(std::string str);
+
+	static std::shared_ptr<human> childCreate(std::string name, std::shared_ptr<human > m = nullptr, std::shared_ptr<human > d = nullptr);
+	static void PrintP(std::shared_ptr<human > value);
 };
 
